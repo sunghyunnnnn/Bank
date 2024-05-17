@@ -1,0 +1,23 @@
+CREATE TABLE member(
+	id varchar2(100) PRIMARY KEY,
+	pw varchar2(100) NOT NULL,
+	name varchar2(100) NOT NULL,
+	rrn varchar2(15) NOT NULL,
+	phone_num varchar2(100) NOT NULL,
+	address varchar2(100) NOT NULL
+);
+
+CREATE TABLE employee(
+	EMPLOYEE_NUM number(6) PRIMARY KEY,
+	EMPLOYEE_NAME varchar2(10) NOT NULL,
+	EMPLOYEE_RRN varchar2(15),
+	DEPARTMENT varchar2(10)
+);
+
+
+CREATE TABLE manager(
+	MANAGER_ID varchar2(100) PRIMARY KEY,
+	MANAGER_PW varchar2(100),
+	EMPLOYEE_NUM number(6),
+	foreign KEY (EMPLOYEE_NUM) REFERENCES employee(EMPLOYEE_NUM)
+);
