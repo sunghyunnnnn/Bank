@@ -72,5 +72,30 @@ public class MainController {
 		mav.setViewName("login/login");
 		return mav;
 	}
-	
+	@RequestMapping(value="/loginController")
+	public ModelAndView loginControl(MemberVO mem, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(">>>>>>>>>>>>");
+		System.out.println("id: "+ mem.getId() + "    pw: "+mem.getPw());
+		
+		MemberVO dbMem = null;
+		
+		String id = mem.getId();
+		String pw = mem.getPw();
+		
+		dbMem = memberRepo.getById(id);
+		System.out.println("DB: >>"+ dbMem);
+		
+		if(id.equals(dbMem.getId()) && pw.equals(dbMem.getPw())) {
+			System.out.println("로그인 완료");
+			session.setAttribute("login", dbMem);
+			mav.setViewName("forward:/");
+		}else {
+			System.out.println("로그인 실패");
+			mav.addObject("loginError","아이디 혹은 비밀번호가 일치하지 않습니다.");
+			mav.setViewName("login/login");
+		}
+		
+		return mav;
+	}
 }
