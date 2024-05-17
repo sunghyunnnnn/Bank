@@ -3,24 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="style/register/register.css">
 </head>
 <body>
 	<h1>회원가입 페이지입니다.</h1>
-	<form action="register_Account" method="post">
-		<input type="text" name="id" placeholder="아이디 입력" required="required">
-		<br>
-		<input type="password" name="pw" placeholder="비밀번호 입력" required="required">
-		<br>
-		<input type="text" name="name" placeholder="이름 입력" required="required">
+	<select id="register__select">
+		<option name="user" selected>일반유저</option>
+		<option name="manager">관리자</option>
+	</select>
+	<div class="user__register">
+		<form action="register_Account" method="post">
+			<input type="text" id="registerid" name="id" placeholder="아이디 입력" required="required">
+			<span class="idCk"></span>
+			<br>
+			<input type="password" id="registerPw" name="pw" placeholder="비밀번호 입력" required="required">
+			<br>
+			<input type="password" id="registerPwCk"  placeholder="비밀번호 확인" required="required">
+			<span class="pwCk"></span>
+			<br>
+			<input type="text" name="name" placeholder="이름 입력" required="required">
+			
+			<br>
+			<input type="text" name="rrn" placeholder="주민번호 입력" required="required">
+			<br>
+			<input type="text" oninput="oninputPhone(this)" name="phone_num" placeholder="핸드폰번호 입력" required="required">
+			<br>
+			<input type="text" name="address" placeholder="주소 입력" required="required">
+			<br>
+			<button type="submit">회원가입</button>
+			<button type="reset">리셋하기</button>
+			<button type="button" onclick="location.href='/'">뒤로가기</button>
+		</form>
+	</div>
+	<div class="manager__register register_display">
+		<form action="manager_Account" method="post">
+			<input type="text" id="managerId" name="manager_id" placeholder="관리자 ID" required="required">
+			<span class="managerIdCk"></span>
+			<br>
+			<input type="password" id="managerPw" name="manager_pw" placeholder="관리자 PW" required="required">
+			<br>
+			<input type="password" id="managerPwCk" name="manager_pwCk" placeholder="관리자 PW확인" required="required">
+			<span class="managerPwCk_text"></span>
+			<br>
+			<input type="text" name="employee_num" placeholder="사원번호" required="required">
+			<br>
+			<button type="submit">회원가입</button>
+			<button type="reset">리셋하기</button>
+			<button type="button" onclick="location.href='/'">뒤로가기</button>
+		</form>
+	</div>
+	<script type="text/javascript">
+		const registerid = document.querySelector("#registerid");
+		const idCk = document.querySelector(".idCk");
+		const registerPw = document.querySelector("#registerPw");
+		const registerPwCk = document.querySelector("#registerPwCk");
+		const pwCk = document.querySelector(".pwCk");
+		const register__select = document.querySelector("#register__select");
+		const user__register = document.querySelector(".user__register");
+		const manager__register = document.querySelector(".manager__register");
+		const managerPw = document.querySelector("#managerPw");
+		const managerPwCk = document.querySelector("#managerPwCk");
+		const managerPwCk_text = document.querySelector(".managerPwCk_text");
+		const managerId = document.querySelector("#managerId");
+		const managerIdCk = document.querySelector(".managerIdCk");
 		
-		<br>
-		<input type="text" name="rrn" placeholder="주민번호 입력" required="required">
-		<br>
-		<input type="text" name="phone_num" placeholder="핸드폰번호 입력" required="required">
-		<br>
-		<input type="text" name="address" placeholder="주소 입력" required="required">
-		<br>
-		<button type="submit">회원가입</button>
-	</form>
+		var regId = /^[A-Za-z0-9]+$/g;
+		const funcIdCk = () =>{
+			if(registerid.value.length <= 4){
+				registerid.value = '';
+				idCk.innerText = '아이디는 5글자 이상입니다르릉';
+			}
+			else if(!regId.test(registerid.value)){
+				registerid.value = '';
+				idCk.innerText = '아이디는 한글이 안됩니다.';
+			}
+			else{
+				idCk.innerText = '';
+			}
+		}
+		
+		const funcPwCk = () =>{
+			if(!(registerPw.value === registerPwCk.value)){
+				pwCk.innerText = '비밀번호가 다릅니다!!';
+				registerPw.value = '';
+				registerPwCk.value= '';
+			}
+			else{
+				pwCk.innerText = '';
+			}
+		}
+		
+		const funcRegisterCk = () =>{
+			if(register__select.value === '관리자'){
+				user__register.classList.toggle('register_display');
+				manager__register.classList.toggle('register_display');
+			}
+			else{
+				user__register.classList.toggle('register_display');
+				manager__register.classList.toggle('register_display');
+			}
+		}
+		
+		const funcManagerCk = () =>{
+			if(!(managerPw.value === managerPwCk.value)){
+				managerPwCk_text.innerText = '비밀번호가 다릅니다!!';
+				managerPw.value= '';
+				managerPwCk.value = '';
+			}
+			else{
+				managerPwCk_text.innerText = '';
+			}
+		}
+		
+		const funcManagerIdCk = () =>{
+			if(managerId.value.length <= 4){
+				managerId.value = '';
+				managerIdCk.innerText = '아이디는 5글자 이상입니다르릉';
+			}
+			else if(!regId.exec(managerId.value)){
+				managerId.value = '';
+				managerIdCk.innerText = '아이디는 한글이 안됩니다.';
+			}
+			else{
+				managerIdCk.innerText = '';
+			}
+		}
+		
+		function oninputPhone(target) {
+		    target.value = target.value
+		        .replace(/[^0-9]/g, '')
+		        .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
+		}
+		
+		registerid.addEventListener("change", funcIdCk);
+		registerPwCk.addEventListener("change", funcPwCk);
+		register__select.addEventListener('change', funcRegisterCk);
+		managerPwCk.addEventListener('change', funcManagerCk);
+		managerId.addEventListener('change', funcManagerIdCk);
+	</script>
 </body>
 </html>

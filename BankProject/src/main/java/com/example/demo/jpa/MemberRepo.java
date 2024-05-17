@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.vo.MemberVO;
 
-public interface MemberRepo extends JpaRepository<MemberVO, Integer>{
+public interface MemberRepo extends JpaRepository<MemberVO, String>{
 
 }

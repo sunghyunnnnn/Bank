@@ -9,6 +9,12 @@
 	<a href="register">회원가입</a>
 	<a href="login">로그인</a>
 	
-	
+	<script type="text/javascript">
+		let manager_register_Ck = true;
+		manager_register_Ck = [[${manager_register_Ck}]];
+		if(!manager_register_Ck){
+			alert("관리자 회원가입 실패!!!");
+		}
+	</script>
 </body>
 </html>
