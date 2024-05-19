@@ -2,11 +2,16 @@ package com.example.demo.controller;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.jpa.EmployeeRepo;
 import com.example.demo.jpa.ManagerRepo;
 import com.example.demo.jpa.MemberRepo;
 import com.example.demo.vo.ManagerVO;
@@ -21,6 +26,10 @@ public class MainController {
 	MemberRepo memberRepo;
 	@Autowired
 	ManagerRepo managerRepo;
+	@Autowired
+	EmployeeRepo employeRepo;
+	
+	
 	
 	
 	@RequestMapping(value="/")
@@ -32,6 +41,9 @@ public class MainController {
 	@RequestMapping(value="/register")
 	public ModelAndView register() {
 		ModelAndView mav = new ModelAndView();
+		List<Integer> employeeNum = employeRepo.selectEnployeeNum();
+//		System.out.println("employeeNum >>> " + employeeNum);
+		mav.addObject("employeeNum", employeeNum);
 		mav.setViewName("member/register");
 		return mav;
 	}
@@ -40,35 +52,39 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		memberRepo.save(member);
 //		System.out.println("member >> " + member);
-		mav.setViewName("index");
+		mav.setViewName("forward:/");
 		return mav;
 	}
 	@RequestMapping(value="/manager_Account")
 	public ModelAndView manager_Account(ManagerVO manager, HttpSession session) {
 		
 		ModelAndView mav = new ModelAndView();
-		String managerId = manager.getManager_id();
-		boolean manager_register_Ck = false;
-		
-//		System.out.println("manager >> " + manager);
+
 		try {
 			managerRepo.save(manager);
-			manager_register_Ck = true;
-			mav.addObject("manager_register_Ck", manager_register_Ck);
-			mav.setViewName("index");
+			mav.setViewName("forward:/");
 			return mav;
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("부모 키가 없습니다.");
-			mav.addObject("manager_register_Ck", manager_register_Ck);
-			mav.setViewName("index");
+			mav.setViewName("member/register");
 			return mav;
 		}
 	}
 	@RequestMapping(value="/login")
 	public ModelAndView login() {
 		ModelAndView mav = new ModelAndView();
+		List<String> memberId = new ArrayList<>();
+		List<String> memberPw = new ArrayList<>();
+		List<Map<String,String>> memberidpw = memberRepo.selectMemberIdPw();
+		for(Map<String, String> a : memberidpw) {
+			 memberId.add(a.get("ID").toString());
+			 memberPw.add(a.get("PW").toString());
+		}
+		mav.addObject("memberId", memberId);
+		mav.addObject("memberPw", memberPw);
+		
 		mav.setViewName("login/login");
 		return mav;
 	}
@@ -82,20 +98,25 @@ public class MainController {
 		
 		String id = mem.getId();
 		String pw = mem.getPw();
-		
-		dbMem = memberRepo.getById(id);
-		System.out.println("DB: >>"+ dbMem);
-		
-		if(id.equals(dbMem.getId()) && pw.equals(dbMem.getPw())) {
+		try {
+			dbMem = memberRepo.getById(id);
+			System.out.println("DB: >>"+ dbMem);
 			System.out.println("로그인 완료");
 			session.setAttribute("login", dbMem);
 			mav.setViewName("forward:/");
-		}else {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
 			System.out.println("로그인 실패");
-			mav.addObject("loginError","아이디 혹은 비밀번호가 일치하지 않습니다.");
-			mav.setViewName("login/login");
+			mav.setViewName("forward:/");
 		}
-		
 		return mav;
 	}
+	@RequestMapping(value="/logout")
+	public ModelAndView logout(HttpSession session) {
+			ModelAndView mav = new ModelAndView();
+			session.removeAttribute("login");
+			mav.setViewName("forward:/");
+			return mav;
+		}
 }

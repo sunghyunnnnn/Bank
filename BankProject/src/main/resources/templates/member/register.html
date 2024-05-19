@@ -45,14 +45,15 @@
 			<input type="password" id="managerPwCk" name="manager_pwCk" placeholder="관리자 PW확인" required="required">
 			<span class="managerPwCk_text"></span>
 			<br>
-			<input type="text" name="employee_num" placeholder="사원번호" required="required">
+			<input type="text" id="employee_num" name="employee_num" placeholder="사원번호" required="required">
 			<br>
-			<button type="submit">회원가입</button>
+			<button type="submit" onclick="funcManagerSubmit()">회원가입</button>
 			<button type="reset">리셋하기</button>
 			<button type="button" onclick="location.href='/'">뒤로가기</button>
 		</form>
 	</div>
 	<script type="text/javascript">
+	
 		const registerid = document.querySelector("#registerid");
 		const idCk = document.querySelector(".idCk");
 		const registerPw = document.querySelector("#registerPw");
@@ -66,6 +67,9 @@
 		const managerPwCk_text = document.querySelector(".managerPwCk_text");
 		const managerId = document.querySelector("#managerId");
 		const managerIdCk = document.querySelector(".managerIdCk");
+		const employee_num = document.querySelector("#employee_num");
+	
+		const employeeNum = [[${employeeNum}]];
 		
 		var regId = /^[A-Za-z0-9]+$/g;
 		const funcIdCk = () =>{
@@ -126,6 +130,21 @@
 			}
 			else{
 				managerIdCk.innerText = '';
+			}
+		}
+		
+		const funcManagerSubmit = () =>{
+			let ck = false;
+			employeeNum.forEach((item) => {
+				if(item === parseInt(employee_num.value)){
+					ck = true;
+				}
+			})
+			if(!ck){
+				alert('일치하는 사원번호가 없습니다.');
+			}
+			else{
+				alert('관리자 회원가입 성공!!!')
 			}
 		}
 		
