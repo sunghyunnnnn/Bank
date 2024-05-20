@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>입출금 통장 개설</h1>
+
+	<form action="accountComplete" method="post">
+		계좌번호 	<input type="text" name="account" id="account" readonly>
+				<br>
+		금액 	<input type="text" name="total"><br>
+		<input type="submit" value="개설">
+	</form>
+
+	<script type="text/javascript">
+		let fix = 4;
+		let accountnum = '';
+		for(let i = 0; i < 8; i++){
+			accountnum += Math.floor(Math.random()*10);
+		}
+		const account = `${fix}${accountnum}`;
+		document.getElementById('account').value = account;
+	</script>
+</body>
+</html>
