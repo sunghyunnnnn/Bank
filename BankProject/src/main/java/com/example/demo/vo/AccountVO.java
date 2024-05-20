@@ -7,14 +7,15 @@ import jakarta.persistence.Id;
 public class AccountVO {
 	
 	@Id
-	private int account_num;
+	private String account_num;
 	private String id;
 	private String dormant;
 	private int total;
-	public int getAccount_num() {
+	
+	public String getAccount_num() {
 		return account_num;
 	}
-	public void setAccount_num(int account_num) {
+	public void setAccount_num(String account_num) {
 		this.account_num = account_num;
 	}
 	public String getId() {
@@ -35,7 +36,6 @@ public class AccountVO {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	
 	@Override
 	public String toString() {
 		return "AccountVO [account_num=" + account_num + ", id=" + id + ", dormant=" + dormant + ", total=" + total
@@ -43,5 +43,4 @@ public class AccountVO {
 	}
 	
 	
-
 }

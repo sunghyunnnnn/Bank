@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,24 @@ public class AccountController {
 		System.out.println(account);
 		
 		
+		return mav;
+	}
+	@RequestMapping(value="/accountSearch")
+	public ModelAndView accountSearch(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String id = request.getParameter("id");
+		List<Map<String, Integer>> accountList = accountrepo.selectAccount2(id);
+		List<String> accountTotal = new ArrayList<>();
+		List<String> accountNum = new ArrayList<>();
+		for(Map<String, Integer> a : accountList) {
+			accountNum.add(String.valueOf(a.get("ACCOUNT_NUM")));
+			accountTotal.add(a.get("TOTAL").toString());
+		}
+		
+		mav.addObject("accountNum",accountNum);
+		mav.addObject("accountTotal", accountTotal);
+		
+		mav.setViewName("account/searchAccount");
 		return mav;
 	}
 }

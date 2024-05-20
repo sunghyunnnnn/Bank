@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>조회 페이지입니다!!!!</h1>
+		<select id="account_select">
+			<option value="none"> === 선택 === </option>
+			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}"></option>
+		</select>
+		<br>
+		<span class="total"></span>
+		
+	<script th:inline="javascript">
+		//var userVal = document.getElementById("mySelect1").selectedIndex;
+		
+		const accountTotal = [[${accountTotal}]];
+		
+		const account_select = document.querySelector("#account_select");
+		const total = document.querySelector(".total");
+		
+		
+		
+		const funcSelectOption = () => {
+			let selectIndex = account_select.selectedIndex;
+			total.innerText = `${accountTotal[selectIndex - 1]}원`;
+		}
+		
+		account_select.addEventListener("change", funcSelectOption);
+	</script>
+</body>
+</html>

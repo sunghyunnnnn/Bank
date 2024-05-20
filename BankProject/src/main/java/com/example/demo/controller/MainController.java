@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.jpa.AccountRepo;
 import com.example.demo.jpa.EmployeeRepo;
 import com.example.demo.jpa.ManagerRepo;
 import com.example.demo.jpa.MemberRepo;
 import com.example.demo.vo.ManagerVO;
 import com.example.demo.vo.MemberVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -28,6 +28,8 @@ public class MainController {
 	ManagerRepo managerRepo;
 	@Autowired
 	EmployeeRepo employeRepo;
+	@Autowired
+	AccountRepo accountRepo;
 	
 	
 	
@@ -167,4 +169,5 @@ public class MainController {
 		mav.setViewName("forward:/");
 		return mav;
 	}
+	
 }
