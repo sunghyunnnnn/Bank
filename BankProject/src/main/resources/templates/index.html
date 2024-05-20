@@ -17,7 +17,8 @@
 	<a href="login"
 		th:if="${session.login == null}">로그인</a>
 	
-	<a href="accountMake">계좌 개설</a>
+	<a th:href="@{accountMake(id=${session.login.id})}"
+		th:if="${session.login != null}">계좌 개설</a>
 	
 	<script th:inline="javascript">
 		

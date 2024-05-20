@@ -8,7 +8,8 @@
 	<h1>입출금 통장 개설</h1>
 
 	<form action="accountComplete" method="post">
-		계좌번호 	<input type="text" name="account" id="account" readonly>
+				<input type="hidden" name=id th:value="${session.login.id}">
+		계좌번호 	<input type="text" name="account_num" id="account" readonly>
 				<br>
 		금액 	<input type="text" name="total"><br>
 		<input type="submit" value="개설">
