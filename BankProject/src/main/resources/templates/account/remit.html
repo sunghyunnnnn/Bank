@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="remitComplete" method="post">
+		<!-- 내가 어떤 계좌를 선택해서 입금 할 것인지 -->
+		<select th:name="account" style="width:300px;height:50px;font-size:15pt;">
+			<option value="" selected disabled>계좌선택</option>
+			<option th:each="account : ${accountnum}"
+					th:value="${account}"
+					th:utext="${account}"></option>
+		</select><br>
+		계좌 번호 입력		<input type="text" name="remit_account"><br> <!-- 나중에 숫자만 입력할 수 있게 -->
+		받는 분에게 표시	<input type="text" name="remit_text"><br>
+		송금 금액			<input type="text" name="remit_money"><br> <!-- 나중에 숫자만 입력할 수 있게 -->
+		<input type="submit" value="송금하기">
+	</form>
+
+<!-- 나중에 해야할 것
+	계좌 + 계좌 별명-->
+
+</body>
+</html>
