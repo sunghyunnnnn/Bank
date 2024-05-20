@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.jpa.AccountRepo;
 import com.example.demo.vo.AccountVO;
+import com.example.demo.vo.RemitVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -54,10 +55,12 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="remitComplete")
-	public ModelAndView remitComplete(HttpServletRequest request) {
+	public ModelAndView remitComplete(HttpServletRequest request, RemitVO remitvo) {
 		
 		String account = request.getParameter("account");
 		System.out.println(account);
+		
+		
 		return mav;
 	}
 }
