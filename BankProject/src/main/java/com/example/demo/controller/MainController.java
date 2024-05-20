@@ -11,12 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.jpa.AccountRepo2;
 import com.example.demo.jpa.EmployeeRepo;
 import com.example.demo.jpa.ManagerRepo;
 import com.example.demo.jpa.MemberRepo;
 import com.example.demo.vo.ManagerVO;
 import com.example.demo.vo.MemberVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -28,6 +30,8 @@ public class MainController {
 	ManagerRepo managerRepo;
 	@Autowired
 	EmployeeRepo employeRepo;
+	@Autowired
+	AccountRepo2 accountRepo2;
 	
 	
 	
@@ -165,6 +169,24 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		session.removeAttribute("managerLogin");
 		mav.setViewName("forward:/");
+		return mav;
+	}
+	@RequestMapping(value="/accountSearch")
+	public ModelAndView accountSearch(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String id = request.getParameter("id");
+		List<Map<String, Integer>> accountList = accountRepo2.selectAccount(id);
+		List<String> accountTotal = new ArrayList<>();
+		List<String> accountNum = new ArrayList<>();
+		for(Map<String, Integer> a : accountList) {
+			accountNum.add(String.valueOf(a.get("ACCOUNT_NUM")));
+			accountTotal.add(a.get("TOTAL").toString());
+		}
+		
+		mav.addObject("accountNum",accountNum);
+		mav.addObject("accountTotal", accountTotal);
+		
+		mav.setViewName("account/searchAccount");
 		return mav;
 	}
 }
