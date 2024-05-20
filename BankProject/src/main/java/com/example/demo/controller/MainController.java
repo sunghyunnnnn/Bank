@@ -77,13 +77,30 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		List<String> memberId = new ArrayList<>();
 		List<String> memberPw = new ArrayList<>();
+		List<String> managerId = new ArrayList<>();
+		List<String> managerPw = new ArrayList<>();
+		
 		List<Map<String,String>> memberidpw = memberRepo.selectMemberIdPw();
+		List<Map<String,String>> manageridpw = managerRepo.selectManagerIdPw();
+		
+//		System.out.println("여기다 >>> " + manageridpw.get(0).keySet());
+		
 		for(Map<String, String> a : memberidpw) {
 			 memberId.add(a.get("ID").toString());
 			 memberPw.add(a.get("PW").toString());
 		}
+		
+		for(Map<String, String> a : manageridpw) {
+			managerId.add(a.get("MANAGER_ID").toString());
+			managerPw.add(a.get("MANAGER_PW").toString());
+		}
+		
+		System.out.println(" >>> " + managerId.toString());
+		System.out.println(" >>> " + managerPw.toString());
 		mav.addObject("memberId", memberId);
 		mav.addObject("memberPw", memberPw);
+		mav.addObject("managerId", managerId);
+		mav.addObject("managerPw", managerPw);
 		
 		mav.setViewName("login/login");
 		return mav;
@@ -112,11 +129,42 @@ public class MainController {
 		}
 		return mav;
 	}
+	@RequestMapping(value="mangerLoginController")
+	public ModelAndView mangerLoginController(ManagerVO manager, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(">>>>>>>>>>>>");
+		System.out.println("id: "+ manager.getManager_id() + "    pw: "+manager.getManager_pw());
+		
+		ManagerVO dbManager = null;
+		
+		String id = manager.getManager_id();
+		String pw = manager.getManager_pw();
+		try {
+			dbManager = managerRepo.getById(id);
+			System.out.println("DB: >>"+ dbManager);
+			System.out.println("로그인 완료");
+			session.setAttribute("managerLogin", dbManager);
+			mav.setViewName("admin/managePage");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("로그인 실패");
+			mav.setViewName("forward:/");
+		}
+		return mav;
+	}
 	@RequestMapping(value="/logout")
 	public ModelAndView logout(HttpSession session) {
 			ModelAndView mav = new ModelAndView();
 			session.removeAttribute("login");
 			mav.setViewName("forward:/");
 			return mav;
-		}
+	}
+	@RequestMapping(value="/managerLogout")
+	public ModelAndView managerLogout(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		session.removeAttribute("managerLogin");
+		mav.setViewName("forward:/");
+		return mav;
+	}
 }
