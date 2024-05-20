@@ -5,6 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 th:text="${managerId}"></h1>
+	<h1 th:text="${session.managerLogin.manager_id}"></h1>
+	<a href="managerLogout">로그아웃</a>
 </body>
 </html>

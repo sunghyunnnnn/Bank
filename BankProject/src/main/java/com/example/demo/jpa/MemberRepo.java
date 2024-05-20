@@ -9,10 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.example.demo.vo.MemberVO;
 
 public interface MemberRepo extends JpaRepository<MemberVO, String>{
-	@Query(value = "select id from member", nativeQuery = true)
-	public List<String> selectMemberId();
-	@Query(value = "select pw from member", nativeQuery = true)
-	public List<String> selectMemberPw();
 	@Query(value = "select id,pw from member", nativeQuery = true)
 	public List<Map<String,String>> selectMemberIdPw();
 }

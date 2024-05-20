@@ -22,11 +22,11 @@
 	</div>
 	<div class="manager_login register_display">
 		<form action="mangerLoginController" method="post">
-			<input type="text" id="loginID" name = "manager_id" placeholder="ID 입력">
+			<input type="text" id="managerID" name = "manager_id" placeholder="ID 입력">
 			<br>
-			<input type="password" id="loginPW" name = "manager_pw" placeholder="PW 입력">
+			<input type="password" id="managerPW" name = "manager_pw" placeholder="PW 입력">
 			<br>
-			<button type="submit">관리자 로그인</button>
+			<button type="submit" onclick="funcManagerLogin()">관리자 로그인</button>
 		</form>
 	</div>
 	<script th:inline="javascript">
@@ -35,9 +35,13 @@
 		const manager_login = document.querySelector(".manager_login");
 		const loginID = document.querySelector("#loginID");
 		const loginPW = document.querySelector("#loginPW");
-	
+		const managerID = document.querySelector("#managerID");
+		const managerPW = document.querySelector("managerPW");
+		
 		const memberId = [[${memberId}]];
 		const memberPw = [[${memberPw}]];
+		const managerId = [[${managerId}]];
+		const managerPw = [[${managerPw}]];
 		
 		const funcSelect = () =>{
 			if(login_select.value === '관리자'){
@@ -64,6 +68,26 @@
 			else{
 				alert("로그인 성공!!!");
 			}
+		}
+		
+		const funcManagerLogin = () => {
+			
+			let loginCk = false;
+			for(let i = 0; i <  managerId.length; i++){
+				if(managerId[i] ===  managerID.value && managerPw[i] ===  managerPW.value){
+					loginCk = true;	
+				}
+			}
+			
+			if(!loginCk){
+				console.log(loginID.value, loginPW.value)
+				alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
+			}
+			else{
+				alert("로그인 성공!!!");
+			}
+			
+			
 		}
 		
 		login_select.addEventListener('change', funcSelect);
