@@ -29,3 +29,21 @@ CREATE TABLE account (
 	total number(10),
 	FOREIGN KEY (id) REFERENCES member(id)
 );
+
+CREATE SEQUENCE remit_seq
+		INCREMENT BY 1
+		START WITH 0
+		MINVALUE 0
+		nocache
+		noorder;
+
+CREATE TABLE remit (
+	num				NUMBER PRIMARY KEY,
+	remit_sign 		varchar2(2) DEFAULT '-',
+	account_num 	varchar2(12) NOT NULL,
+	remit_account	varchar(12) NOT NULL,
+	remit_text		varchar(12) NOT NULL,
+	remit_money		NUMBER(10)	NOT NULL,
+	remit_date		DATE DEFAULT sysdate
+	FOREIGN KEY (account_num) REFERENCES account(account_num)
+);
