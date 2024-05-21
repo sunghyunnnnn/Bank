@@ -10,9 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.jpa.AccountRepo;
+
 import com.example.demo.jpa.PlusRepo;
+
+import com.example.demo.jpa.RemitRepo;
+
 import com.example.demo.vo.AccountVO;
+
 import com.example.demo.vo.PlusVO;
+
+import com.example.demo.vo.RemitVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -23,6 +30,8 @@ public class AccountController {
 	AccountRepo accountrepo;
 	@Autowired
 	PlusRepo plusRepo;
+	@Autowired
+	RemitRepo remitrepo;
 	
 	ModelAndView mav = new ModelAndView();
 	
@@ -59,12 +68,25 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="remitComplete")
-	public ModelAndView remitComplete(HttpServletRequest request) {
+	public ModelAndView remitComplete(HttpServletRequest request, RemitVO remitvo) {
 		
 		String account = request.getParameter("account");
 		System.out.println(account);
+		String remit_account = request.getParameter("remit_account");
+		String remit_text = request.getParameter("remit_text");
+		int remit_money = Integer.parseInt(request.getParameter("remit_money"));
+		
+		try {
+			int i = remitrepo.insertRemit(account, remit_account, remit_text, remit_money);
+		} catch (Exception e) {
+		//왜 오류가 날까요?
+		}
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+		mav.addObject("result","송금완료");
+		mav.setViewName("account/remitComplete");
 		return mav;
 	}
+	
 	@RequestMapping(value="/accountSearch")
 	public ModelAndView accountSearch(HttpServletRequest request) {
 		
