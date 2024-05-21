@@ -82,6 +82,14 @@ public class AccountController {
 		//왜 오류가 날까요?
 		}
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+		
+		String account_num = request.getParameter("account");
+		System.out.println(account_num);
+		try {
+			remitrepo.updateRemit(account_num);
+		} catch (Exception e) {
+			//오류남
+		}
 		mav.addObject("result","송금완료");
 		mav.setViewName("account/remitComplete");
 		return mav;
