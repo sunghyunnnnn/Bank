@@ -44,6 +44,23 @@ CREATE TABLE remit (
 	remit_account	varchar(12) NOT NULL,
 	remit_text		varchar(12) NOT NULL,
 	remit_money		NUMBER(10)	NOT NULL,
-	remit_date		DATE DEFAULT sysdate
+	remit_date		DATE DEFAULT sysdate,
 	FOREIGN KEY (account_num) REFERENCES account(account_num)
 );
+
+CREATE TABLE plus(
+	num NUMBER PRIMARY KEY,
+	PLUS_SIGN	VARCHAR2(2) DEFAULT '+',
+	ACCOUNT_NUM	VARCHAR2(100),
+	PLUS_TEXT	VARCHAR2(8),
+	PLUS_MONEY	NUMBER(10),
+	PLUS_DATE	DATE DEFAULT sysdate,
+	FOREIGN KEY(ACCOUNT_NUM) REFERENCES account(account_num)
+);
+
+CREATE SEQUENCE plus_seq
+	INCREMENT BY 1
+	START WITH 0
+	MINVALUE 0
+	nocache
+	noorder;

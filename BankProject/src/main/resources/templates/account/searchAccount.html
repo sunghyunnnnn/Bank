@@ -12,20 +12,57 @@
 		</select>
 		<br>
 		<span class="total"></span>
+		<br>
+		<div class="accountList">
+			
+			
+		</div>
 		
 	<script th:inline="javascript">
 		//var userVal = document.getElementById("mySelect1").selectedIndex;
 		
 		const accountTotal = [[${accountTotal}]];
+		const plusList = [[${plusList}]];
 		
+		const accountList = document.querySelector(".accountList");
 		const account_select = document.querySelector("#account_select");
 		const total = document.querySelector(".total");
 		
-		
+		let cnt = 0;
 		
 		const funcSelectOption = () => {
+			let newPTagMoney;
+			let newPTagDate;
+			let newPTagSign;
 			let selectIndex = account_select.selectedIndex;
-			total.innerText = `${accountTotal[selectIndex - 1]}원`;
+			total.innerText = `총 잔액 : ${accountTotal[selectIndex - 1]}원`;
+			if(document.querySelectorAll(".newptag").length !== 0){
+
+				accountList.replaceChildren();
+			}
+			for(let i = 0; i < plusList.length; i++){
+				if(plusList[i].account_num === account_select.value){
+					
+					if(plusList[i].plus_sign === '+'){
+						newPTagSign = document.createElement('p');
+						newPTagSign.setAttribute("class", 'newptag');
+						newPTagSign.innerText = '입금';
+					}
+					newPTagMoney = document.createElement('p');
+					newPTagMoney.setAttribute("class", "newptag");
+					
+					newPTagDate = document.createElement('p');
+					newPTagDate.setAttribute("class","newptag");
+					
+					newPTagMoney.innerText = plusList[i].plus_money;
+					newPTagDate.innerText = plusList[i].plus_date;
+					accountList.appendChild(newPTagSign);
+					accountList.appendChild(newPTagDate);
+					accountList.appendChild(newPTagMoney);	
+				}
+			}
+			
+			
 		}
 		
 		account_select.addEventListener("change", funcSelectOption);

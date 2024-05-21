@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.jpa.AccountRepo;
+import com.example.demo.jpa.PlusRepo;
 import com.example.demo.vo.AccountVO;
+import com.example.demo.vo.PlusVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,6 +21,8 @@ public class AccountController {
 	
 	@Autowired
 	AccountRepo accountrepo;
+	@Autowired
+	PlusRepo plusRepo;
 	
 	ModelAndView mav = new ModelAndView();
 	
@@ -63,11 +67,15 @@ public class AccountController {
 	}
 	@RequestMapping(value="/accountSearch")
 	public ModelAndView accountSearch(HttpServletRequest request) {
+		
 		ModelAndView mav = new ModelAndView();
 		String id = request.getParameter("id");
 		List<Map<String, Integer>> accountList = accountrepo.selectAccount2(id);
 		List<String> accountTotal = new ArrayList<>();
 		List<String> accountNum = new ArrayList<>();
+		
+		List<PlusVO> plusList =  plusRepo.findAll();
+		
 		for(Map<String, Integer> a : accountList) {
 			accountNum.add(String.valueOf(a.get("ACCOUNT_NUM")));
 			accountTotal.add(a.get("TOTAL").toString());
@@ -75,7 +83,7 @@ public class AccountController {
 		
 		mav.addObject("accountNum",accountNum);
 		mav.addObject("accountTotal", accountTotal);
-		
+		mav.addObject("plusList", plusList);
 		mav.setViewName("account/searchAccount");
 		return mav;
 	}
