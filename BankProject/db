@@ -64,3 +64,11 @@ CREATE SEQUENCE plus_seq
 	MINVALUE 0
 	nocache
 	noorder;
+	
+
+ALTER TABLE remit RENAME COLUMN remit_date TO exchage_date;
+ALTER TABLE plus RENAME COLUMN plus_date TO exchage_date;
+ALTER TABLE remit RENAME COLUMN remit_sign TO exchange_sign;
+ALTER TABLE plus RENAME COLUMN plus_sign TO exchange_sign;
+ALTER TABLE remit RENAME COLUMN remit_money TO exchange_money;
+ALTER TABLE plus RENAME COLUMN plus_money TO exchange_money;

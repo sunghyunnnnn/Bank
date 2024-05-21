@@ -14,21 +14,26 @@
 		<span class="total"></span>
 		<br>
 		<div class="accountList">
-			
-			
 		</div>
 		
 	<script th:inline="javascript">
 		//var userVal = document.getElementById("mySelect1").selectedIndex;
 		
 		const accountTotal = [[${accountTotal}]];
+		
 		const plusList = [[${plusList}]];
+		const remitList = [[${remitList}]];
+		
+		let totalList = plusList.concat(remitList);
+		console.log('정렬전 >>> ',totalList);
+		let totalSorted = totalList.sort((a, b) => {
+			return new Date(a.exchage_date) - new Date(b.exchage_date)
+		});
+		console.log(totalSorted);
 		
 		const accountList = document.querySelector(".accountList");
 		const account_select = document.querySelector("#account_select");
 		const total = document.querySelector(".total");
-		
-		let cnt = 0;
 		
 		const funcSelectOption = () => {
 			let newPTagMoney;
@@ -40,13 +45,18 @@
 
 				accountList.replaceChildren();
 			}
-			for(let i = 0; i < plusList.length; i++){
-				if(plusList[i].account_num === account_select.value){
+			for(let i = 0; i < totalSorted.length; i++){
+				if(totalSorted[i].account_num === account_select.value){
 					
-					if(plusList[i].plus_sign === '+'){
+					if(totalSorted[i].exchange_sign === '+'){
 						newPTagSign = document.createElement('p');
 						newPTagSign.setAttribute("class", 'newptag');
 						newPTagSign.innerText = '입금';
+					}
+					else{
+						newPTagSign = document.createElement('p');
+						newPTagSign.setAttribute("class", 'newptag');
+						newPTagSign.innerText = '출금';
 					}
 					newPTagMoney = document.createElement('p');
 					newPTagMoney.setAttribute("class", "newptag");
@@ -54,8 +64,8 @@
 					newPTagDate = document.createElement('p');
 					newPTagDate.setAttribute("class","newptag");
 					
-					newPTagMoney.innerText = plusList[i].plus_money;
-					newPTagDate.innerText = plusList[i].plus_date;
+					newPTagMoney.innerText = totalSorted[i].exchange_money;
+					newPTagDate.innerText = totalSorted[i].exchage_date;
 					accountList.appendChild(newPTagSign);
 					accountList.appendChild(newPTagDate);
 					accountList.appendChild(newPTagMoney);	

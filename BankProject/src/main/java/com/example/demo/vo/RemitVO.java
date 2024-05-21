@@ -8,23 +8,23 @@ public class RemitVO {
 	
 	@Id
 	private int num;
-	private String remit_sign;
+	private String exchange_sign;
 	private String account_num;
 	private String remit_account;
 	private String remit_text;
-	private int remit_money;
-	private String remit_date;
+	private int exchange_money;
+	private String exchage_date;
 	public int getNum() {
 		return num;
 	}
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getRemit_sign() {
-		return remit_sign;
+	public String getExchange_sign() {
+		return exchange_sign;
 	}
-	public void setRemit_sign(String remit_sign) {
-		this.remit_sign = remit_sign;
+	public void setExchange_sign(String exchange_sign) {
+		this.exchange_sign = exchange_sign;
 	}
 	public String getAccount_num() {
 		return account_num;
@@ -44,23 +44,25 @@ public class RemitVO {
 	public void setRemit_text(String remit_text) {
 		this.remit_text = remit_text;
 	}
-	public int getRemit_money() {
-		return remit_money;
+	public int getExchange_money() {
+		return exchange_money;
 	}
-	public void setRemit_money(int remit_money) {
-		this.remit_money = remit_money;
+	public void setExchange_money(int exchange_money) {
+		this.exchange_money = exchange_money;
 	}
-	public String getRemit_date() {
-		return remit_date;
+	public String getExchage_date() {
+		return exchage_date;
 	}
-	public void setRemit_date(String remit_date) {
-		this.remit_date = remit_date;
+	public void setExchage_date(String exchage_date) {
+		this.exchage_date = exchage_date;
 	}
 	@Override
 	public String toString() {
-		return "RemitVO [num=" + num + ", remit_sign=" + remit_sign + ", account_num=" + account_num
-				+ ", remit_account=" + remit_account + ", remit_text=" + remit_text + ", remit_money=" + remit_money
-				+ ", remit_date=" + remit_date + "]";
+		return "RemitVO [num=" + num + ", exchange_sign=" + exchange_sign + ", account_num=" + account_num
+				+ ", remit_account=" + remit_account + ", remit_text=" + remit_text + ", exchange_money="
+				+ exchange_money + ", exchage_date=" + exchage_date + "]";
 	}
 	
+	
+
 }
