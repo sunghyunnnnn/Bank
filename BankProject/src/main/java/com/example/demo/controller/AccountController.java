@@ -132,6 +132,8 @@ public class AccountController {
 		List<String> accountNum = new ArrayList<>();
 		
 		List<PlusVO> plusList =  plusRepo.findAll();
+		List<RemitVO> remitList = remitrepo.findAll();
+		
 		
 		for(Map<String, Integer> a : accountList) {
 			accountNum.add(String.valueOf(a.get("ACCOUNT_NUM")));
@@ -141,6 +143,7 @@ public class AccountController {
 		mav.addObject("accountNum",accountNum);
 		mav.addObject("accountTotal", accountTotal);
 		mav.addObject("plusList", plusList);
+		mav.addObject("remitList", remitList);
 		mav.setViewName("account/searchAccount");
 		return mav;
 	}
