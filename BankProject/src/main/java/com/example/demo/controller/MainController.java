@@ -44,7 +44,8 @@ public class MainController {
 	public ModelAndView register() {
 		ModelAndView mav = new ModelAndView();
 		List<Integer> employeeNum = employeRepo.selectEnployeeNum();
-//		System.out.println("employeeNum >>> " + employeeNum);
+		List<String> member_id = memberRepo.selectMemberId();
+		mav.addObject("member_id", member_id);
 		mav.addObject("employeeNum", employeeNum);
 		mav.setViewName("member/register");
 		return mav;

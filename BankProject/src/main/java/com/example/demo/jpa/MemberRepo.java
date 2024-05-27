@@ -11,4 +11,6 @@ import com.example.demo.vo.MemberVO;
 public interface MemberRepo extends JpaRepository<MemberVO, String>{
 	@Query(value = "select id,pw from member", nativeQuery = true)
 	public List<Map<String,String>> selectMemberIdPw();
+	@Query(value = "select id from member", nativeQuery = true)
+	public List<String> selectMemberId();
 }
