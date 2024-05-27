@@ -15,4 +15,10 @@ public interface MemberRepo extends JpaRepository<MemberVO, String>{
 	
 	@Query(value = "select id from member", nativeQuery = true)
 	public List<String> selectID();
+	
+	@Query(value = "select id from member", nativeQuery = true)
+	public List<String> selectMemberId();
+	
+	@Query(value = "select * from member where id = :id and pw = :pw", nativeQuery = true)
+	public MemberVO loginIdPw(@Param (value="id") String id, @Param (value="pw") String pw);
 }

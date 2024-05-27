@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import com.example.demo.vo.ManagerVO;
 import com.example.demo.vo.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -48,6 +51,8 @@ public class MainController {
 		List<String> selectID = memberRepo.selectID();
 		System.out.println(selectID);
 //		System.out.println("employeeNum >>> " + employeeNum);
+		List<String> member_id = memberRepo.selectMemberId();
+		mav.addObject("member_id", member_id);
 		mav.addObject("employeeNum", employeeNum);
 		mav.setViewName("member/register");
 		return mav;
@@ -111,28 +116,32 @@ public class MainController {
 		return mav;
 	}
 	@RequestMapping(value="/loginController")
-	public ModelAndView loginControl(MemberVO mem, HttpSession session) {
+	public ModelAndView loginControl(HttpServletResponse response, HttpServletRequest request, MemberVO mem, HttpSession session) throws IOException {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(">>>>>>>>>>>>");
-		System.out.println("id: "+ mem.getId() + "    pw: "+mem.getPw());
 		
 		MemberVO dbMem = null;
 		
-		String id = mem.getId();
-		String pw = mem.getPw();
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
 		try {
-			dbMem = memberRepo.getById(id);
+			dbMem = memberRepo.loginIdPw(id, pw);
 			System.out.println("DB: >>"+ dbMem);
 			System.out.println("로그인 완료");
 			session.setAttribute("login", dbMem);
 			mav.setViewName("forward:/");
+			return mav;
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println("로그인 실패");
-			mav.setViewName("forward:/");
+			//일단 더 해야됨(메인페이지 말고 현재 페이지로 다시오게)
+			 String currentUrl = request.getRequestURL().toString();
+		     String queryString = request.getQueryString();
+		        if (queryString != null) {
+		            currentUrl += "?" + queryString;
+		        }
+		        response.sendRedirect(currentUrl);
+		        return null;
 		}
-		return mav;
 	}
 	@RequestMapping(value="mangerLoginController")
 	public ModelAndView mangerLoginController(ManagerVO manager, HttpSession session) {
