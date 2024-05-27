@@ -41,9 +41,12 @@ public class MainController {
 		return mav;
 	}
 	@RequestMapping(value="/register")
-	public ModelAndView register() {
+	public ModelAndView register(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		List<Integer> employeeNum = employeRepo.selectEnployeeNum();
+		
+		List<String> selectID = memberRepo.selectID();
+		System.out.println(selectID);
 //		System.out.println("employeeNum >>> " + employeeNum);
 		mav.addObject("employeeNum", employeeNum);
 		mav.setViewName("member/register");
