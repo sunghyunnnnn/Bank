@@ -116,31 +116,27 @@ public class MainController {
 		return mav;
 	}
 	@RequestMapping(value="/loginController")
-	public ModelAndView loginControl(HttpServletResponse response, HttpServletRequest request, MemberVO mem, HttpSession session) throws IOException {
+	public ModelAndView loginControl(HttpServletResponse response,HttpServletRequest request, MemberVO mem, HttpSession session) throws IOException{
 		ModelAndView mav = new ModelAndView();
 		
 		MemberVO dbMem = null;
 		
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		try {
-			dbMem = memberRepo.loginIdPw(id, pw);
+		dbMem = memberRepo.loginIdPw(id, pw);
+		if(dbMem != null) {
 			System.out.println("DB: >>"+ dbMem);
 			System.out.println("로그인 완료");
 			session.setAttribute("login", dbMem);
 			mav.setViewName("forward:/");
 			return mav;
 			
-		} catch (Exception e) {
+		} else {
 			System.out.println("로그인 실패");
 			//일단 더 해야됨(메인페이지 말고 현재 페이지로 다시오게)
-			 String currentUrl = request.getRequestURL().toString();
-		     String queryString = request.getQueryString();
-		        if (queryString != null) {
-		            currentUrl += "?" + queryString;
-		        }
-		        response.sendRedirect(currentUrl);
-		        return null;
+			mav.setViewName("forward:/");
+			//response.sendRedirect(request.getHeader("referer"));
+			return mav;
 		}
 	}
 	@RequestMapping(value="mangerLoginController")
