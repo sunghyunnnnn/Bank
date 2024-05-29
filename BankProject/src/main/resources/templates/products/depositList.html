@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>여기는 예금페이지~!~!</h1>
+
+<div th:each="list : ${depositVO}">
+	<hr>
+	<a th:href="@{depositProduct(deposit_num=${list.deposit_num},id=${session.login.id})}">
+		<span th:text="'상품명 :' +${list.deposit_name}"></span>
+	</a>
+	<br>
+	<span th:text="'상품기간 :' +${list.create_date}"></span>
+	<br>
+	<span th:text="'최소금액 :' +${list.min_money}"></span>
+	<br>
+	<span th:text="'금리 :' +${list.rate}"></span>
+	<br>
+	<hr>
+</div>
+
+
+</body>
+</html>

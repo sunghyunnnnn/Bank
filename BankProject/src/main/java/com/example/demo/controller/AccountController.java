@@ -128,6 +128,7 @@ public class AccountController {
 		ModelAndView mav = new ModelAndView();
 		String id = request.getParameter("id");
 		List<Map<String, Integer>> accountList = accountrepo.selectAccount2(id);
+		
 		List<String> accountTotal = new ArrayList<>();
 		List<String> accountNum = new ArrayList<>();
 		
