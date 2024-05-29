@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>예금상품 페이지~!~!~</h1>
+	<span>가입대상 : 개인</span>
+	<br>
+	<span>예치방식 : 거치식예금</span>
+	<br>
+	<span th:text = "'금리 : ' + ${deposit.rate} + '%'"></span>
+	<br>
+	<span th:text = "'가입기간 : '+ ${deposit.create_date} + '년'"></span>
+	<br>
+	<form action="depositController" method="post">
+		<input name="deposit_num" th:value="${deposit.deposit_num}" type="hidden">
+		<input type="hidden" name="id" th:value="${session.login.id}"> 
+		<span>계좌선택 >>> </span>
+		<select id="account_select" th:name="account_num">
+			<option value="none"> === 선택 === </option>
+			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}"></option>
+		</select>
+		<br>
+		<span class="total"></span>
+		<br>
+		<input type="text" name = "total" class="myMoney" placeholder="금액 입력" >
+		<button type="submit" onclick="return moneyCk()" class="depositBtn">가입하기</button>
+	</form>
+	<script th:inline="javascript">
+		const accountTotal = [[${accountTotal}]];
+		const depositBtn = document.querySelector(".depositBtn");
+		const account_select = document.querySelector("#account_select");
+		let myMoney = document.querySelector(".myMoney");
+		let total = document.querySelector(".total");
+		
+		let totalMoney;
+		
+		let mCk = false;
+		
+		function moneyCk(){
+			console.log('totalMoney : ',totalMoney, 'myMoney : ', myMoney.value);
+			if(Number(myMoney.value) > Number(totalMoney)){
+				alert('금액 초과!!!');
+				return mCk;
+			}
+			else{
+				mCk = true;
+				return mCk;
+			}
+			
+		}
+		
+		const funcChange = () =>{
+			let selectIndex = account_select.selectedIndex;
+			totalMoney = accountTotal[selectIndex - 1];
+			total.innerText = `총 잔액 : ${accountTotal[selectIndex - 1]}원`;
+		}
+		
+		account_select.addEventListener('change', funcChange);
+	</script>
+</body>
+</html>
