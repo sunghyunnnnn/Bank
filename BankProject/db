@@ -82,6 +82,28 @@ CREATE TABLE deposit_product(
 	FOREIGN KEY (DEPOSIT_NUM) REFERENCES deposit_manager(deposit_num)
 );
 
+------------------------------------------
+CREATE TABLE savings_manager (
+	savings_num		varchar2(6) PRIMARY KEY,
+	savings_name	varchar2(50) NOT NULL,
+	create_date		varchar(5) NOT NULL,
+	min_money		number(10) NOT NULL,
+	rate 			varchar2(3) NOT NULL,
+	fr_or_in		varchar2(2) NOT NULL
+);
+
+CREATE TABLE savings_product (
+	account_num		varchar2(12) PRIMARY KEY,
+	id				varchar2(100),
+	savings_num		varchar2(6),
+	reg_date		DATE,
+	total			number(10),
+	plus_money		number(10),
+	plus_date		DATE,
+	FOREIGN KEY(id) REFERENCES member(id),
+	FOREIGN KEY(savings_num) REFERENCES savings_manager(savings_num)	
+);
+
 ALTER TABLE remit RENAME COLUMN remit_date TO exchage_date;
 ALTER TABLE plus RENAME COLUMN plus_date TO exchage_date;
 ALTER TABLE remit RENAME COLUMN remit_sign TO exchange_sign;
