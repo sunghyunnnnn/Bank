@@ -11,4 +11,5 @@ import com.example.demo.vo.EmployeeVO;
 public interface EmployeeRepo extends JpaRepository<EmployeeVO, Integer>{
 	@Query(value = "select employee_num from employee", nativeQuery = true)
 	public List<Integer> selectEnployeeNum();
+
 }

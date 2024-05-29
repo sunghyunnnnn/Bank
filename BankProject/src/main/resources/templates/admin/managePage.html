@@ -5,7 +5,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 th:text="${session.managerLogin.manager_id}"></h1>
+	<h1><p
+		align = "left"
+		th:text="${managername} + ' 매니저님' ">
+	</p></h1>
+	<a href="savingsManager">적금 상품 등록</a>
 	<a href="managerLogout">로그아웃</a>
 </body>
 </html>

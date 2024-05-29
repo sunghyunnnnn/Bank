@@ -153,6 +153,8 @@ public class MainController {
 			dbManager = managerRepo.getById(id);
 			System.out.println("DB: >>"+ dbManager);
 			System.out.println("로그인 완료");
+			String managername = managerRepo.selectName(id);
+			mav.addObject("managername", managername);
 			session.setAttribute("managerLogin", dbManager);
 			mav.setViewName("admin/managePage");
 			

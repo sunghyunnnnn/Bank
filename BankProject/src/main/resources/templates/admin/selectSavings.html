@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<p th:text=" '상품명: ' + ${savings.savings_name} "></p>
+	<p th:text=" '가입 기간: ' + ${savings.create_date} "></p>
+	<p th:text=" '최소 가입 금액: '  + ${savings.min_money} + '원' "></p>
+	<p th:text=" '이율: ' + ${savings.rate} "></p>
+
+
+</body>
+</html>
