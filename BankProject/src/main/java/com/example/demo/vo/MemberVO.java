@@ -1,12 +1,13 @@
 package com.example.demo.vo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity(name = "member")
 public class MemberVO {
 	@Id
-	private String id; 
+	private String id;
 	private String pw;
 	private String name;
 	private String rrn;

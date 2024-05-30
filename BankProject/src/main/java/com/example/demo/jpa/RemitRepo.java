@@ -19,8 +19,12 @@ public interface RemitRepo extends JpaRepository<RemitVO, Integer>{
 	public String selectMoney();*/
 	
 	@Query(value="update account a set total = total - :exchange_money where account_num=:account_num", nativeQuery = true)
-	public void updateRemit(@Param("exchange_money")int exchange_money, @Param("account_num") String account_num);
+	public void updateRemit(@Param("exchange_money")int exchange_money, @Param("account_num") String account_num);	
 	
-	@Query(value = "select account_num,total from account", nativeQuery = true)
-	public List<Map<String,Integer>> selectNumTotal();
+	@Query(value = "select account_num,total from account where id = :id", nativeQuery = true)
+	public List<Map<String,Integer>> selectNumTotal(@Param(value="id")String id);
+	
+	@Query(value="insert into remit values(remit_seq.nextval, '-', :account, :account_num, :remit_text, :total, sysdate)", nativeQuery = true)
+	public int insertRemit2(@Param("account") String account, @Param("account_num") String account_num,
+							@Param("remit_text") String remit_text, @Param("total") int total);
 }

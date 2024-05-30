@@ -24,4 +24,5 @@ public interface AccountRepo extends JpaRepository<AccountVO, String>{
 	
 	@Query(value="select total from account where account_num=:account_num", nativeQuery = true)
 	public String selectTotal(@Param(value="account_num") String account);
+	
 }
