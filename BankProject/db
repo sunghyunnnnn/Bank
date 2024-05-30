@@ -86,7 +86,7 @@ CREATE TABLE deposit_product(
 CREATE TABLE savings_manager (
 	savings_num		varchar2(6) PRIMARY KEY,
 	savings_name	varchar2(50) NOT NULL,
-	create_date		varchar(5) NOT NULL,
+	create_date		varchar2(5) NOT NULL,
 	min_money		number(10) NOT NULL,
 	rate 			varchar2(3) NOT NULL,
 	fr_or_in		varchar2(2) NOT NULL

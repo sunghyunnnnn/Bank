@@ -18,22 +18,23 @@ import com.example.demo.jpa.AccountRepo;
 import com.example.demo.jpa.DepositProductRepo;
 import com.example.demo.jpa.DepositRepo;
 import com.example.demo.jpa.RemitRepo;
+import com.example.demo.vo.AccountVO;
 import com.example.demo.vo.DepositVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class ProductController {
+	ModelAndView mav = new ModelAndView();
 	
 	@Autowired
 	SavingsManagerRepo smr;
-	ModelAndView mav = new ModelAndView();
-	
+	@Autowired
 	DepositRepo depositRepo;
 	@Autowired
 	AccountRepo accountRepo;
 	@Autowired
-	DepositProductRepo  depositProductRepo;
+	DepositProductRepo depositProductRepo;
 	@Autowired
 	RemitRepo remitRepo;
 	
@@ -42,7 +43,7 @@ public class ProductController {
 	public ModelAndView deposit() {
 		ModelAndView mav = new ModelAndView();
 		List<DepositVO> depositVO =  depositRepo.findAll();
-//		System.out.println(">>> " + depositVO);
+		System.out.println(">>> " + depositVO);
 		mav.addObject("depositVO", depositVO);
 		mav.setViewName("products/depositList");
 		return mav;
@@ -78,12 +79,14 @@ public class ProductController {
 		return mav;
 	}
 	@RequestMapping(value="depositController")
-	public ModelAndView depositController(HttpServletRequest request) {
+	public ModelAndView depositController(HttpServletRequest request, AccountVO acvo) {
 		ModelAndView mav = new ModelAndView();
 		String deposit_num = request.getParameter("deposit_num");
 		String account_num = request.getParameter("account_num");
+		String my_account_num = request.getParameter("my_account_num");
 		String id = request.getParameter("id");
 		String total = request.getParameter("total");
+		accountRepo.save(acvo);
 		int exchange_money = Integer.parseInt(total);
 		
 		try {
@@ -93,12 +96,12 @@ public class ProductController {
 			
 		}
 		try {
-			remitRepo.insertRemit(account_num, "----", "----", exchange_money);
+			remitRepo.insertRemit(my_account_num, "----", "----", exchange_money);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		try {
-			remitRepo.updateRemit(exchange_money, account_num);
+			remitRepo.updateRemit(exchange_money, my_account_num);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
