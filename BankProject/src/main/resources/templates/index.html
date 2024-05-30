@@ -11,6 +11,7 @@
 		th:if="${session.login != null}"
 		th:text="${session.login.name} + '님' ">
 	</p>
+	
 	<a th:if="${session.login != null}" href="logout">로그아웃</a>
 	<a href="register"
 		th:if="${session.login == null}">회원가입</a>
