@@ -1,7 +1,11 @@
 package com.example.demo.vo;
 
+import org.springframework.validation.annotation.Validated;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
 
 @Entity(name="savings_manager")
 public class SavingsManagerVO {

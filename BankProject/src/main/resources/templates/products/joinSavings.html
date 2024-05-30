@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="joinComplete" method="post">
+		계좌번호: <input type="text" name="account_num" id="account" readonly> <br>
+		상품명: <input th:value= " ${savings.savings_name}" readonly> <br>
+		가입 기간: <input th:value=" ${savings.create_date} " readonly> <br>
+		<select th:name="account" id="account_num" >
+			<option value="" selected disabled>계좌 선택</option>
+			<option th:each="account : ${account}"
+					th:value="${account}"
+					th:utext="${account}"></option>
+			</select> <br>
+		가입 금액: <input name="total" type="text" id="savings_money" th:placeholder="'가입 최소금액은 '+${savings.min_money}+'원 입니다.'"> <br>
+		이율: <input th:value=" ${savings.rate} " readonly> <br>
+		<input type="submit" value="가입하기" onclick="return func()">
+	</form>
+	
+	<script th:inline="javascript">
+		let fix = 9;
+		let accountnum = '';
+		let ck = false;
+		for(let i = 0; i < 8; i++){
+			accountnum += Math.floor(Math.random()*10);
+		}
+		const account = `${fix}${accountnum}`;
+		document.getElementById('account').value = account;
+		
+		const account_num=document.querySelector("#account_num")
+		const savings_money=document.querySelector("#savings_money")
+		const account2 = [[${account}]]
+		const total = [[${total}]]
+		
+		const func=() => {
+		let money;		
+			for(let i=0; i<account2.length; i++) {
+				console.log(account_num.value)
+				if(account2[i]===account_num.value) {
+					money = total[i]
+				}
+			}if(money < savings_money.value) {
+				alert("잔액이 부족합니다. 다른 계좌를 선택하세요")
+				return ck;
+			} else {
+				alert("가입되었습니다!")
+				ck = true;
+			}
+		}
+	</script>
+</body>
+</html>

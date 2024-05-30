@@ -65,7 +65,7 @@ public class AccountController {
 		List<String> account = new ArrayList<>();
 		List<String> total = new ArrayList<>();
 		
-		List<Map<String, Integer>> selectNumTotal = remitrepo.selectNumTotal();
+		List<Map<String, Integer>> selectNumTotal = remitrepo.selectNumTotal(id);
 		accountnum = accountrepo.selectAccount(id);
 		//확인용:System.out.println(selectNumTotal.get(0).keySet());
 		for(Map<String, Integer> a : selectNumTotal) {
