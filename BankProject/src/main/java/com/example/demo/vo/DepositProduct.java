@@ -5,12 +5,14 @@ import jakarta.persistence.Id;
 
 @Entity(name="deposit_product")
 public class DepositProduct {
+	
 	@Id
 	private String account_num;
 	private String deposit_num;
 	private String id;
 	private String reg_date;
 	private String total;
+	
 	public String getAccount_num() {
 		return account_num;
 	}

@@ -15,22 +15,13 @@
 </style>
 </head>
 <body>
- 	<form action="createComplete" method="post" th:object="${smv}">
- 		상품 번호: <input type="text" th:field="*{savings_num}"> <br>
- 		 <span th:if="${#fields.hasErrors('savings_num')}" th:errors="*{savings_num}">번호 오류</span> <br>
- 		 상품 이름: <input type="text" th:field="*{savings_name}"> <br>
-        <span th:if="${#fields.hasErrors('savings_name')}" th:errors="*{savings_name}">이름 오류</span> <br>
- 		기간: <input type="text" th:field="*{create_date}"> <br>
-        <span th:if="${#fields.hasErrors('create_date')}" th:errors="*{create_date}">기간 오류</span> <br>
- 		가입 최소 금액: <input type="text" th:field="*{min_money}" > <br>
-        <span th:if="${#fields.hasErrors('min_money')}" th:errors="*{min_money}">금액 오류</span> <br>
- 		이율: <input type="text" th:field="*{rate}" oninput="addPercent()"> <br>
-        <span th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}">이율 오류</span> <br>
- 		적금 유형: <select name="fr_or_in" id="select">
- 					<option value="fr" name="fr">자유 적금</option>
- 					<option value="in" name="in">정기 적금</option>
- 				 </select> <br>
- 		<input type="submit" value="등록" >
+ 	<form action="createDepositComplete" method="post">
+ 		상품 번호: <input type="text" name="deposit_num" id="deposit_num"> <br>
+ 		상품 이름: <input type="text" name="deposit_name" id="deposit_name"> <br>
+ 		기간: <input type="text" name="create_date" id="create_date"> <br>
+ 		가입 최소 금액: <input type="text" name="min_money" id="min_money" oninput="addWon()"> <br>
+ 		이율: <input type="text" name="rate" id="rate" oninput="addPercent()" > <br>
+ 		<input type="submit" value="등록" onclick="save()">
 	</form>
 	
 	<script type="text/javascript">
@@ -67,7 +58,7 @@
          }
 
          input.value = value;
-     } -->
+     }-->
 	</script>
 </body>
 </html>

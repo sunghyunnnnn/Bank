@@ -6,20 +6,29 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.jpa.DepositRepo;
 import com.example.demo.jpa.SavingsManagerRepo;
+import com.example.demo.vo.DepositVO;
 import com.example.demo.vo.SavingsManagerVO;
 
 import ch.qos.logback.core.model.Model;
+import jakarta.validation.Valid;
+
 
 @Controller
 public class ManagerController {
 	
 	@Autowired
 	SavingsManagerRepo smr;
+	@Autowired
+	DepositRepo depositRepo;
 	ModelAndView mav = new ModelAndView();
 	
 	@RequestMapping(value="savingsManager")
@@ -49,16 +58,49 @@ public class ManagerController {
 
 	@RequestMapping(value="createSavings" )
 	public ModelAndView create() {
-		
 		mav.setViewName("admin/createSavings");
 		return mav;
 	}
 	
 	@RequestMapping(value="createComplete")
-	public ModelAndView insert(SavingsManagerVO smv) {
+	public String insert(@Valid @ModelAttribute("smv") SavingsManagerVO smv,  BindingResult binding, ModelAndView mav) {
+		if(binding.hasErrors()) {
+			return "admin/createSavings";
+		}
 		smr.save(smv);
 		//mav.addObject("result", "상품이 등록 되었습니다.");
-		mav.setViewName("redirect:/savingsManager");
+		//mav.setViewName("redirect:/savingsManager");
+		return "redirect:/savingsManager";
+	}
+	
+	@RequestMapping(value="depositManager")
+	public ModelAndView depositManager() {
+		List<DepositVO> list = depositRepo.deposit_list();
+		mav.addObject("list", list);
+		mav.setViewName("admin/depositManager");
+		return mav;
+	}
+	@RequestMapping(value="detailDeposit")
+	public ModelAndView detailDeposit(@RequestParam(name="deposit_num") String num) {
+		System.out.println("+++++++++++++++++++++++++++++");
+		System.out.println(num);
+		Optional<DepositVO> list = depositRepo.findById(num);
+		DepositVO deposit = list.get();
+		System.out.println(">>>>>>>>>>>>>>>"+deposit);
+		mav.addObject("deposit", deposit);
+		mav.setViewName("admin/selectDeposit");
+		return mav;
+	}
+	@RequestMapping(value="createDeposit")
+	public ModelAndView createDeposit() {
+		mav.setViewName("admin/createDeposit");
+		return mav;
+	}
+	@RequestMapping(value="createDepositComplete")
+	public ModelAndView createDepositComplete(DepositVO depositVO) {
+		depositRepo.save(depositVO);
+		//mav.addObject("result", "상품이 등록 되었습니다.");
+		mav.setViewName("redirect:/depositManager");
 		return mav;
 	}
 }
