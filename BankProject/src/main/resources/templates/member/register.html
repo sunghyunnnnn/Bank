@@ -78,6 +78,7 @@
 		var regId = /^[A-Za-z0-9]+$/g;
 		
 		const funcIdCk = () =>{
+			idDuplication = true;
 			if(registerid.value.length <= 4){
 				registerid.value = '';
 				idCk.innerText = '아이디는 5글자 이상입니다르릉';
