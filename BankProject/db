@@ -121,4 +121,19 @@ CREATE TABLE product_manager(
 	RATE VARCHAR2(3)
 );
 
+--------------------6/3 새로 추가------------------
+DROP TABLE ACCOUNT CASCADE CONSTRAINTS;
+
+CREATE TABLE ACCOUNT(
+	account_num	varchar2(12)	PRIMARY KEY,
+	id 			varchar2(100),
+	product_num	varchar2(5),
+	account_pw	NUMBER(6) NOT NULL,
+	reg_date 	DATE DEFAULT sysdate,
+	total 		NUMBER(10) NOT NULL,
+	dormant_date	number(1) DEFAULT 0,
+	FOREIGN KEY (id) REFERENCES member(id),
+	FOREIGN KEY (product_num) REFERENCES product_manager(product_num)
+);
+
 

@@ -6,7 +6,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,7 @@ import com.example.demo.jpa.ProductRepo;
 import com.example.demo.vo.ProductManagerVO;
 
 import ch.qos.logback.core.model.Model;
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -61,14 +64,23 @@ public class ManagerController {
 
 	@RequestMapping(value="createProduct" )
 	public ModelAndView create() {
+		mav.setViewName("admin/createSavings");
 		mav.setViewName("admin/createProduct");
 		return mav;
 	}
 	
+	/*@RequestMapping(value="createComplete")
+	public String insert(@Valid @ModelAttribute("smv") SavingsManagerVO smv,  BindingResult binding, ModelAndView mav) {
+		if(binding.hasErrors()) {
+			return "admin/createSavings";
+		}
+		smr.save(smv);*/
+		
 	@RequestMapping(value="createProductComplete")
 	public ModelAndView insert(ProductManagerVO pmvo) {
 		pr.save(pmvo);
 		//mav.addObject("result", "상품이 등록 되었습니다.");
+		//mav.setViewName("redirect:/savingsManager");
 		mav.setViewName("admin/managePage");
 		return mav;
 	}
