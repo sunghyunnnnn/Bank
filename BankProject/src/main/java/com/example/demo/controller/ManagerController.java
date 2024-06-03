@@ -81,6 +81,7 @@ public class ManagerController {
 //		mav.setViewName("admin/depositManager");
 //		return mav;
 //	}
+	
 	@RequestMapping(value="detailDeposit")
 	public ModelAndView detailDeposit(@RequestParam(name="product_num") String num) {
 		System.out.println("+++++++++++++++++++++++++++++");
