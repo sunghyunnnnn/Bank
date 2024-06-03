@@ -110,3 +110,15 @@ ALTER TABLE remit RENAME COLUMN remit_sign TO exchange_sign;
 ALTER TABLE plus RENAME COLUMN plus_sign TO exchange_sign;
 ALTER TABLE remit RENAME COLUMN remit_money TO exchange_money;
 ALTER TABLE plus RENAME COLUMN plus_money TO exchange_money;
+
+-----------------------------------------
+여기만들기
+CREATE TABLE product_manager(
+	PRODUCT_NUM	VARCHAR2(5) PRIMARY key,
+	DEPOSIT_NAME VARCHAR2(50),
+	CREATE_DATE	NUMBER(2),
+	MIN_MONEY NUMBER(10),
+	RATE VARCHAR2(3)
+);
+
+

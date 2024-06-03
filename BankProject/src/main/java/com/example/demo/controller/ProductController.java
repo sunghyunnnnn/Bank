@@ -12,16 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.jpa.SavingsManagerRepo;
-import com.example.demo.jpa.SavingsProductRepo;
-import com.example.demo.vo.SavingsManagerVO;
+
 import com.example.demo.jpa.AccountRepo;
-import com.example.demo.jpa.DepositProductRepo;
-import com.example.demo.jpa.DepositRepo;
+
+import com.example.demo.jpa.ProductRepo;
 import com.example.demo.jpa.RemitRepo;
 import com.example.demo.vo.AccountVO;
-import com.example.demo.vo.DepositVO;
 import com.example.demo.vo.MemberVO;
+import com.example.demo.vo.ProductManagerVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,23 +29,19 @@ public class ProductController {
 	ModelAndView mav = new ModelAndView();
 	
 	@Autowired
-	SavingsManagerRepo smr;
-	@Autowired
-	DepositRepo depositRepo;
-	@Autowired
 	AccountRepo accountRepo;
-	@Autowired
-	DepositProductRepo depositProductRepo;
+
 	@Autowired
 	RemitRepo remitRepo;
+	
 	@Autowired
-	SavingsProductRepo spr;
+	ProductRepo pr;
 	
 	
 	@RequestMapping(value="/depositList")
 	public ModelAndView deposit() {
 		ModelAndView mav = new ModelAndView();
-		List<DepositVO> depositVO =  depositRepo.findAll();
+		List<ProductManagerVO> depositVO =  pr.showDeposit();
 		System.out.println(">>> " + depositVO);
 		mav.addObject("depositVO", depositVO);
 		mav.setViewName("products/depositList");
@@ -55,7 +49,7 @@ public class ProductController {
 	}
 	@RequestMapping(value="/savings")
 	public ModelAndView savings() {
-		List<SavingsManagerVO> list = smr.savings_list();
+		List<ProductManagerVO> list = pr.showSavings();
 		mav.addObject("list", list);
 		mav.setViewName("products/savings");
 		return mav;
@@ -75,7 +69,7 @@ public class ProductController {
 		}
 		
 		ModelAndView mav = new ModelAndView();
-		DepositVO deposit = depositRepo.getById(deposit_num);
+		ProductManagerVO deposit = pr.getById(deposit_num);
 		
 		mav.addObject("accountNum",accountNum);
 		mav.addObject("accountTotal", accountTotal);
@@ -94,23 +88,23 @@ public class ProductController {
 		accountRepo.save(acvo);
 		int exchange_money = Integer.parseInt(total);
 		
-		try {
-			depositProductRepo.insertDeposit(account_num, deposit_num, id, total);
-			
-		} catch (Exception e) {
-			
-		}
-		try {
-			remitRepo.insertRemit(my_account_num, "----", "----", exchange_money);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		try {
-			remitRepo.updateRemit(exchange_money, my_account_num);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+//		try {
+//			depositProductRepo.insertDeposit(account_num, deposit_num, id, total);
+//			
+//		} catch (Exception e) {
+//			
+//		}
+//		try {
+//			remitRepo.insertRemit(my_account_num, "----", "----", exchange_money);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		try {
+//			remitRepo.updateRemit(exchange_money, my_account_num);
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
 		mav.setViewName("index");
 		return mav;
 		
@@ -119,9 +113,9 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="detailProduct")
-	public ModelAndView detail(@RequestParam(name="savings_num") String num, HttpSession session) {
-		Optional<SavingsManagerVO> list = smr.findById(num);
-		SavingsManagerVO savings = list.get();
+	public ModelAndView detail(@RequestParam(name="product_num") String num, HttpSession session) {
+		Optional<ProductManagerVO> list = pr.findById(num);
+		ProductManagerVO savings = list.get();
 		System.out.println(">>>>>>>>>>>>>>>"+savings);
 		//DB에 저장하기 위해 session으로 넘겨줌.
 		session.setAttribute("savings", savings);
@@ -152,29 +146,29 @@ public class ProductController {
 	@RequestMapping(value="joinComplete")
 	public String join(HttpServletRequest request, HttpSession session) {
 		MemberVO getid = (MemberVO) session.getAttribute("login");
-		SavingsManagerVO num = (SavingsManagerVO) session.getAttribute("savings");
+		ProductManagerVO num = (ProductManagerVO) session.getAttribute("savings");
 		//넣을 값
 		String account_num = request.getParameter("account_num");
 		String account = request.getParameter("account");
 		int total = Integer.parseInt(request.getParameter("total"));
-		String savings_num = num.getSavings_num();
+		String savings_num = num.getProduct_num();
 		String id = getid.getId();
 		System.out.println(total +">>>>>>>>>"+ account);
-		try {
-			spr.updateSavings(total, account);			
-		} catch (Exception e) {
-			System.out.println("반영되긴 했는데,,,,");
-		}
-		try {
-			remitRepo.insertRemit2(account, account_num, "적금", total);
-		} catch (Exception e) {
-		}
-		try {			
-			String i = spr.join(account_num, id, savings_num, total);
-			System.out.println(i);
-		}catch (Exception e) {
-			System.out.println("나오지 말아");
-		}
+//		try {
+//			spr.updateSavings(total, account);			
+//		} catch (Exception e) {
+//			System.out.println("반영되긴 했는데,,,,");
+//		}
+//		try {
+//			remitRepo.insertRemit2(account, account_num, "적금", total);
+//		} catch (Exception e) {
+//		}
+//		try {			
+//			String i = spr.join(account_num, id, savings_num, total);
+//			System.out.println(i);
+//		}catch (Exception e) {
+//			System.out.println("나오지 말아");
+//		}
 		return "redirect:/savings?id="+id;
 	}
 	

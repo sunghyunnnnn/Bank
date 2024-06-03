@@ -100,10 +100,6 @@ public class AccountController {
 			} catch (Exception e) {
 			//왜 오류가 날까요?
 			}
-			
-			int i = remitrepo.insertRemit(account_num, remit_account, remit_text, remit_money);
-			
-			
 			try {
 				remitrepo.updateRemit(remit_money,account_num);
 				System.out.println("원래 나와야하는 부분");

@@ -7,7 +7,7 @@
 <body>
 	<form action="joinComplete" method="post">
 		계좌번호: <input type="text" name="account_num" id="account" readonly> <br>
-		상품명: <input th:value= " ${savings.savings_name}" readonly> <br>
+		상품명: <input th:value= " ${savings.product_name}" readonly> <br>
 		가입 기간: <input th:value=" ${savings.create_date} " readonly> <br>
 		<select th:name="account" id="account_num" >
 			<option value="" selected disabled>계좌 선택</option>

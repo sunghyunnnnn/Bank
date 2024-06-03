@@ -9,8 +9,8 @@
 	<div th:each="list:${list}">
 		<div>
 				적금<br>
-			<a th:href="@{/detailProduct(savings_num=${list.savings_num})}"
-				th:text=${list.savings_name}>
+			<a th:href="@{/detailProduct(product_num=${list.product_num})}"
+				th:text=${list.product_name}>
 			</a>
 		</div> <br>
 		<span>

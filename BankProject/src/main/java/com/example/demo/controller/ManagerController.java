@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.jpa.DepositRepo;
-import com.example.demo.jpa.SavingsManagerRepo;
-import com.example.demo.vo.DepositVO;
-import com.example.demo.vo.SavingsManagerVO;
+import com.example.demo.jpa.ProductRepo;
+
+import com.example.demo.vo.ProductManagerVO;
 
 import ch.qos.logback.core.model.Model;
 
@@ -23,25 +22,32 @@ import ch.qos.logback.core.model.Model;
 public class ManagerController {
 	
 	@Autowired
-	SavingsManagerRepo smr;
-	@Autowired
-	DepositRepo depositRepo;
+	ProductRepo pr;
+	
 	ModelAndView mav = new ModelAndView();
 	
 	@RequestMapping(value="savingsManager")
 	public ModelAndView savings() {
-		List<SavingsManagerVO> list = smr.savings_list();
+		List<ProductManagerVO> list = pr.showSavings();
 		mav.addObject("list", list);
 		mav.setViewName("admin/savingsManager");
 		return mav;
 	}
 	
+	@RequestMapping(value="depositManager")
+	public ModelAndView deposit() {
+		List<ProductManagerVO> list = pr.showDeposit();
+		mav.addObject("list", list);
+		mav.setViewName("admin/depositManager");
+		return mav;
+	}
+	
 	@RequestMapping(value="detailSavings")
-	public ModelAndView detail(@RequestParam(name="savings_num") String num) {
+	public ModelAndView detail(@RequestParam(name="product_num") String num) {
 		System.out.println("+++++++++++++++++++++++++++++");
 		System.out.println(num);
-		Optional<SavingsManagerVO> list = smr.findById(num);
-		SavingsManagerVO savings = list.get();
+		Optional<ProductManagerVO> list = pr.findById(num);
+		ProductManagerVO savings = list.get();
 		System.out.println(">>>>>>>>>>>>>>>"+savings);
 		mav.addObject("savings", savings);
 		mav.setViewName("admin/selectSavings");
@@ -53,49 +59,37 @@ public class ManagerController {
 		return mav;
 	}
 
-	@RequestMapping(value="createSavings" )
+	@RequestMapping(value="createProduct" )
 	public ModelAndView create() {
-		
-		mav.setViewName("admin/createSavings");
+		mav.setViewName("admin/createProduct");
 		return mav;
 	}
 	
-	@RequestMapping(value="createComplete")
-	public ModelAndView insert(SavingsManagerVO smv) {
-		smr.save(smv);
+	@RequestMapping(value="createProductComplete")
+	public ModelAndView insert(ProductManagerVO pmvo) {
+		pr.save(pmvo);
 		//mav.addObject("result", "상품이 등록 되었습니다.");
-		mav.setViewName("redirect:/savingsManager");
+		mav.setViewName("admin/managePage");
 		return mav;
 	}
 	
-	@RequestMapping(value="depositManager")
-	public ModelAndView depositManager() {
-		List<DepositVO> list = depositRepo.deposit_list();
-		mav.addObject("list", list);
-		mav.setViewName("admin/depositManager");
-		return mav;
-	}
+//	@RequestMapping(value="depositManager")
+//	public ModelAndView depositManager() {
+//		
+//		List<ProductManagerVO> list = pr.showDeposit();
+//		mav.addObject("list", list);
+//		mav.setViewName("admin/depositManager");
+//		return mav;
+//	}
 	@RequestMapping(value="detailDeposit")
-	public ModelAndView detailDeposit(@RequestParam(name="deposit_num") String num) {
+	public ModelAndView detailDeposit(@RequestParam(name="product_num") String num) {
 		System.out.println("+++++++++++++++++++++++++++++");
 		System.out.println(num);
-		Optional<DepositVO> list = depositRepo.findById(num);
-		DepositVO deposit = list.get();
+		Optional<ProductManagerVO> list = pr.findById(num);
+		ProductManagerVO deposit = list.get();
 		System.out.println(">>>>>>>>>>>>>>>"+deposit);
 		mav.addObject("deposit", deposit);
 		mav.setViewName("admin/selectDeposit");
-		return mav;
-	}
-	@RequestMapping(value="createDeposit")
-	public ModelAndView createDeposit() {
-		mav.setViewName("admin/createDeposit");
-		return mav;
-	}
-	@RequestMapping(value="createDepositComplete")
-	public ModelAndView createDepositComplete(DepositVO depositVO) {
-		depositRepo.save(depositVO);
-		//mav.addObject("result", "상품이 등록 되었습니다.");
-		mav.setViewName("redirect:/depositManager");
 		return mav;
 	}
 }
