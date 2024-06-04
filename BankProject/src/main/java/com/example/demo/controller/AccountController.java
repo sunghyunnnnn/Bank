@@ -47,8 +47,21 @@ public class AccountController {
 
 	@RequestMapping(value="accountComplete")
 	public ModelAndView accountComplete(AccountVO acvo) {
-			
-		accountrepo.save(acvo);
+		String account_num = acvo.getAccount_num();
+		String id = acvo.getId();
+		int account_pw = acvo.getAccount_pw();
+		int total = acvo.getTotal();
+		
+		try {
+			accountrepo.insertAccount(account_num, id, account_pw, total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			plusRepo.insertPlus(account_num, total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		mav.addObject("result","계좌 개설 완료");
 		mav.setViewName("account/accountComplete");

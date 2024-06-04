@@ -15,7 +15,7 @@
 	<span th:text = "'가입기간 : '+ ${deposit.create_date} + '년'"></span>
 	<br>
 	<form action="depositController" method="post">
-		<input name="deposit_num" th:value="${deposit.deposit_num}" type="hidden">
+		<input name="product_num" th:value="${deposit.product_num}" type="hidden">
 		<input type="hidden" name="id" th:value="${session.login.id}"> 
 		<span>계좌선택 >>> </span>
 		<select id="account_select" th:name="my_account_num">

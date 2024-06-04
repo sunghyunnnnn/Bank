@@ -5,7 +5,6 @@ import jakarta.persistence.Id;
 
 @Entity(name="product_manager")
 public class ProductManagerVO {
-	
 	@Id
 	private String product_num;
 	private String deposit_name;

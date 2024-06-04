@@ -9,7 +9,7 @@
 
 <div th:each="list : ${depositVO}">
 	<hr>
-	<a th:href="@{depositProduct(deposit_num=${list.deposit_num},id=${session.login.id})}">
+	<a th:href="@{depositProduct(product_num=${list.product_num},id=${session.login.id})}">
 		<span th:text="'상품명 :' +${list.deposit_name}"></span>
 	</a>
 	<br>

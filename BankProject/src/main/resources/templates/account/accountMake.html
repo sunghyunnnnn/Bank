@@ -11,6 +11,8 @@
 				<input type="hidden" name=id th:value="${session.login.id}">
 		계좌번호 	<input type="text" name="account_num" id="account" readonly>
 				<br>
+		계좌 비밀번호 <input type="password" name="account_pw" id="account_pw">
+		<br>
 		금액 	<input type="text" name="total"><br>
 		<input type="submit" value="개설" onclick="func()">
 	</form>
@@ -23,13 +25,7 @@
 		}
 		const account = `${fix}${accountnum}`;
 		document.getElementById('account').value = account;
-		
-<<<<<<< HEAD
-		<!--const func=()=> {
-			if 
-		}-->
-=======
->>>>>>> branch 'master' of https://github.com/hkw2304/BankProject.git
+	
 	</script>
 </body>
 </html>

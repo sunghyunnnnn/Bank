@@ -10,8 +10,8 @@ import org.springframework.data.repository.query.Param;
 import com.example.demo.vo.AccountVO;
 
 public interface AccountRepo extends JpaRepository<AccountVO, String>{
-	@Query(value="insert into account(total) values(:na)", nativeQuery = true)
-	public void insertAccount(@Param(value="na") String money);
+	@Query(value="insert into account(account_num, id, account_pw, total) values(:account_num, :id, :account_pw, :total)", nativeQuery = true)
+	public void insertAccount(@Param(value="account_num") String account_num, @Param(value="id") String id,@Param(value="account_pw") int account_pw,@Param(value="total") int total);
 	
 	@Query(value="select account_num from account where id=:na", nativeQuery = true)
 	public List<String> selectAccount(@Param(value="na") String id);

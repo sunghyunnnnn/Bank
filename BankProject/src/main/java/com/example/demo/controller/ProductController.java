@@ -56,7 +56,7 @@ public class ProductController {
 	}
 	@RequestMapping(value="/depositProduct")
 	public ModelAndView depositProduct(HttpServletRequest request) {
-		String deposit_num = request.getParameter("deposit_num");
+		String product_num = request.getParameter("product_num");
 		String id = request.getParameter("id");
 		List<Map<String, Integer>> accountList = accountRepo.selectAccount2(id);
 		
@@ -69,7 +69,7 @@ public class ProductController {
 		}
 		
 		ModelAndView mav = new ModelAndView();
-		ProductManagerVO deposit = pr.getById(deposit_num);
+		ProductManagerVO deposit = pr.getById(product_num);
 		
 		mav.addObject("accountNum",accountNum);
 		mav.addObject("accountTotal", accountTotal);
