@@ -11,7 +11,8 @@ import com.example.demo.vo.AccountVO;
 
 public interface AccountRepo extends JpaRepository<AccountVO, String>{
 	@Query(value="insert into account(account_num, id, account_pw, total) values(:account_num, :id, :account_pw, :total)", nativeQuery = true)
-	public void insertAccount(@Param(value="account_num") String account_num, @Param(value="id") String id,@Param(value="account_pw") int account_pw,@Param(value="total") int total);
+	public void insertAccount(@Param(value="account_num") String account_num, @Param(value="id") String id, 
+							  @Param(value="account_pw") int account_pw, @Param(value="total") int total);
 	
 	@Query(value="select account_num from account where id=:na", nativeQuery = true)
 	public List<String> selectAccount(@Param(value="na") String id);
@@ -28,4 +29,9 @@ public interface AccountRepo extends JpaRepository<AccountVO, String>{
 	@Query(value="update account set product_num = :product_num, total = total - :money where account_num = :account_num", nativeQuery = true)
 	public void updateAccount(@Param(value="product_num") String product_num,@Param(value="money") int money ,@Param(value="account_num") String account_num);
 	
+	@Query(value="select count(*) from account where account_num=:account_num", nativeQuery = true)
+	public int selectAccountRemit(@Param(value="account_num") String account);
+	
+	@Query(value ="select account_num from account where account_num=:account_num", nativeQuery = true)
+	public String selectAccountNum(@Param(value="account_num") String account);
 }
