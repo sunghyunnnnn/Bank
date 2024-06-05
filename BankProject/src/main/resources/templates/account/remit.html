@@ -13,30 +13,66 @@
 					th:value="${account}"
 					th:utext="${account}"></option>
 		</select><br>
-		계좌 번호 입력		<input type="text" name="remit_account"><br> <!-- 나중에 숫자만 입력할 수 있게 -->
-		받는 분에게 표시	<input type="text" name="remit_text"><br>
+		계좌 번호 입력		<input type="text" name="remit_account" id="remit_account"> <button type="button" onclick="ckNum()">계좌 확인</button>  <br> <!-- 나중에 숫자만 입력할 수 있게 -->
+		<!-- <input type="text" name="memberName"> -----님에게 <br> -->
 		송금 금액			<input type="text" name="remit_money" class="remit_money"><br> <!-- 나중에 숫자만 입력할 수 있게 -->
-		<input type="submit" value="송금하기" onclick="func()">
+		받는 분에게 표시	<input type="text" name="remit_text"><br>
+		<input type="submit" value="송금하기" onclick="return func()">
+		
 	</form>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script th:inline="javascript">
+	let check = false;
+	
+	function ckNum(){
+		let accountNum = $("#remit_account").val();
+		
+		$.ajax({
+			type: "get",
+			url: "/accountCheck",
+			data : {
+				accountNum : accountNum
+			},
+			success : function(data) {
+				if(data == 1) {
+				alert('계좌 확인 완료');
+				check = true;
+			}else {
+				alert('다시 입력 해주세요')
+				check = false;
+				}
+			}
+		})
+	}
+	
 		const account_num=document.querySelector("#account_num")
 		const remit_money=document.querySelector(".remit_money")
 		const account=[[${account}]]
-		const total = [[${total}]]
+		const total = [[${total}]]		
 		
-		const func=() => {
-		let money;		
+		function func() {
+			
+			let money;		
 			for(let i=0; i<account.length; i++) {
 				console.log(account_num.value)
 				if(account[i]===account_num.value) {
 					money = total[i]
 				}
-			}if(money < remit_money.value) {
+			}if (!check) {
+				alert('계좌를 확인해주세요.')
+				return false;
+			}if(parseInt(money) < parseInt(remit_money.value)) {
 				alert("잔액이 부족합니다. 다른 계좌를 선택하세요")
-			}		
+				/*alert(typeof remit_money.value)
+				alert(typeof money)*/
+				return false;
+			}else {
+				return true;
+			}
 		}
 		
+
 	</script>
 	<!-- 나중에 해야할 것 계좌 + 계좌 별명-->
 

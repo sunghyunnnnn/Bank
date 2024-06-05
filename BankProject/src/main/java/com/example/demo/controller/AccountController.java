@@ -7,7 +7,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.jpa.AccountRepo;
@@ -31,7 +34,7 @@ public class AccountController {
 	@Autowired
 	AccountRepo accountrepo;
 	@Autowired
-	PlusRepo plusRepo;
+	PlusRepo plusrepo;
 	@Autowired
 	RemitRepo remitrepo;
 	
@@ -58,7 +61,7 @@ public class AccountController {
 			// TODO: handle exception
 		}
 		try {
-			plusRepo.insertPlus(account_num, total);
+			plusrepo.insertPlus(account_num, total);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -97,21 +100,35 @@ public class AccountController {
 		return mav;
 	}
 	
-	@RequestMapping(value="remitComplete")
-	public ModelAndView remitComplete(HttpServletRequest request, RemitVO remitvo, HttpServletResponse response) throws IOException {
+	@ResponseBody
+	@RequestMapping("/accountCheck")
+	public int check(@RequestParam("accountNum") String accountNum) throws Exception{
+		int i = accountrepo.selectAccountRemit(accountNum);
+		
+		if(i == 1) {
+			return 1;
+		}else {
+			return 0;
+		}
+
+	}
+	
+	@RequestMapping(value="remitComplete") //송금, 입금 모두 다 있음.
+	public ModelAndView remitComplete(HttpServletRequest request, RemitVO remitvo, HttpServletResponse response, PlusVO plusvo) throws IOException {
 		
 		String account_num = request.getParameter("account_num");
 		String total = accountrepo.selectTotal(account_num);
 		System.out.println(account_num);
-		String remit_account = request.getParameter("remit_account");
-		String remit_text = request.getParameter("remit_text");
-		int remit_money = Integer.parseInt(request.getParameter("remit_money"));
+		String remit_account = request.getParameter("remit_account"); //송금 받는 계좌 = 입금 계좌
+		String remit_text = request.getParameter("remit_text"); //계좌 소유주 or 송금 내역 = 입금한 사람 이름 or 입금 한 내역
+		int remit_money = Integer.parseInt(request.getParameter("remit_money")); //송금 금액 = 입금 금액
 		
-		if(Integer.parseInt(total) > remit_money) {
+		//if(Integer.parseInt(total) > remit_money) {
 			try {
 				int i = remitrepo.insertRemit(account_num, remit_account, remit_text, remit_money);
 			} catch (Exception e) {
 			//왜 오류가 날까요?
+				System.out.println("송금 완료");
 			}
 			try {
 				remitrepo.updateRemit(remit_money,account_num);
@@ -119,15 +136,25 @@ public class AccountController {
 			} catch (Exception e) {
 				//오류남
 				System.out.println("되면 안되는데;;");
-			} 
+			}
+			try {
+				plusrepo.insertRemitPlus(remit_account, remit_text, remit_money);
+			} catch (Exception e) {
+				System.out.println("입금 완료");
+			}
+			try {
+				plusrepo.updatePlus(remit_money, remit_account);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			mav.addObject("result","송금완료");
 			mav.setViewName("account/remitComplete");
 			return mav;
-		} else {
+		} /*else {
 			response.sendRedirect(request.getHeader("referer"));
 			return mav;
 			} 
-		} 
+		}    html에서 해줘서 삭제*/ 
 		
 		//String money = remitrepo.selectMoney();
 		//System.out.println(total);
@@ -144,7 +171,7 @@ public class AccountController {
 		List<String> accountTotal = new ArrayList<>();
 		List<String> accountNum = new ArrayList<>();
 		
-		List<PlusVO> plusList =  plusRepo.findAll();
+		List<PlusVO> plusList =  plusrepo.findAll();
 		List<RemitVO> remitList = remitrepo.findAll();
 		
 		for(Map<String, Integer> a : accountList) {
@@ -159,4 +186,5 @@ public class AccountController {
 		mav.setViewName("account/searchAccount");
 		return mav;
 	}
+	
 }

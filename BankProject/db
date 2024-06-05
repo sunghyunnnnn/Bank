@@ -136,4 +136,12 @@ CREATE TABLE ACCOUNT(
 	FOREIGN KEY (product_num) REFERENCES product_manager(product_num)
 );
 
+------------------6/4 새로추가 ---------------------
+ALTER TABLE REMIT ADD CONSTRAINT foreignAccount FOREIGN KEY(account_num) REFERENCES ACCOUNT(ACCOUNT_NUM); 
+ALTER TABLE PLUS  ADD CONSTRAINT foreignPlus FOREIGN KEY(account_num) REFERENCES ACCOUNT(ACCOUNT_NUM);
+--외래키 지정해주는거임 remit안에 값 있으면 다 지우고 해야댐
+
+------------------6/5 새로추가 ---------------------
+ALTER TABLE HR.PLUS MODIFY PLUS_TEXT VARCHAR2(100);
+--plus테이블에 text값 modify함
 
