@@ -80,35 +80,21 @@ public class ProductController {
 	@RequestMapping(value="depositController")
 	public ModelAndView depositController(HttpServletRequest request, AccountVO acvo) {
 		ModelAndView mav = new ModelAndView();
-		String deposit_num = request.getParameter("deposit_num");
-		String account_num = request.getParameter("account_num");
-		String my_account_num = request.getParameter("my_account_num");
-		String id = request.getParameter("id");
-		String total = request.getParameter("total");
-		accountRepo.save(acvo);
-		int exchange_money = Integer.parseInt(total);
-		
-//		try {
-//			depositProductRepo.insertDeposit(account_num, deposit_num, id, total);
-//			
-//		} catch (Exception e) {
-//			
-//		}
-//		try {
-//			remitRepo.insertRemit(my_account_num, "----", "----", exchange_money);
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		try {
-//			remitRepo.updateRemit(exchange_money, my_account_num);
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
+
+	
+		try {			
+			accountRepo.updateAccount(acvo.getProduct_num(), acvo.getTotal(), acvo.getAccount_num());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {			
+			remitRepo.insertRemit(acvo.getAccount_num(), "----", "----", acvo.getTotal());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		mav.setViewName("index");
 		return mav;
-		
-		
+	
 		
 	}
 	
@@ -144,34 +130,22 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="joinComplete")
-	public String join(HttpServletRequest request, HttpSession session) {
+	public String join(HttpServletRequest request, HttpSession session, AccountVO acvo) {
+		
 		MemberVO getid = (MemberVO) session.getAttribute("login");
-		ProductManagerVO num = (ProductManagerVO) session.getAttribute("savings");
-		//넣을 값
-		String account_num = request.getParameter("account_num");
-		String account = request.getParameter("account");
-		int total = Integer.parseInt(request.getParameter("total"));
-		String savings_num = num.getProduct_num();
+
 		String id = getid.getId();
-		System.out.println(total +">>>>>>>>>"+ account);
-//		try {
-//			spr.updateSavings(total, account);			
-//		} catch (Exception e) {
-//			System.out.println("반영되긴 했는데,,,,");
-//		}
-//		try {
-//			remitRepo.insertRemit2(account, account_num, "적금", total);
-//		} catch (Exception e) {
-//		}
-//		try {			
-//			String i = spr.join(account_num, id, savings_num, total);
-//			System.out.println(i);
-//		}catch (Exception e) {
-//			System.out.println("나오지 말아");
-//		}
+		
+		try {			
+			accountRepo.updateAccount(acvo.getProduct_num(), acvo.getTotal(), acvo.getAccount_num());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {			
+			remitRepo.insertRemit(acvo.getAccount_num(), "----", "----", acvo.getTotal());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return "redirect:/savings?id="+id;
 	}
-	
-	
-	
 }

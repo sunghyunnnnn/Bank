@@ -6,11 +6,12 @@
 </head>
 <body>
 	<h1>여기는 적금페이지~!~!~</h1>
+	<button type="button" onclick="location.href='/'">뒤로가기</button>
 	<div th:each="list:${list}">
 		<div>
 				적금<br>
 			<a th:href="@{/detailProduct(product_num=${list.product_num})}"
-				th:text=${list.product_name}>
+				th:text=${list.deposit_name}>
 			</a>
 		</div> <br>
 		<span>

@@ -1,5 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <head>
 	<meta http-equiv="x-ua-compatible" content="IE=edge">
@@ -334,10 +333,9 @@
 
 </div>
 <div class="userAndlogout">
-	<span
-		th:if="${session.login != null}"
-		th:text="${session.login.name} + '님' ">
-	</span>
+	<a th:if="${session.login != null}" th:href="@{mypage(id=${session.login.id})}">
+		<span th:text="${session.login.name} + '님' "></span>
+	</a>
 	<span><a th:if="${session.login != null}" href="logout">로그아웃</a></span>
 </div>				
 					<div class="register_login_section">

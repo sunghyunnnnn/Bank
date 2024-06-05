@@ -179,5 +179,13 @@ public class MainController {
 		mav.setViewName("forward:/");
 		return mav;
 	}
+	@RequestMapping(value="/mypage")
+	public ModelAndView mypage(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String id = request.getParameter("id");
+		System.out.println(">>>>" + id);
+		mav.setViewName("member/mypage");
+		return mav;
+	}
 	
 }

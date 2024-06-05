@@ -15,9 +15,6 @@ public interface RemitRepo extends JpaRepository<RemitVO, Integer>{
 	public int insertRemit(@Param("account_num") String account_num, @Param("remit_account") String remit_account,
 							@Param("remit_text") String remit_text, @Param("exchange_money") int exchange_money);
 	
-	/*@Query(value="select remit_money from remit where num = (select max(num) from remit)", nativeQuery = true)
-	public String selectMoney();*/
-	
 	@Query(value="update account a set total = total - :exchange_money where account_num=:account_num", nativeQuery = true)
 	public void updateRemit(@Param("exchange_money")int exchange_money, @Param("account_num") String account_num);	
 	

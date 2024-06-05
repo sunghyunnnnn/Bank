@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>여기는 예금페이지~!~!</h1>
-
+<button type="button" onclick="location.href='/'">뒤로가기</button>
 <div th:each="list : ${depositVO}">
 	<hr>
 	<a th:href="@{depositProduct(product_num=${list.product_num},id=${session.login.id})}">

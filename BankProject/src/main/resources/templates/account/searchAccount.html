@@ -10,11 +10,13 @@
 			<option value="none"> === 선택 === </option>
 			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}"></option>
 		</select>
+		<button type="button" onclick="location.href='/'">뒤로가기</button>
 		<br>
 		<span class="total"></span>
 		<br>
 		<div class="accountList">
 		</div>
+		
 		
 	<script th:inline="javascript">
 		//var userVal = document.getElementById("mySelect1").selectedIndex;
