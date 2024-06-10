@@ -14,7 +14,7 @@
 					th:utext="${account}"></option>
 		</select><br>
 		계좌 번호 입력		<input type="text" name="remit_account" id="remit_account"> <button type="button" onclick="ckNum()">계좌 확인</button>  <br> <!-- 나중에 숫자만 입력할 수 있게 -->
-		<!-- <input type="text" name="memberName"> -----님에게 <br> -->
+		<input type="text" name="memberName" id="name" readonly>님에게<br>
 		송금 금액			<input type="text" name="remit_money" class="remit_money"><br> <!-- 나중에 숫자만 입력할 수 있게 -->
 		받는 분에게 표시	<input type="text" name="remit_text"><br>
 		<input type="submit" value="송금하기" onclick="return func()">
@@ -24,27 +24,38 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script th:inline="javascript">
 	let check = false;
+	let name = "";
+	const nameId = document.querySelector("#name");
 	
 	function ckNum(){
-		let accountNum = $("#remit_account").val();
-		
-		$.ajax({
+		let remitAccount = $("#remit_account").val();
+			$.ajax({
 			type: "get",
-			url: "/accountCheck",
+			url: "/checkAccount",
 			data : {
-				accountNum : accountNum
+				remitAccount : remitAccount
 			},
+			datatype: "json",
 			success : function(data) {
-				if(data == 1) {
+				if(data.status=="1") {
 				alert('계좌 확인 완료');
-				check = true;
+				check = true;	
+				name = data.name;
+				nameId.value = name;
+				console.log("변수 name값: ", name)
+				console.log("보낸 데이터", data)
+				console.log("이름:", data.name);
 			}else {
 				alert('다시 입력 해주세요')
 				check = false;
 				}
 			}
-		})
-	}
+		});
+     }
+		
+		
+
+	
 	
 		const account_num=document.querySelector("#account_num")
 		const remit_money=document.querySelector(".remit_money")
