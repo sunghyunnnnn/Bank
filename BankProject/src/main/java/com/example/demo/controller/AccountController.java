@@ -2,12 +2,15 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +30,8 @@ import com.example.demo.vo.RemitVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 
 @Controller
 public class AccountController {
@@ -72,16 +77,18 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="remitMoney")
-	public ModelAndView remitMoney(HttpServletRequest request) {
+	public ModelAndView remitMoney(HttpServletRequest request, AccountVO accountvo) {
 		
 		String id = request.getParameter("id");
-		System.out.println(id);
+		//System.out.println(">>>>>>>>>>>>"+id);
 		List<String> accountnum = new ArrayList<>();
 		List<String> accountAll = new ArrayList<>();
 		List<String> account = new ArrayList<>();
 		List<String> total = new ArrayList<>();
 		
 		List<Map<String, Integer>> selectNumTotal = remitrepo.selectNumTotal(id);
+		
+		
 		accountnum = accountrepo.selectAccount(id);
 		//확인용:System.out.println(selectNumTotal.get(0).keySet());
 		for(Map<String, Integer> a : selectNumTotal) {
@@ -101,17 +108,27 @@ public class AccountController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/accountCheck")
-	public int check(@RequestParam("accountNum") String accountNum) throws Exception{
-		int i = accountrepo.selectAccountRemit(accountNum);
+	@RequestMapping("/checkAccount")
+	 public Map<String, String> checkAccount(@RequestParam("remitAccount") String remit_account, AccountVO accountvo) throws Exception{
+       	Map<String,String> response = new HashMap<>();
+		String i = accountrepo.selectAccountRemit(remit_account);
+		String name = accountrepo.account_name(remit_account);
+		System.out.println(">>>>>>>>>>>>>>"+remit_account);
+		mav.addObject(name);
 		
-		if(i == 1) {
-			return 1;
+		if(i.equals("1")) {
+			response.put("status", "1");
+			response.put("name", name);
 		}else {
-			return 0;
+			response.put("status", "0");
 		}
-
-	}
+		return response;
+		//계좌 확인용
+		//String account_num = accountvo.getAccount_num();
+		
+       // 여기에 계좌 확인 결과를 넣어줍니다.
+	
+    }
 	
 	
 	@RequestMapping(value="remitComplete") //송금, 입금 모두 다 있음.
