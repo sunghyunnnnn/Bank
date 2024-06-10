@@ -59,6 +59,7 @@ public class ProductController {
 		String product_num = request.getParameter("product_num");
 		String id = request.getParameter("id");
 		List<Map<String, Integer>> accountList = accountRepo.selectAccount2(id);
+		List<Integer> accountPW = accountRepo.selectAccountPW(id);
 		
 		List<String> accountTotal = new ArrayList<>();
 		List<String> accountNum = new ArrayList<>();
@@ -73,6 +74,7 @@ public class ProductController {
 		
 		mav.addObject("accountNum",accountNum);
 		mav.addObject("accountTotal", accountTotal);
+		mav.addObject("accountPW", accountPW);
 		mav.addObject("deposit", deposit);
 		mav.setViewName("products/depositPage");
 		return mav;
@@ -80,8 +82,7 @@ public class ProductController {
 	@RequestMapping(value="depositController")
 	public ModelAndView depositController(HttpServletRequest request, AccountVO acvo) {
 		ModelAndView mav = new ModelAndView();
-
-	
+		
 		try {			
 			accountRepo.updateAccount(acvo.getProduct_num(), acvo.getTotal(), acvo.getAccount_num());
 		} catch (Exception e) {
@@ -116,14 +117,16 @@ public class ProductController {
 		String id = getid.getId();
 		List<String> account = new ArrayList<>();
 		List<String> total = new ArrayList<>();
-		List<Map<String, Integer>> selectNumTotal = remitRepo .selectNumTotal(id);
-		
+		List<Map<String, Integer>> selectNumTotal = remitRepo.selectNumTotal(id);
+		List<Integer> accountPW = accountRepo.selectAccountPW(id);
+		System.out.println(">>> " + accountPW);
 		for(Map<String, Integer> a : selectNumTotal) {
 			account.add(String.valueOf(a.get("ACCOUNT_NUM")));
 			total.add(a.get("TOTAL").toString());
 		}
 		
 		mav.addObject("account", account);
+		mav.addObject("accountPW", accountPW);
 		mav.addObject("total", total);
 		mav.setViewName("products/joinSavings");
 		return mav;

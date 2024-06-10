@@ -5,6 +5,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>hello!!!</h1>
+	<h1 th:text="${member.name}+'님의 마이페이지'"></h1>
+	<span th:text="'이름 : ' + ${member.name}"></span>
+	<br>
+	<span th:text="'주민번호 : ' + ${member.rrn}"></span>
+	<br>
+	<span th:text="'핸드폰 번호 : ' + ${member.phone_num}"></span>
+	<br>
+	<span th:text="'주소 : ' + ${member.address}"></span>
+	<br>
+	<h1>등록된 계좌정보</h1>
+	<div th:each="list: ${account}">
+		
+	</div>
 </body>
 </html>

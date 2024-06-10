@@ -15,6 +15,7 @@ import com.example.demo.jpa.AccountRepo;
 import com.example.demo.jpa.EmployeeRepo;
 import com.example.demo.jpa.ManagerRepo;
 import com.example.demo.jpa.MemberRepo;
+import com.example.demo.vo.AccountVO;
 import com.example.demo.vo.ManagerVO;
 import com.example.demo.vo.MemberVO;
 
@@ -183,9 +184,11 @@ public class MainController {
 	public ModelAndView mypage(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		String id = request.getParameter("id");
-		System.out.println(">>>>" + id);
+		MemberVO member = memberRepo.getById(id);
+		List<AccountVO> account = accountRepo.selectAllById(id);
+		mav.addObject("member", member);
+		mav.addObject("account", account);
 		mav.setViewName("member/mypage");
 		return mav;
 	}
-	
 }

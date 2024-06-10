@@ -31,32 +31,41 @@
 		const totalText = document.querySelector(".totalMoney");
 		const account2 = [[${account}]]
 		const total = [[${total}]]
+		const accountPW = [[${accountPW}]];
 		
 	
 		let accountnum = '';
 		let ck = false;
 		let totalMoney;
+		let pwCk;
 		
 		const func=() => {
 			ck = false;
-			let money;		
+			let money;
+			let account_pw = Number(prompt("계좌 비밀번호 입력"));
+			
 			for(let i=0; i<account2.length; i++) {
 				console.log(account_num.value)
 				if(account2[i]===account_num.value) {
 					money = total[i]
 				}
-			}if(money < savings_money.value) {
+			}if(Number(money) > Number(totalMoney)) {
 				alert("잔액이 부족합니다. 다른 계좌를 선택하세요")
-				return ck;
-			} else {
+			}else if(pwCk != account_pw){
+				alert("계좌 비밀번호가 다릅니다.")
+			}
+			else {
 				alert("가입되었습니다!")
 				ck = true;
 			}
+			return ck
 		}
 		
 		const funcChange = () =>{
 			let selectIndex = select_account.selectedIndex;
 			totalMoney = total[selectIndex - 1];
+			pwCk = accountPW[selectIndex - 1];
+			
 			totalText.innerText = `총 잔액 : ${total[selectIndex - 1]}원`;
 		}
 		
