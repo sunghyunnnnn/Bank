@@ -3,62 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-	.percent-input::after {
-	    content: '%';
-	    position: absolute;
-	    right: 5px;
-	    top: 50%;
-	    transform: translateY(-50%);
-	    pointer-events: none;
-	}
-</style>
 </head>
 <body>
- 	<form action="createProductComplete" method="post">
- 		상품 번호: <input type="text" name="product_num" id="product_num"> <br>
- 		상품 이름: <input type="text" name="deposit_name" id="deposit_name"> <br>
- 		기간: <input type="text" name="create_date" id="create_date"> <br>
- 		가입 최소 금액: <input type="text" name="min_money" id="min_money" oninput="addWon()"> <br>
- 		이율: <input type="text" name="rate" id="rate" oninput="addPercent()" > <br>
- 		<input type="submit" value="등록" onclick="save()">
-	</form>
-	
-	<script type="text/javascript">
-
-	 <!-- function addPercent() {
-         var input = document.getElementById('percent');
-         var value = input.value;
-         
-         // '%'가 이미 붙어 있는지 확인하고, 붙어 있다면 제거
-         if (value.endsWith('%')) {
-             value = value.slice(0, -1);
-         }
-         
-         // 입력값이 빈 문자열이 아니면 '%'를 다시 붙임
-         if (value !== '') {
-             value += '%';
-         }
-
-         input.value = value;
-     }
-	 
-	 function addWon() {
-         var input = document.getElementById('won');
-         var value = input.value;
-         
-         // '%'가 이미 붙어 있는지 확인하고, 붙어 있다면 제거
-         if (value.endsWith('원')) {
-             value = value.slice(-1);
-         }
-         
-         // 입력값이 빈 문자열이 아니면 '%'를 다시 붙임
-         if (value !== '') {
-             value += '원';
-         }
-
-         input.value = value;
-     }-->
-	</script>
+	<a href="mainManager">주거래 통장 상품 목록</a> <br> <br>
+	<a href="depositManager">예금 통장 상품 목록</a> <br> <br>
+	<a href="savingsManager">적금 통장 상품 목록</a> <br>
 </body>
 </html>

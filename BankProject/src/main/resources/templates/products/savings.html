@@ -6,7 +6,6 @@
 </head>
 <body>
 	<h1>여기는 적금페이지~!~!~</h1>
-	<button type="button" onclick="location.href='/'">뒤로가기</button>
 	<div th:each="list:${list}">
 		<div>
 				적금<br>
@@ -15,10 +14,14 @@
 			</a>
 		</div> <br>
 		<span>
-			<span th:text="'기간: ' + ${list.create_date} + ' / '" ></span>
+			<span th:text="'기간: ' + ${list.create_date} + '년 / '" ></span>
 			<span th:text="'이율: ' + ${list.rate}"></span>
 		</span>		
 	<hr>
 	</div>
+	<button type="button" onclick="location.href='/'">뒤로가기</button>
+	<script type="text/javascript">
+
+	</script>
 </body>
 </html>

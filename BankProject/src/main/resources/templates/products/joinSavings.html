@@ -5,10 +5,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h1>적금 상품 페이지</h1>
+		<span th:text=" '상품 이름: ' + ${savings.deposit_name} "></span>
+		<br>
+		<span th:text=" '금리: ' + ${savings.rate} "></span>
+		<br>
+		<span th:text=" '가입기간: ' + ${savings.create_date} + '년' " ></span>
 	<form action="joinComplete" method="post">
-		<input type="hidden" name="product_num" th:value="${savings.product_num}">
-		상품명: <input th:value= " ${savings.deposit_name}" readonly> <br>
-		가입 기간: <input th:value=" ${savings.create_date} " readonly> <br>
+	<span>계좌 선택 >> </span>
 		<select name="account_num" id="account_num" >
 			<option value="" selected disabled>계좌 선택</option>
 			<option th:each="account : ${account}"
@@ -18,8 +22,7 @@
 		<br>
 		<span class="totalMoney"></span>
 		<br>	
-		가입 금액: <input name="total" type="text" id="savings_money" th:placeholder="'가입 최소금액은 '+${savings.min_money}+'원 입니다.'"> <br>
-		이율: <input th:value=" ${savings.rate} " readonly> <br>
+		가입 금액: <input name="total" type="text" id="savings_money" th:placeholder="'가입 최소금액은 '+${savings.min_money}+'원'"> <br>
 		<input type="submit" value="가입하기" onclick="return func()">
 	</form>
 	
