@@ -46,6 +46,14 @@
 		const tableList = document.querySelector("#tableList");
 		const account_info = document.querySelector(".account_info");
 		
+		 function formatDate(dateString) {
+		        const date = new Date(dateString);
+		        const year = date.getFullYear();
+		        const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 +1을 해준 후 두 자리로 포맷팅
+		        const day = ('0' + date.getDate()).slice(-2); // 일을 두 자리로 포맷팅
+		        return year + '-' + month + '-' + day;
+		    }
+		
 		let accountList = [[${account}]];
 		for(item of accountList){
 			const span_account = document.createElement("span");
@@ -57,7 +65,7 @@
 			
 			span_account.innerText = item.account_num;
 			span_total.innerText = `${item.total}원`;
-			span_date.innerText = item.reg_date;
+			span_date.innerText = formatDate(item.reg_date);
 			
 			let num;
 			if(item.product_num !== null){
