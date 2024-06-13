@@ -12,6 +12,8 @@
 		<br>
 		<span th:text=" '가입기간: ' + ${savings.create_date} + '년' " ></span>
 	<form action="joinComplete" method="post">
+	<input type="hidden" name="product_num" th:value="${savings.product_num}">
+	
 	<span>계좌 선택 >> </span>
 		<select name="account_num" id="account_num" >
 			<option value="" selected disabled>계좌 선택</option>
