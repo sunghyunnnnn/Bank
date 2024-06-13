@@ -14,6 +14,8 @@ public class AccountVO {
 	private String reg_date;
 	private int total;
 	private int dormant_date;
+	private int product_money;
+	
 	public String getAccount_num() {
 		return account_num;
 	}
@@ -56,10 +58,17 @@ public class AccountVO {
 	public void setDormant_date(int dormant_date) {
 		this.dormant_date = dormant_date;
 	}
+	public int getProduct_money() {
+		return product_money;
+	}
+	public void setProduct_money(int product_money) {
+		this.product_money = product_money;
+	}
 	@Override
 	public String toString() {
 		return "AccountVO [account_num=" + account_num + ", id=" + id + ", product_num=" + product_num + ", account_pw="
-				+ account_pw + ", reg_date=" + reg_date + ", total=" + total + ", dormant_date=" + dormant_date + "]";
+				+ account_pw + ", reg_date=" + reg_date + ", total=" + total + ", dormant_date=" + dormant_date
+				+ ", product_money=" + product_money + "]";
 	}
 	
 }

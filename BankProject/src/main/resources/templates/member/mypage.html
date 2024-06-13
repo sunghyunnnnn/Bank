@@ -3,6 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.account_menu{
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+		margin-bottom: 30px;
+	}
+	.account_info div{
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+		
+	}
+	.account_info div span{
+		width: 150px;
+		height: 75px;
+	}
+</style>
 </head>
 <body>
 	<h1 th:text="${member.name}+'님의 마이페이지'"></h1>
@@ -15,8 +33,62 @@
 	<span th:text="'주소 : ' + ${member.address}"></span>
 	<br>
 	<h1>등록된 계좌정보</h1>
-	<div th:each="list: ${account}">
+	<div class="account_menu">
+		<span>계좌번호</span>
+		<span>상품유형</span>
+		<span>총액</span>
+		<span>개설날짜</span>
 		
 	</div>
+	<div class="account_info">
+	</div>
+	<script th:inline="javascript">
+		const tableList = document.querySelector("#tableList");
+		const account_info = document.querySelector(".account_info");
+		
+		let accountList = [[${account}]];
+		for(item of accountList){
+			const span_account = document.createElement("span");
+			const a_product = document.createElement("a");
+			const span_total = document.createElement("span");
+			const span_date = document.createElement("span");
+			const span_br = document.createElement("br");
+			const span_div = document.createElement("div");
+			
+			span_account.innerText = item.account_num;
+			span_total.innerText = `${item.total}원`;
+			span_date.innerText = item.reg_date;
+			
+			let num;
+			if(item.product_num !== null){
+				//"@{./Termination(product_num = num)}"
+				if(item.product_num.substr(0,2) == '#1'){
+					a_product.innerText = '일반';
+					a_product.href="#";
+				}
+				else if(item.product_num.substr(0,2) == '#2'){
+					a_product.innerText = '예금';
+					num = item.product_num.substring(1);
+					a_product.href="./Termination?product_num=%23"+num + "&account_num=" + item.account_num;
+				}
+				else if(item.product_num.substr(0,2) == '#3'){
+					a_product.innerText = '적금';
+					num = item.product_num.substring(1);
+					a_product.href="./Termination?product_num=%23"+num+"&account_num=" + item.account_num;
+				}
+			}		
+			
+			span_div.appendChild(span_account);
+			span_div.appendChild(a_product);
+			span_div.appendChild(span_total);
+			span_div.appendChild(span_date);
+			
+			account_info.appendChild(span_div);
+			
+		}
+		
+		
+		
+	</script>
 </body>
 </html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1 th:text="${member.name} + '님의 상품정보!!!'"></h1>
+	<hr>
+	<span th:text="'상품 : ' + ${product.deposit_name}"></span>
+	<br>
+	<span th:text="'금액 : ' + ${account.product_money} + '원'"></span>
+	<br>
+	<span th:text = "'이율 : ' + ${product.rate} + '%'"></span>
+	<br>
+	<button onclick="termination()">해지하기</button>
+	<script th:inline="javascript">
+	
+		const product_money = Number([[${account.product_money}]]);
+		const rate = Number([[${product.rate}]]);
+		const account_num = [[${account.account_num}]];
+		
+		const product_rate = rate * 0.01;
+		const addMoney = product_money + (product_money * product_rate);
+		
+		function termination(){
+			let ck = confirm(`지금 해지 시 ${addMoney}원이 지급됩니다.`);
+			if(ck){
+				location.href = `/Termination_controller?account_num=${account_num}&addMoney=${addMoney}`;
+			}
+			else{
+				location.href="/";
+			}
+			
+		}
+	</script>
+</body>
+</html>

@@ -155,7 +155,7 @@ public class MainController {
 			System.out.println("DB: >>"+ dbManager);
 			System.out.println("로그인 완료");
 			String managername = managerRepo.selectName(id);
-			mav.addObject("managername", managername);
+			session.setAttribute("managername", managername);
 			session.setAttribute("managerLogin", dbManager);
 			mav.setViewName("admin/managePage");
 			
@@ -177,6 +177,7 @@ public class MainController {
 	public ModelAndView managerLogout(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		session.removeAttribute("managerLogin");
+		session.removeAttribute("managername");
 		mav.setViewName("forward:/");
 		return mav;
 	}

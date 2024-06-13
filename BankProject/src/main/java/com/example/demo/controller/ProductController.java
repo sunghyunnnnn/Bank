@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import com.example.demo.jpa.AccountRepo;
-
+import com.example.demo.jpa.PlusRepo;
 import com.example.demo.jpa.ProductRepo;
 import com.example.demo.jpa.RemitRepo;
 import com.example.demo.vo.AccountVO;
@@ -36,6 +36,8 @@ public class ProductController {
 	
 	@Autowired
 	ProductRepo pr;
+	@Autowired
+	PlusRepo plueRepo;
 	
 	
 	@RequestMapping(value="/depositList")
@@ -150,5 +152,39 @@ public class ProductController {
 			// TODO: handle exception
 		}
 		return "redirect:/savings?id="+id;
+	}
+	@RequestMapping(value="Termination")
+	public ModelAndView Termination(HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		String product_num = request.getParameter("product_num");
+		String account_num = request.getParameter("account_num");
+		
+		MemberVO member = (MemberVO)session.getAttribute("login");
+		ProductManagerVO product = pr.showProduct(product_num);
+		AccountVO account = accountRepo.getById(account_num);
+		mav.addObject("account", account);
+		mav.addObject("member", member);
+		mav.addObject("product", product);
+		
+		mav.setViewName("products/Termination");
+		return mav;
+	}
+	@RequestMapping(value="Termination_controller")
+	public ModelAndView Termination_controller(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String account_num = request.getParameter("account_num");
+		int addMoney = Integer.parseInt(request.getParameter("addMoney"));
+		try {
+			accountRepo.updateAccountMoney(account_num, addMoney);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			plueRepo.insertPlus(account_num, addMoney);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		mav.setViewName("index");
+		return mav;
 	}
 }

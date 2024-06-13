@@ -22,7 +22,6 @@
 		//var userVal = document.getElementById("mySelect1").selectedIndex;
 		
 		const accountTotal = [[${accountTotal}]];
-		console.log(accountTotal)
 		
 		const plusList = [[${plusList}]];
 		const remitList = [[${remitList}]];
@@ -62,6 +61,7 @@
 						newPTagSign.setAttribute("class", 'newptag');
 						newPTagSign.innerText = '출금';
 					}
+					newhr = document.createElement('hr');
 					newPTagMoney = document.createElement('p');
 					newPTagMoney.setAttribute("class", "newptag");
 					
@@ -73,6 +73,7 @@
 					accountList.appendChild(newPTagSign);
 					accountList.appendChild(newPTagDate);
 					accountList.appendChild(newPTagMoney);	
+					accountList.appendChild(newhr);	
 				}
 			}
 		}

@@ -144,4 +144,5 @@ ALTER TABLE PLUS  ADD CONSTRAINT foreignPlus FOREIGN KEY(account_num) REFERENCES
 ------------------6/5 새로추가 ---------------------
 ALTER TABLE HR.PLUS MODIFY PLUS_TEXT VARCHAR2(100);
 --plus테이블에 text값 modify함
-
+------------------6/11 새로추가 ---------------------
+ALTER TABLE account add product_money Number(20) DEFAULT 0;
