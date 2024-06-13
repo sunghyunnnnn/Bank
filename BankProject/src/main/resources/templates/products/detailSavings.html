@@ -8,10 +8,11 @@
 
 	<form action="joinSavings" method="post">
 		상품명: <input th:value= " ${savings.deposit_name}" readonly></input> <br>
+		이율: <input th:value=" ${savings.rate} " readonly></input><br>
 		가입 기간: <input th:value=" ${savings.create_date} " readonly></input> <br>
 		최소 가입 금액: <input th:value="${savings.min_money}+'원'" readonly></input> <br>
-		이율: <input th:value=" ${savings.rate} " readonly></input><br>
 		<input type="submit" value="가입하기">
 	</form>
+	
 </body>
 </html>

@@ -8,9 +8,9 @@
 	<h1>예금상품 페이지~!~!~</h1>
 	<span>가입대상 : 개인</span>
 	<br>
-	<span th:text = "'상품 번호 : ' + ${deposit.product_num}"></span>
+	<span th:text = "'상품 이름 : ' + ${deposit.deposit_name}"></span>
 	<br>
-	<span th:text = "'금리 : ' + ${deposit.rate} + '%'"></span>
+	<span th:text = "'금리 : ' + ${deposit.rate}"></span>
 	<br>
 	<span th:text = "'가입기간 : '+ ${deposit.create_date} + '년'"></span>
 	<br>
@@ -25,7 +25,7 @@
 		<br>
 		<span class="total"></span>
 		<br>
-		<input type="text" name = "total" class="myMoney" placeholder="금액 입력" >
+		가입금액<input type="text" name = "total" class="myMoney" th:placeholder="'최소 가입금액 '+${deposit.min_money}+'원'" >
 		<button type="submit" onclick="return moneyCk()" class="depositBtn">가입하기</button>
 	</form>
 	<script th:inline="javascript">

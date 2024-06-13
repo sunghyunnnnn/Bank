@@ -1,11 +1,13 @@
 @charset "UTF-8";
+@charset "UTF-8";
 .register_display{
 	display: none;
 }
 
 input, button {
   border: none;
-  outline: none;
+  outline: solid #87CEFA;
+  outline-width: thin;
   background: none;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
@@ -16,38 +18,12 @@ h1 {
   text-align: center;
 }
 
-.select {
- 	display: block; 
-    margin: 0 auto;
-    margin-top: 10%;
-    margin-bottom: 2em;
-    width: 200px;
-    border: 1px solid #C4C4C4;
-    box-sizing: border-box;
-    border-radius: 10px;
-    padding: 12px 13px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
-}
-
-.select:focus{
-    border: 1px solid #1E90FF;
-    box-sizing: border-box;
-    border-radius: 10px;
-    outline: 3px solid #87CEFA;
-    border-radius: 10px;
-}
-
 input {
   display: block;
   width: 20%;
   margin-top: 5px;
   padding-bottom: 5px;
   font-size: 16px;
-  border-bottom: 1px solid rgba(0,0,0,0.4);
   text-align: center;
 }
 

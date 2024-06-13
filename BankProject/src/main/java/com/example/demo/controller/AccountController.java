@@ -114,7 +114,6 @@ public class AccountController {
 		String i = accountrepo.selectAccountRemit(remit_account);
 		String name = accountrepo.account_name(remit_account);
 		System.out.println(">>>>>>>>>>>>>>"+remit_account);
-		mav.addObject(name);
 		
 		if(i.equals("1")) {
 			response.put("status", "1");
@@ -122,12 +121,7 @@ public class AccountController {
 		}else {
 			response.put("status", "0");
 		}
-		return response;
-		//계좌 확인용
-		//String account_num = accountvo.getAccount_num();
-		
-       // 여기에 계좌 확인 결과를 넣어줍니다.
-	
+		return response;	
     }
 	
 	

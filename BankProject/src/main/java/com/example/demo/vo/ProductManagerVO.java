@@ -2,6 +2,8 @@ package com.example.demo.vo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 @Entity(name="product_manager")
 public class ProductManagerVO {

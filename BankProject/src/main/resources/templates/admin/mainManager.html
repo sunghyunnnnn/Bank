@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 예금 페이지!!!</title>
+<title>Insert title here</title>
 </head>
 <body>
-<div th:each="list:${list}">
+	<div th:each="list:${list}">
 		<div>
-				예금<br>
-			<a th:href="@{/detailDeposit(product_num=${list.product_num})}"
+				주거래 통장<br>
+			<a th:href="@{/detailMain(product_num=${list.product_num})}"
 				th:text=${list.deposit_name}>
 			</a>
 		</div> <br>
@@ -18,7 +18,7 @@
 		</span>		
 	<hr>
 	</div>
-	<form action="createDeposit" method="post">
+	<form action="createMain" method="post">
 		<input type="submit" value="상품 등록">
 	</form>
 </body>

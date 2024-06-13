@@ -50,6 +50,7 @@ public class ProductController {
 	@RequestMapping(value="/savings")
 	public ModelAndView savings() {
 		List<ProductManagerVO> list = pr.showSavings();
+		System.out.println(list);
 		mav.addObject("list", list);
 		mav.setViewName("products/savings");
 		return mav;

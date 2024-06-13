@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div></div>
+<div>
+ 	<form action="createProductComplete" method="post" id="productCK">
+ 		<div>
+ 		<label for="product_num">상품 번호 </label>
+ 		 <input type="text" name="product_num" id="product_num" value="#2" required>
+ 		 <button type="button"  id="numCK">상품 번호 확인</button>
+ 		</div>
+ 		
+ 		<div>
+ 		<label for="deposit_name">상품 이름 </label>
+ 		 <input type="text" name="deposit_name" id="deposit_name"  required>
+ 		</div>
+ 		
+ 		<div>
+ 		<label for="create_date">기간 </label>
+ 		 <input type="number" name="create_date" id="create_date" required>
+ 		</div>
+ 		
+ 		<div>
+ 		<label for="min_money">가입 최소 금액</label>
+ 		 <input type="number" name="min_money" id="min_money" required>
+ 		</div>
+ 		
+ 		<div>
+ 		<label for="rate">이율</label>
+ 		 <input type="text" name="rate" id="rate" required>
+ 		</div>
+ 		
+ 		<div>
+ 			<input type="submit" value="등록">
+ 		</div>
+	</form>
+</div>	
+	
+	<script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script th:inline="javascript">
+	
+	document.addEventListener("DOMContentLoaded", function() {
+		handleProductNumInput();
+	});
+	function handleProductNumInput() {
+		let productNumInput = document.querySelector("#product_num");
+		productNumInput.addEventListener("input", function() {
+            // 입력된 값이 #2로 시작하지 않으면 #2를 다시 추가
+            if (!productNumInput.value.startsWith("#2")) {
+                productNumInput.value = "#2" + productNumInput.value;
+            }
+        });
+	}
+	
+	$('#numCK').click(function() {
+		let product_num = $('#product_num').val();
+		
+		//상품번호 3글자 미만인지 확인
+		if (product_num.length < 4) {
+			alert('상품 번호는 최소 숫자 3개 이상이어야 합니다.');
+			return;
+		}
+		
+		let param = new URLSearchParams({
+			product_num : product_num
+		})
+		console.log(product_num);
+		
+		fetch('/productNum_CK', {
+			method: 'POST'
+			,body: param
+		}).then(response => response.json())
+		.then(data => {
+			console.log(data);
+			if(data === 1) {
+			alert('이미 존재하는 상품입니다.');
+			}else {
+				alert('사용가능합니다.')
+			}
+		})
+		.catch(error => {
+			console.error('Error: ', error);
+		})
+	})
+	
+	/* 전체 데이터 불러와서 프론트에서 처리
+	function numCK() {
+		let product_num = document.querySelector('#product_num').value;
+		console.log(product_num)
+			var num = [[${num}]];
+			console.log(num)
+			for (var i = 0; i < num.length; i++) {
+				console.log(num[i])
+				if(product_num === num[i]) {
+					alert('상품이 있습니다.')
+				}
+			}
+			
+	} */
+		
+	jQuery(function() {
+		const productCK = $('#productCK');
+		productCK.validate({
+			rules: {
+				product_num: {
+					required: true,
+					maxlength: 4
+				},
+				deposit_name: {
+					required: true,
+					maxlength: 15
+				},
+				create_date: {
+					required: true
+				},
+				min_money: {
+					required: true
+				},
+				rate: {
+					required: true
+				}
+			},
+			messages: {
+				product_num: {
+					required: '필수 입력 항목입니다.',
+					maxlength: '숫자는 3자리까지 입니다.'
+				},
+				deposit_name: {
+					required: '필수 입력 항목입니다.',
+					maxlength: '15자 안으로 입력해주세요.'
+				},
+				create_date: {
+					required: '필수 입력 항목입니다.'
+				},
+				min_money: {
+					required: '필수 입력 항목입니다.'
+				},
+				rate: {
+					required: '필수 입력 항목입니다.'
+				}
+			}
+		});
+	});
+	</script>
+</body>
+</html>

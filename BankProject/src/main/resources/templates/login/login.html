@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="style/register/register.css">
 </head>
 <body>
-	<h1>로그인 페이지!</h1>
-	<select id="login_select">
+	<h1>로그인 페이지</h1>
+	<select id="login_select" class="select">
 		<option name="user" selected>일반유저</option>
 		<option name="manager">관리자</option>
 	</select>
@@ -17,7 +17,7 @@
 			<br>
 			<input type="password" id="loginPW" name = "pw" placeholder="PW 입력">
 			<br>
-			<button type="submit" onclick="funcLogin()">일반유저 로그인</button>
+			<button type="submit" class="submit" onclick="funcLogin()">일반유저 로그인</button>
 		</form>
 	</div>
 	<div class="manager_login register_display">
@@ -26,10 +26,10 @@
 			<br>
 			<input type="password" id="managerPW" name = "manager_pw" placeholder="PW 입력" required="required">
 			<br>
-			<button type="submit" onclick="funcManagerLogin()">관리자 로그인</button>
+			<button type="submit" class="submit" onclick="funcManagerLogin()">관리자 로그인</button>
 		</form>
 	</div>
-	<button type="button" onclick="location.href='/'">뒤로가기</button>
+	 		<button type="button" onclick="location.href='/'" class="back">뒤로가기</button>
 	<script th:inline="javascript">
 		const login_select = document.querySelector("#login_select");
 		const user_login = document.querySelector(".user_login");
