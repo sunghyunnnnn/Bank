@@ -6,15 +6,17 @@
 <link rel="stylesheet" href="style/register/register.css">
 </head>
 <body>
-	<h1>회원가입 페이지입니다.</h1>
-	<select id="register__select">
+<th:block th:replace="layouts/header :: headerFragment"></th:block>
+
+	<h1 class="registerTitle">회원가입 페이지</h1>
+	<select id="register__select" class="select">
 		<option name="user" selected>일반유저</option>
 		<option name="manager">관리자</option>
 	</select>
 	<div class="user__register">
-		<form action="register_Account" method="post">
+		<form action="register_Account" method="post" class="form__input">
 			<input type="text" id="registerid" name="id" placeholder="아이디 입력" required="required">
-			<input type="button" id="idDuplicationBtn" value="아이디 중복확인" onclick="id_duplication()">
+			<input type="button" id="idDuplicationBtn" class="custom-btn btn-1" value="아이디 중복확인" onclick="id_duplication()">
 			<span class="idCk"></span>
 			<br>
 			<input type="password" id="registerPw" name="pw" placeholder="비밀번호 입력" required="required">
@@ -31,9 +33,11 @@
 			<br>
 			<input type="text" name="address" placeholder="주소 입력" required="required">
 			<br>
-			<button type="submit" onclick = "return id_duplicationCk()">회원가입</button>
-			<button type="reset">리셋하기</button>
-			<button type="button" onclick="location.href='/'">뒤로가기</button>
+			<div class="registerBtn">
+			<button type="submit" class="custom-btn btn-10" onclick = "return id_duplicationCk()">회원가입</button>
+			<button type="reset" class="custom-btn btn-10">리셋하기</button>
+			<button type="button" class="custom-btn btn-10" onclick="location.href='/'">뒤로가기</button>
+			</div>
 		</form>
 	</div>
 	<div class="manager__register register_display">
@@ -48,11 +52,14 @@
 			<br>
 			<input type="text" id="employee_num" name="employee_num" placeholder="사원번호" required="required">
 			<br>
-			<button type="submit" onclick="funcManagerSubmit()">회원가입</button>
-			<button type="reset">리셋하기</button>
-			<button type="button" onclick="location.href='/'">뒤로가기</button>
+			<div class="registerBtn">
+			<button type="submit" class="custom-btn btn-10" onclick="funcManagerSubmit()">회원가입</button>
+			<button type="reset" class="custom-btn btn-10">리셋하기</button>
+			<button type="button" class="custom-btn btn-10" onclick="location.href='/'">뒤로가기</button>
+			</div>
 		</form>
 	</div>
+	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 	<script th:inline="javascript">
 		
 		let idDuplication = true;

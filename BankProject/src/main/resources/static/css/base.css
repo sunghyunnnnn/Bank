@@ -7,12 +7,12 @@ html {overflow-y:scroll;width:100%;margin:0;padding:0}
 body {font-family:'맑은 고딕','Malgun Gothic','돋움',Dotum,Helvetica,AppleGothic,Sans-serif;width:100%;height:100%;color:#000;}
 * {font-family:'맑은 고딕','Malgun Gothic','돋움',Dotum,Helvetica,AppleGothic,Sans-serif}
 
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,a,button,form,fieldset,p,blockquote{margin:0;padding:0}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,a,form,fieldset,p,blockquote{margin:0;padding:0}
 img, fieldset {border:none}
 a {color:#000;}
-body, dl, dt, dd, th, td, div, p, a, button, table,li, form, fieldset,legend, input, button, textarea, select {}
-body, dl, dt, dd, th, td, div, p, a, button, table,li {font-size:12px;}
-form, fieldset,legend, input, button, textarea, select {font-size:13px;}
+body, dl, dt, dd, th, td, div, p, a, table,li, form, fieldset,legend, input, textarea, select {}
+body, dl, dt, dd, th, td, div, p, a, table,li {font-size:12px;}
+form, fieldset,legend, input, textarea, select {font-size:13px;}
 ul, ol {list-style:none}
 table {border-collapse:collapse}
 input, textarea {display:inline-block;font-size:13px;vertical-align:middle;}
@@ -21,7 +21,7 @@ address, em {font-style:normal}
 th, td {padding:0;vertical-align:top;text-align:left;font-weight:normal}
 
 /* 언더라인 없는 거로 변경 */
-a, button, input[type=button], input[type=submit], input[type=reset] {text-decoration:none;}
+a,input[type=reset] {text-decoration:none;}
 .lt-ie7 a, .lt-ie7 a * {text-decoration:none}
 /* 언더라인 없는 거로 변경 */
 input[type="text"],
@@ -29,11 +29,10 @@ input[type="password"],
 input[type="email"],
 input[type="search"],
 input[type="image"],
-input[type="button"],
 textarea {border:1px solid #d1d1d1;background:#fff;-webkit-appearance: none}
 input[type="checkbox"]:focus {border:none}
 input[type="checkbox"]:checked {background-color:#fff;-webkit-appearance:checkbox}
-input[type="text"], input[type="password"] {height:18px;position:relative;margin:1px 2px 0;padding:2px 3px 3px;border:1px solid #d1d1d1;background:#fff;color:#000}
+input[type="text"], input[type="password"] {height:18px;position:relative;padding:2px 3px 3px;border:1px solid #d1d1d1;background:#fff;color:#000}
 .lt-css3 input[type="text"],input[type="password"] {padding:2px 3px 3px}
 input[type="text"]:focus, input[type="password"]:focus, textarea:focus {border:1px solid #009ae6;outline-width:0} 
 input[type="password"] {font-size:12px;color:#373737}
@@ -57,7 +56,7 @@ label {*vertical-align:middle} /* radio, checkbox 뒤에 label이 있을 경우 
 cite, em, dfn {font-style:normal}
 sub {vertical-align:bottom;font-family:helvetica}
 sup {vertical-align:top;font-family:helvetica}
-hr {display:none}
+
 .pop-description {font-size:0px; width:0px; line-height:0px; text-indent:-100px; *text-indent:0; visibility:hidden;}
 .a-disabled {pointer-events:none; cursor:default !important; outline:none; ie-dummy:expression(this.hideFocus=true);}
 /* block */

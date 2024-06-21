@@ -3,20 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="style/register/makeAccount.css">
 </head>
 <body>
-	<h1>조회 페이지입니다!!!!</h1>
+<th:block th:replace="layouts/header :: headerFragment"></th:block>
+	<h1 class="title">조회</h1>
+		<div class="select__total">
 		<select id="account_select">
-			<option value="none"> === 선택 === </option>
+			<option value="none" disabled selected> === 선택 === </option>
 			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}"></option>
 		</select>
-		<button type="button" onclick="location.href='/'">뒤로가기</button>
 		<br>
 		<span class="total"></span>
-		<br>
-		<div class="accountList">
 		</div>
-		
+		<table class = "accountList_table">
+			<tr>
+				<th>입금 / 출금</th>
+				<th>거래금액</th>
+				<th>거래내역</th>
+			</tr>
+		</table>
+		<div class="accountList">
+		<br>
+		</div>
+		<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 		
 	<script th:inline="javascript">
 		//var userVal = document.getElementById("mySelect1").selectedIndex;
@@ -32,11 +42,13 @@
 		let totalSorted = totalList.sort((a, b) => {
 			return new Date(a.exchage_date) - new Date(b.exchage_date)
 		});
+		
 		console.log(totalSorted);
 		
 		const accountList = document.querySelector(".accountList");
 		const account_select = document.querySelector("#account_select");
 		const total = document.querySelector(".total");
+		const accountList_table = document.querySelector(".accountList_table");
 		
 		const funcSelectOption = () => {
 			let newPTagMoney;
@@ -50,23 +62,18 @@
 			}
 			for(let i = 0; i < totalSorted.length; i++){
 				if(totalSorted[i].account_num === account_select.value){
-					
+					newtrTag = document.createElement('tr');
 					if(totalSorted[i].exchange_sign === '+'){
-						newPTagSign = document.createElement('p');
-						newPTagSign.setAttribute("class", 'newptag');
-						newPTagSign.innerText = '입금';
+						newtdTag = document.createElement('td');
+						newtdTag.innerText = '입금';
 					}
 					else{
-						newPTagSign = document.createElement('p');
-						newPTagSign.setAttribute("class", 'newptag');
-						newPTagSign.innerText = '출금';
+						newtdTag = document.createElement('td');
+						newtdTag.innerText = '출금';
 					}
-					newhr = document.createElement('hr');
 					newPTagMoney = document.createElement('p');
-					newPTagMoney.setAttribute("class", "newptag");
-					
 					newPTagDate = document.createElement('p');
-					newPTagDate.setAttribute("class","newptag");
+					
 					
 					newPTagMoney.innerText = totalSorted[i].exchange_money;
 					newPTagDate.innerText = totalSorted[i].exchage_date;
