@@ -4,7 +4,7 @@
 	display: none;
 }
 
-input, button {
+input, button{
   border: none;
   outline: solid #87CEFA;
   outline-width: thin;
@@ -20,7 +20,7 @@ h1 {
 
 input {
   display: block;
-  width: 20%;
+  width: 100%;
   margin-top: 5px;
   padding-bottom: 5px;
   font-size: 16px;
@@ -67,4 +67,16 @@ form div {
     display: flex; /* 내부 div 요소들을 가로로 나열 */
     flex-direction: row;
     margin-bottom: 10px; /* 요소들 사이의 간격 설정 */
+}
+
+.input-container {
+    position: relative;
+    display: inline-block;
+}
+
+#total-unit {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
 }

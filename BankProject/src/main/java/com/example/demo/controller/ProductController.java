@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -23,6 +24,8 @@ import com.example.demo.vo.ProductManagerVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 public class ProductController {
@@ -188,4 +191,16 @@ public class ProductController {
 		mav.setViewName("index");
 		return mav;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/account_ckeck")
+	public int accountCK(HttpSession session, HttpServletRequest request) {
+		MemberVO login= (MemberVO) session.getAttribute("login");
+		String id = login.getId();
+		System.out.println(id);
+		int i = pr.account_ckeck(id);
+		System.out.println(i);
+		return i;
+	}
+	
 }

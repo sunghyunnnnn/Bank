@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -197,6 +198,21 @@ public class AccountController {
 		mav.addObject("remitList",remitList);
 		mav.setViewName("account/searchAccount");
 		return mav;
+	}
+	
+	@ResponseBody
+	@PostMapping("/account_CK") 
+	public Map<String, String> account_ck(@RequestParam(value="account") String account, HttpServletRequest request) {
+		
+		Map<String,String> response = new HashMap<>();
+		String i = accountrepo.selectAccountRemit(account);
+		
+		if(i.equals("1")) {
+			response.put("status","1");
+		}else {
+			response.put("status","0");
+		}
+		return response;
 	}
 	
 }

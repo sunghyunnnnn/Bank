@@ -15,7 +15,7 @@
 		</select><br>
 		계좌 번호 입력		<input type="text" name="remit_account" id="remit_account"> <button type="button" onclick="ckNum()">계좌 확인</button>  <br> <!-- 나중에 숫자만 입력할 수 있게 -->
 		<input type="text" name="memberName" id="name" readonly>님에게<br>
-		송금 금액			<input type="text" name="remit_money" class="remit_money"><br> <!-- 나중에 숫자만 입력할 수 있게 -->
+		송금 금액			<input type="text" name="remit_money" class="remit_money" id="remit_money">원<br> <!-- 나중에 숫자만 입력할 수 있게 -->
 		받는 분에게 표시	<input type="text" name="remit_text"><br>
 		<input type="submit" value="송금하기" onclick="return func()">
 		
@@ -53,8 +53,15 @@
 		});
      }
 		
-		
-
+	window.onload = function() {
+		$('#remit_money').on('keyup', () => {
+			let value = $('#remit_money').val().replace(/,/g, '');
+			if (!isNaN(value) && value.trim() !== "") {
+                value = parseInt(value, 10).toLocaleString('ko-KR');
+            }
+            $('#remit_money').val(value);
+        });
+	}
 	
 	
 		const account_num=document.querySelector("#account_num")

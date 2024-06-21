@@ -25,4 +25,7 @@ public interface ProductRepo extends JpaRepository<ProductManagerVO, String>{
 	public List<String> product_num();
 	@Query(value = "select count(*) from product_manager where product_num = :product_num", nativeQuery = true)
 	public int productNum_CK(@Param("product_num") String product_num);
+	
+	@Query(value="select count(*) from account where id = :id and account_num like '4%'", nativeQuery = true)
+	public int account_ckeck(@Param("id")String id);
 }

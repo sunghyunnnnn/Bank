@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <head>
+	<th:block th:replace="~{fragments/css :: css}"></th:block>
 	<meta http-equiv="x-ua-compatible" content="IE=edge">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,6 @@
 	<meta name="keywords" content="해피은행, 해피은행 인터넷뱅킹, 계좌조회, 이체, 대출, 외화 환전, 공과금납부, 상품신규, 사고신고 안내">
 	<meta name="robots" content="index,follow"></meta>
 	<title>해피은행</title>
-	
 	<link  rel="stylesheet" href="css/base.css" type="text/css" />
 	<link  rel="stylesheet" href="css/intro_new.css" type="text/css" />
 
@@ -82,6 +82,7 @@
 <!--[if IE 9]>   <body class="intro msie ie9 css3"><![endif]-->
 <!--[if gt IE 9]><!-->
 <body class="intro css3 transition">
+<th:block th:replace="~{fragments/header :: header}"></th:block>
 <!--<![endif]-->
 		<div id="accNav">
 		<p><a href="#container" class="skip">본문으로 바로가기</a></p>
@@ -316,35 +317,7 @@
 	* {font-family:'NotoSans','Noto Sans KR', sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:antialiased;}
 </style>
 
-		<div id="introHeader" class="re_new">
-			<div class="content h66"  name="crmArea" id="introCrm_01">
-				<h1 class="absolute">
-					<a href="/">
-						<img  alt="해피은행" src="img/intro/header/h1_01.png" />
-					</a>
-				</h1>
-	
-<div class="tit-0 absolute js-display-hover">
-	<a href="#none" class="gnb-member-bt js-display-hover-trigger renew_login"><span>로그인</span></a>
-	<div class="js-display-hover-area level2">
-		
-	</div>
 
-</div>
-<div class="userAndlogout">
-	<a th:if="${session.login != null}" th:href="@{mypage(id=${session.login.id})}">
-		<span th:text="${session.login.name} + '님' "></span>
-	</a>
-	<span><a th:if="${session.login != null}" href="logout">로그아웃</a></span>
-</div>				
-					<div class="register_login_section">
-						<div class="register">
-							<a href="register" th:if="${session.login == null}">회원가입</a>
-						</div>
-						<div class="login">
-							<a href="login" th:if="${session.login == null}">로그인</a>
-						</div>
-					</div>
 			
 				<div class="tit-9 absolute js-display-hover">
 					
