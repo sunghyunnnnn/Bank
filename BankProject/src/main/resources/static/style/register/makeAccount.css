@@ -68,3 +68,36 @@ form div {
     flex-direction: row;
     margin-bottom: 10px; /* 요소들 사이의 간격 설정 */
 }
+form input{
+	display:flex;
+	margin-bottom: 30px;
+}
+.title{
+	margin: 20px 0px 20px 0px;
+}
+.accountMake__title{
+	margin-top: 80px;
+	margin-bottom: 30px;
+}
+.commonBtn{
+	width: 300px;
+	margin-bottom: 80px;
+}
+.accountList{
+	text-align: center;
+}
+.select__total{
+	text-align: center;
+}
+.accountList{
+	text-align: center;
+	width: 600px;
+}
+.accountList_table{
+	margin-top: 120px;
+	width: 100%;
+	
+}
+.accountList_table tr th{
+	text-align: center;
+}

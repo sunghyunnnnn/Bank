@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="style/register/register.css">
 </head>
 <body>
+<th:block th:replace="layouts/header :: headerFragment"></th:block>
 	<h1>로그인 페이지</h1>
 	<select id="login_select" class="select">
 		<option name="user" selected>일반유저</option>
@@ -17,7 +18,10 @@
 			<br>
 			<input type="password" id="loginPW" name = "pw" placeholder="PW 입력">
 			<br>
-			<button type="submit" class="submit" onclick="funcLogin()">일반유저 로그인</button>
+			<div class="registerBtn">
+				<button type="submit" class="custom-btn btn-10" onclick="funcLogin()">일반유저</button>
+				<button type="button" onclick="location.href='/'" class="back custom-btn btn-10">뒤로가기</button>
+			</div>
 		</form>
 	</div>
 	<div class="manager_login register_display">
@@ -26,10 +30,14 @@
 			<br>
 			<input type="password" id="managerPW" name = "manager_pw" placeholder="PW 입력" required="required">
 			<br>
-			<button type="submit" class="submit" onclick="funcManagerLogin()">관리자 로그인</button>
+			<div class="registerBtn">
+				<button type="submit" class="custom-btn btn-10" onclick="funcManagerLogin()">관리자</button>
+				<button type="button" onclick="location.href='/'" class="back custom-btn btn-10">뒤로가기</button>
+			</div>
 		</form>
 	</div>
-	 		<button type="button" onclick="location.href='/'" class="back">뒤로가기</button>
+	 		
+	 		<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 	<script th:inline="javascript">
 		const login_select = document.querySelector("#login_select");
 		const user_login = document.querySelector(".user_login");
