@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,18 +31,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ProductController {
+	
 	ModelAndView mav = new ModelAndView();
 	
 	@Autowired
 	AccountRepo accountRepo;
-
-	@Autowired
-	RemitRepo remitRepo;
-	
-	@Autowired
+		@Autowired
 	ProductRepo pr;
 	@Autowired
-	PlusRepo plueRepo;
+	PlusRepo plusrepo;
+	@Autowired
+	RemitRepo remitrepo;
 	
 	
 	@RequestMapping(value="/depositList")
@@ -95,7 +96,7 @@ public class ProductController {
 			// TODO: handle exception
 		}
 		try {			
-			remitRepo.insertRemit(acvo.getAccount_num(), "----", "----", acvo.getTotal());
+			remitrepo.insertRemit(acvo.getAccount_num(), "----", "----", acvo.getTotal());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -123,7 +124,7 @@ public class ProductController {
 		String id = getid.getId();
 		List<String> account = new ArrayList<>();
 		List<String> total = new ArrayList<>();
-		List<Map<String, Integer>> selectNumTotal = remitRepo.selectNumTotal(id);
+		List<Map<String, Integer>> selectNumTotal = remitrepo.selectNumTotal(id);
 		List<Integer> accountPW = accountRepo.selectAccountPW(id);
 		System.out.println(">>> " + accountPW);
 		for(Map<String, Integer> a : selectNumTotal) {
@@ -151,7 +152,7 @@ public class ProductController {
 			// TODO: handle exception
 		}
 		try {			
-			remitRepo.insertRemit(acvo.getAccount_num(), "----", "----", acvo.getTotal());
+			remitrepo.insertRemit(acvo.getAccount_num(), "----", "----", acvo.getTotal());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -184,7 +185,7 @@ public class ProductController {
 			// TODO: handle exception
 		}
 		try {
-			plueRepo.insertPlus(account_num, addMoney);
+			plusrepo.insertPlus(account_num, addMoney);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -201,6 +202,56 @@ public class ProductController {
 		int i = pr.account_ckeck(id);
 		System.out.println(i);
 		return i;
+	}
+	
+	@RequestMapping(value="mainAccountList")
+	public ModelAndView accountMainList(HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("login");
+		vo.getId();
+		List<ProductManagerVO> depositVO =  pr.showMain();
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>"+depositVO);
+		//session.setAttribute("depositVO", depositVO);
+		mav.addObject("depositVO",depositVO);
+		mav.setViewName("products/mainAccount");
+		return mav;
+	}
+	
+	@RequestMapping(value="mainAccountDetail")
+	public ModelAndView mainAccountJoin(HttpSession session, @RequestParam("product_num") String num) {
+		MemberVO vo = (MemberVO) session.getAttribute("login");
+		vo.getId();
+		ProductManagerVO mainList = pr.getById(num);
+		System.out.println(mainList);
+		mav.addObject("mainList", mainList);
+		session.setAttribute("num", num);
+		//session.setAttribute("mainList", mainList);
+		mav.setViewName("products/mainAccountJoin");
+		return mav;
+	}
+		
+	@PostMapping("accountComplete")
+	public ModelAndView accountComplete(HttpServletRequest request, HttpSession session) {
+		String account_num = request.getParameter("account_num");
+		String id = request.getParameter("id");
+		String product_num = (String) session.getAttribute("num");
+		System.out.println(session.getId());
+		int account_pw = Integer.parseInt(request.getParameter("account_pw"));
+		int total = Integer.parseInt(request.getParameter("total").replace(",", ""));
+		
+		try {
+			accountRepo.insertAccount(account_num,  id, product_num, account_pw, total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			plusrepo.insertPlus(account_num, total);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		mav.addObject("result","계좌 개설 완료");
+		mav.setViewName("products/accountComplete");
+		return mav;
 	}
 	
 }

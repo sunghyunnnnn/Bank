@@ -3,12 +3,16 @@ package com.example.demo.controller;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.jpa.AccountRepo;
@@ -191,5 +195,20 @@ public class MainController {
 		mav.addObject("account", account);
 		mav.setViewName("member/mypage");
 		return mav;
+	}
+	
+	@ResponseBody
+	@PostMapping("/id_ck")
+	public Map<String, String> idCK(@RequestParam(value="id") String id) {
+		
+		Map<String, String> response = new HashMap<>();
+		String i = memberRepo.idCK(id);
+		
+		if(i.equals("1")) {
+			response.put("status","1");
+		}else {
+			response.put("status","0");
+		}
+		return response;
 	}
 }

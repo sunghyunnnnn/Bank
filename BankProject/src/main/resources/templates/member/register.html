@@ -16,7 +16,7 @@
 	<div class="user__register">
 		<form action="register_Account" method="post" class="form__input">
 			<input type="text" id="registerid" name="id" placeholder="아이디 입력" required="required">
-			<input type="button" id="idDuplicationBtn" class="custom-btn btn-1" value="아이디 중복확인" onclick="id_duplication()">
+			<button type="button" id="idDuplicationBtn" class="custom-btn btn-1" value="아이디 중복확인" ></button>
 			<span class="idCk"></span>
 			<br>
 			<input type="password" id="registerPw" name="pw" placeholder="비밀번호 입력" required="required">
@@ -60,6 +60,7 @@
 		</form>
 	</div>
 	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script th:inline="javascript">
 		
 		let idDuplication = true;
@@ -161,6 +162,7 @@
 			}
 		}
 		
+		/*
 		function id_duplication(){
 			idDuplication = false;
 			let ck = true;
@@ -174,7 +176,34 @@
 			if(ck){
 				alert("사용가능한 ID입니다.");
 			}
-		}
+		}*/
+	$(document).ready(function() {
+		$('#idDuplicationBtn').click(function() {
+			let id = $('#registerid').val();
+			console.log(id);
+			
+			let param = new URLSearchParams({
+				id : id
+			});
+			
+			
+			fetch('/id_ck', {
+				method: 'POST'
+				,body: param
+			}).then(response => response.json())
+			.then(data => {
+				if(data === 1) {
+					alert('존재하는 아이디 입니다.')
+				}else {
+					console.log(data)
+					alert('사용가능합니다.')
+				}
+			})
+			.catch(error => {
+				console.error('error: ', error)
+			});
+		});
+	});
 		
 		function id_duplicationCk(){
 			if(idDuplication){
