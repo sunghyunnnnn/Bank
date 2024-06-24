@@ -432,15 +432,15 @@
 		<ul class="left_menu">
 			<li><a href="https://spib.wooribank.com/pib/Dream?withyou=PSINQ0180">다른금융<br />정보조회</a></li>
 			<li>
-				<a th:if="${session.login != null}" th:href="@{accountMake(id=${session.login.id})}">개설</a>
+				<a th:if="${session.login != null}" th:href="@{mainAccountList}">개설</a>
 				<a th:if="${session.login == null}" href="#" onclick="funcLogin()">개설</a>
 			</li>
 			<li>
-				<a th:if="${session.login != null}" th:href="@{accountSearch(id=${session.login.id})}">조회</a>
+				<a th:if="${session.login != null}" th:href="@{accountSearch}">조회</a>
 				<a th:if="${session.login == null}" href="#" onclick="funcLogin()">조회</a>
 			</li>
 			<li>
-				<a th:if="${session.login != null}" th:href="@{remitMoney(id=${session.login.id})}">송금</a>
+				<a th:if="${session.login != null}" th:href="@{remitMoney}">송금</a>
 				<a th:if="${session.login == null}" href="#" onclick="funcLogin()">송금</a>
 			</li>
 			<li class="q_btn">
@@ -449,11 +449,11 @@
 					<div name="crmArea" id="introCrm_02" class="q_menu_inner">
 						<ul class="q_menu_list w100p clearfix top">
 							<li class="">
-								<a th:if="${session.login != null}" th:href="@{depositList(id=${session.login.id})}" >예금</a>
+								<a th:if="${session.login != null}" th:href="@{depositList}" >예금</a>
 								<a th:if="${session.login == null}" href="#" onclick="funcLogin()">예금</a>
 							</li>
 							<li>
-								<a th:href="@{savings(id=${session.login.id})}" th:if="${session.login != null}">적금</a>
+								<a th:href="@{savings}" th:if="${session.login != null}">적금</a>
 								<a th:if="${session.login == null}" href="#" onclick="funcLogin()">적금</a>
 							</li>
 						</ul>

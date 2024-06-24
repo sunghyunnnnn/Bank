@@ -24,7 +24,7 @@ import com.example.demo.jpa.PlusRepo;
 import com.example.demo.jpa.RemitRepo;
 
 import com.example.demo.vo.AccountVO;
-
+import com.example.demo.vo.MemberVO;
 import com.example.demo.vo.PlusVO;
 
 import com.example.demo.vo.RemitVO;
@@ -47,41 +47,17 @@ public class AccountController {
 	ModelAndView mav = new ModelAndView();
 	private ModelAndView modelAndView;
 	
-	@RequestMapping(value="accountMake")
-	public ModelAndView accountMake() {
-		
-		mav.setViewName("account/accountMake");
-		return mav;
-	}
 
-	@RequestMapping(value="accountComplete")
-	public ModelAndView accountComplete(AccountVO acvo) {
-		String account_num = acvo.getAccount_num();
-		String id = acvo.getId();
-		int account_pw = acvo.getAccount_pw();
-		int total = acvo.getTotal();
-		
-		try {
-			accountrepo.insertAccount(account_num, id, account_pw, total);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		try {
-			plusrepo.insertPlus(account_num, total);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		mav.addObject("result","계좌 개설 완료");
-		mav.setViewName("account/accountComplete");
-		return mav;
-	}
 	
 	@RequestMapping(value="remitMoney")
 	public ModelAndView remitMoney(HttpServletRequest request, AccountVO accountvo) {
 		
-		String id = request.getParameter("id");
-		//System.out.println(">>>>>>>>>>>>"+id);
+		HttpSession session = request.getSession();
+		MemberVO  vo = (MemberVO) session.getAttribute("login");
+		String id = vo.getId();
+		System.out.println(id);
+		List<Map<String, Integer>> accountList = accountrepo.selectAccount2(id);
+
 		List<String> accountnum = new ArrayList<>();
 		List<String> accountAll = new ArrayList<>();
 		List<String> account = new ArrayList<>();
@@ -175,10 +151,12 @@ public class AccountController {
 
 	
 	@RequestMapping(value="/accountSearch")
-	public ModelAndView accountSearch(HttpServletRequest request) {
+	public ModelAndView accountSearch(HttpServletRequest request, HttpSession session) {
 		
 		ModelAndView mav = new ModelAndView();
-		String id = request.getParameter("id");
+		MemberVO  vo = (MemberVO) session.getAttribute("login");
+		String id = vo.getId();
+		System.out.println(id);
 		List<Map<String, Integer>> accountList = accountrepo.selectAccount2(id);
 		
 		List<String> accountTotal = new ArrayList<>();

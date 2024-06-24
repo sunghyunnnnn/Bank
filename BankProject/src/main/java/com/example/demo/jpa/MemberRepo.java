@@ -21,4 +21,7 @@ public interface MemberRepo extends JpaRepository<MemberVO, String>{
 	
 	@Query(value = "select * from member where id = :id and pw = :pw", nativeQuery = true)
 	public MemberVO loginIdPw(@Param (value="id") String id, @Param (value="pw") String pw);
+	
+	@Query(value = "select count(*) from member where id = :id", nativeQuery = true)
+	public String idCK(@Param (value="id") String id);
 }
