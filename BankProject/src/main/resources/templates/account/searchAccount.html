@@ -14,17 +14,11 @@
 			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}"></option>
 		</select>
 		<br>
-		<span class="total"></span>
+		<span class="totalMoney"></span>
 		</div>
-		<table class = "accountList_table">
-			<tr>
-				<th>입금 / 출금</th>
-				<th>거래금액</th>
-				<th>거래내역</th>
-			</tr>
-		</table>
-		<div class="accountList">
-		<br>
+		<div class="tableSection">
+			<table class = "accountList_table">
+			</table>
 		</div>
 		<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 		
@@ -39,30 +33,50 @@
 		
 		let totalList = plusList.concat(remitList);
 		console.log('정렬전 >>> ',totalList);
-		let totalSorted = totalList.sort((a, b) => {
+		let totalSorted = totalList.sort((b, a) => {
 			return new Date(a.exchage_date) - new Date(b.exchage_date)
 		});
 		
 		console.log(totalSorted);
 		
-		const accountList = document.querySelector(".accountList");
+		
 		const account_select = document.querySelector("#account_select");
-		const total = document.querySelector(".total");
+		const total = document.querySelector(".totalMoney");
 		const accountList_table = document.querySelector(".accountList_table");
 		
 		const funcSelectOption = () => {
-			let newPTagMoney;
-			let newPTagDate;
-			let newPTagSign;
+			let newTdTagMoney;
+			let newTdTagDate;
+			let newtdTag;
+			let newtrTag;
 			let selectIndex = account_select.selectedIndex;
 			total.innerText = `총 잔액 : ${accountTotal[selectIndex - 1]}원`;
-			if(document.querySelectorAll(".newptag").length !== 0){
+			if(document.querySelectorAll("tr").length !== 0){
 
-				accountList.replaceChildren();
+				accountList_table.replaceChildren();
 			}
+			
+			let newTrTag1 = document.createElement('tr');
+			
+			let newThTag1 = document.createElement('th');
+			let newThTag2 = document.createElement('th');
+			let newThTag3 = document.createElement('th');
+			
+			newThTag1.innerText = '입금 / 출금';
+			newThTag2.innerText = '거래금액';
+			newThTag3.innerText = '거래내역';
+			
+			newTrTag1.appendChild(newThTag1);
+			newTrTag1.appendChild(newThTag2);
+			newTrTag1.appendChild(newThTag3);
+			
+			accountList_table.appendChild(newTrTag1);
+			
 			for(let i = 0; i < totalSorted.length; i++){
 				if(totalSorted[i].account_num === account_select.value){
+					
 					newtrTag = document.createElement('tr');
+					
 					if(totalSorted[i].exchange_sign === '+'){
 						newtdTag = document.createElement('td');
 						newtdTag.innerText = '입금';
@@ -71,16 +85,17 @@
 						newtdTag = document.createElement('td');
 						newtdTag.innerText = '출금';
 					}
-					newPTagMoney = document.createElement('p');
-					newPTagDate = document.createElement('p');
 					
+					let day = totalSorted[i].exchage_date;
+					newTdTagMoney = document.createElement('td');
+					newTdTagDate = document.createElement('td');
+					newTdTagMoney.innerText = totalSorted[i].exchange_money;
+					newTdTagDate.innerText = day.substr(0, 11);
+					newtrTag.appendChild(newtdTag);
+					newtrTag.appendChild(newTdTagMoney);
+					newtrTag.appendChild(newTdTagDate);	
+					accountList_table.appendChild(newtrTag);
 					
-					newPTagMoney.innerText = totalSorted[i].exchange_money;
-					newPTagDate.innerText = totalSorted[i].exchage_date;
-					accountList.appendChild(newPTagSign);
-					accountList.appendChild(newPTagDate);
-					accountList.appendChild(newPTagMoney);	
-					accountList.appendChild(newhr);	
 				}
 			}
 		}

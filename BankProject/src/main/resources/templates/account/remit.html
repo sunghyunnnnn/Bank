@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="style/register/makeAccount.css">
 </head>
 <body>
+<th:block th:replace="layouts/header :: headerFragment"></th:block>
 	<form action="remitComplete" method="post">
 		<!-- 내가 어떤 계좌를 선택해서 입금 할 것인지 -->
 		<select id="account_num" th:name="account_num" style="width:300px;height:50px;font-size:15pt;">
@@ -13,14 +15,27 @@
 					th:value="${account}"
 					th:utext="${account}"></option>
 		</select><br>
-		계좌 번호 입력		<input type="text" name="remit_account" id="remit_account"> <button type="button" onclick="ckNum()">계좌 확인</button>  <br> <!-- 나중에 숫자만 입력할 수 있게 -->
-		<input type="text" name="memberName" id="name" readonly>님에게<br>
-		송금 금액			<input type="text" name="remit_money" class="remit_money" id="remit_money">원<br> <!-- 나중에 숫자만 입력할 수 있게 -->
-		받는 분에게 표시	<input type="text" name="remit_text"><br>
-		<input type="submit" value="송금하기" onclick="return func()">
+		<div class="input-container">
+			<label for="remit_account">계좌 번호 입력</label>
+			<input type="text" name="remit_account" id="remit_account">
+			<button type="button" class="submit" onclick="ckNum()" style="position: relative">계좌 확인</button>  <br> <!-- 나중에 숫자만 입력할 수 있게 -->
+		</div>
+		<div class="input-container">
+			<input type="text" name="memberName" id="name" readonly>님에게<br>
+		</div>
+		<div class="input-container">
+			<label for="remit_money">송금 금액</label>
+			<input type="text" name="remit_money" class="remit_money" id="remit_money">원<br>
+		</div>
+		<div class="input-container">
+			<label for= "remit_text">받는 분에게 표시	</label>
+		 <!-- 나중에 숫자만 입력할 수 있게 -->
+		<input type="text" name="remit_text"><br>
+		</div>
+		<button type="submit" class="submit" onclick="return func()" style="margin-bottom: 30px;">송금하기</button>
 		
 	</form>
-
+<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script th:inline="javascript">
 	let check = false;

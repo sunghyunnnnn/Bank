@@ -72,13 +72,16 @@ form div {
 
 .input-container {
     position: relative;
-    display: inline-block;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #total-unit {
     position: absolute;
     right: 8px;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
 }
     
@@ -108,12 +111,67 @@ form input{
 	text-align: center;
 	width: 600px;
 }
-
-.accountList_table{
+input-container
+{
 	margin-top: 120px;
-	width: 100%;
+	padding: 20px;
+	width: 80%;
+	text-align: center;
 	
 }
-.accountList_table tr th{
+.tableSection{
 	text-align: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.totalMoney{
+	display:inline-block;
+	margin-top: 25px;
+	font-size: 25px;
+}
+table {
+  border-collapse: collapse;
+  width: 75%;
+  margin: 20px 0px 40px 0px;
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+ /* 테이블 행 */
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #1b1b1b;
+  color: #ddd;
+}
+
+/* 테이블 올렸을 때 */
+tr:hover {
+  background-color: #d3d3d3;
+  opacity: 0.9;
+  cursor: pointer;
+}
+th:nth-child(1),
+td:nth-child(1) {
+  width: 25%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 25%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 25%;
+}
+th:nth-child(3),
+td:nth-child(3) {
+  width: 25%;
 }

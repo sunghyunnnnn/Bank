@@ -3,14 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="style/register/makeAccount.css">
 </head>
 <body>
-	<h1><p
-		align = "left"
-		th:text="${session.managername} + ' 매니저님' ">
-	</p></h1>
-	<a href="productList"> 상품 목록</a>
-
-	<a href="managerLogout">로그아웃</a>
+<th:block th:replace="layouts/headerManager :: headerManagerFragment"></th:block>
+	
+	<a href="productList" style= "font-size: 30px; margin: 20px;"> 상품 생성하기</a>
+	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 </body>
 </html>

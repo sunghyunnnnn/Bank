@@ -2,24 +2,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 예금 페이지!!!</title>
+<title>Insert title here</title>
+<link rel="stylesheet" href="style/register/makeAccount.css">
+<link rel="stylesheet" href="style/admin/admin.css">
 </head>
 <body>
-<div th:each="list:${list}">
-		<div>
-				예금<br>
-			<a th:href="@{/detailDeposit(product_num=${list.product_num})}"
-				th:text=${list.deposit_name}>
-			</a>
-		</div> <br>
-		<span>
-			<span th:text="'기간: ' + ${list.create_date} + ' / '" ></span>
-			<span th:text="'이율: ' + ${list.rate}"></span>
-		</span>		
-	<hr>
-	</div>
-	<form action="createDeposit" method="post">
-		<input type="submit" value="상품 등록">
+<th:block th:replace="layouts/headerManager :: headerManagerFragment"></th:block>
+<form action="createSaving" method="post">
+		<button type="submit" class="submit">상품등록</button>
 	</form>
+	
+	<div th:each="list:${list}" class="product__items">
+		
+		<div class="product__name product__common">
+			<span>상품 이름 : </span>
+			<a th:href="@{/detailMain(product_num=${list.product_num})}"
+				th:text="${list.deposit_name}">
+			</a>
+		</div>
+		<div class="product__date product__common">
+			<span>기간 : </span>
+			<span th:text="${list.create_date} + '년'" ></span>
+		</div>
+		<div class="product_rate product__common">
+			<span>비율 : </span>
+			<span th:text="${list.rate} + '%'"></span>
+		</div>		
+		<hr>
+	</div>
+	
+	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 </body>
 </html>

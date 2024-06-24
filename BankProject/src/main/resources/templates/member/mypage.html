@@ -3,48 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-	.account_menu{
-		width: 100%;
-		display: flex;
-		justify-content: space-around;
-		margin-bottom: 30px;
-	}
-	.account_info div{
-		width: 100%;
-		display: flex;
-		justify-content: space-around;
-		
-	}
-	.account_info div span{
-		width: 150px;
-		height: 75px;
-	}
-</style>
+<link rel="stylesheet" href="style/register/makeAccount.css">
+<link rel="stylesheet" href="style/register/mypage.css">
 </head>
 <body>
-	<h1 th:text="${member.name}+'님의 마이페이지'"></h1>
-	<span th:text="'이름 : ' + ${member.name}"></span>
-	<br>
-	<span th:text="'주민번호 : ' + ${member.rrn}"></span>
-	<br>
-	<span th:text="'핸드폰 번호 : ' + ${member.phone_num}"></span>
-	<br>
-	<span th:text="'주소 : ' + ${member.address}"></span>
+<th:block th:replace="layouts/header :: headerFragment"></th:block>
+	<h1 th:text="${member.name}+' 어서와'"></h1>
+	<div class="mypage">
+		<div class="mypage__item">
+			<span>이름 : </span>
+			<span th:text="${member.name}"></span>
+		</div>
+		<div class="mypage__item">
+			<span>주민번호 : </span>
+			<span th:text="${member.rrn}"></span>
+		</div>
+		<div class="mypage__item">
+			<span>핸드폰 번호 : </span>
+			<span th:text="${member.phone_num}"></span>
+		</div>
+		<div class="mypage__item">
+			<span>주소 : </span>
+			<span th:text="${member.address}"></span>
+		</div>
+	</div>
 	<br>
 	<h1>등록된 계좌정보</h1>
-	<div class="account_menu">
-		<span>계좌번호</span>
-		<span>상품유형</span>
-		<span>총액</span>
-		<span>개설날짜</span>
-		
+	<div class="tableSection">
+		<table class = "accountList_table">
+		</table>
 	</div>
 	<div class="account_info">
 	</div>
+	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 	<script th:inline="javascript">
 		const tableList = document.querySelector("#tableList");
 		const account_info = document.querySelector(".account_info");
+		const accountList_table = document.querySelector(".accountList_table");
+		
+		let newTdTagMoney;
+		let newTdTagDate;
+		let newtdTag;
+		let a_product;
+		
+		let newtrTag;
 		
 		 function formatDate(dateString) {
 		        const date = new Date(dateString);
@@ -54,21 +56,44 @@
 		        return year + '-' + month + '-' + day;
 		        
 		    }
+		 let newTrTag1 = document.createElement('tr');
+		
+		
+		let newThTag1 = document.createElement('th');
+		let newThTag2 = document.createElement('th');
+		let newThTag3 = document.createElement('th');
+		let newThTag4 = document.createElement('th');
+		
+		newThTag1.innerText = '계좌번호';
+		newThTag2.innerText = '상품유형';
+		newThTag3.innerText = '총액';
+		newThTag4.innerText = "개설날짜"
+		
+		newTrTag1.appendChild(newThTag1);
+		newTrTag1.appendChild(newThTag2);
+		newTrTag1.appendChild(newThTag3);
+		newTrTag1.appendChild(newThTag4);
+		
+		accountList_table.appendChild(newTrTag1);
+		
+		newtdTag = document.createElement('td');
+		newTdTagMoney = document.createElement('td');
+		newTdTagDate = document.createElement('td');
 		
 		let accountList = [[${account}]];
 		for(item of accountList){
-			const span_account = document.createElement("span");
-			const a_product = document.createElement("a");
-			const span_total = document.createElement("span");
-			const span_date = document.createElement("span");
-			const span_br = document.createElement("br");
-			const span_div = document.createElement("div");
+			newtrTag = document.createElement('tr');
+			a_product = document.createElement("a");
+			newtdTag = document.createElement('td');
+			newTdTagMoney = document.createElement('td');
+			newTdTagDate = document.createElement('td');
 			
-			span_account.innerText = item.account_num;
-			span_total.innerText = `${item.total}원`;
-			span_date.innerText = formatDate(item.reg_date);
+			newtdTag.innerText = item.account_num;
+			newTdTagMoney.innerText = `${item.total}원`;
+			newTdTagDate.innerText = formatDate(item.reg_date);
 			
 			let num;
+			
 			if(item.product_num !== null){
 				//"@{./Termination(product_num = num)}"
 				if(item.product_num.substr(0,2) == '#1'){
@@ -87,12 +112,12 @@
 				}
 			}		
 			
-			span_div.appendChild(span_account);
-			span_div.appendChild(a_product);
-			span_div.appendChild(span_total);
-			span_div.appendChild(span_date);
+			newtrTag.appendChild(newtdTag);
+			newtrTag.appendChild(a_product);
+			newtrTag.appendChild(newTdTagMoney);
+			newtrTag.appendChild(newTdTagDate);
 			
-			account_info.appendChild(span_div);
+			accountList_table.appendChild(newtrTag);
 			
 		}
 		

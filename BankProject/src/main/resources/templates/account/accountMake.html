@@ -10,38 +10,28 @@
 	<h1 class="accountMake__title">입출금 통장 개설</h1>
 
 	<form action="accountComplete" method="post" id="ck" class="ck">
-				<input type="hidden" name=id th:value="${session.login.id}">
-		<span>
-				<label for="account_num">계좌번호</label>
-		</span>
-		<span>
-				<input type="text" name="account_num" id="account" readonly>
-		</span>
+		<input type="hidden" name=id th:value="${session.login.id}">
 		
-		<br>
-		<span>
-			<label for="account_pw">계좌 비밀번호</label>
-		</span>
-		<span>
-			<input type="password" name="account_pw" id="account_pw" required>
-		</span>
-		
-		<br>
-		<span>
-			<label for="total">금액</label>
-		</span>
 		<div class="input-container">
-			<span>
+			<label for="account_num">계좌번호</label>
+			<input type="text" name="account_num" id="account" readonly>
+		</div>
+		<div class="input-container">
+			<label for="account_pw">계좌 비밀번호</label>
+			<br>
+			<input type="password" name="account_pw" id="account_pw" required>
+		</div>
+			
+		<div class="input-container">
+				<label for="total">금액</label>
 				<input type="text" name="total" id="total" class="total" required>
 				<span id="total-unit">원</span>
-			</span>
-		</div><br>
+		</div>
 		<div class= "commonBtn">
-		<button type="submit" class="submit" id="submit">개설</button>
+			<button type="submit" class="submit" id="submit">개설</button>
+			<button type="button" onclick="location.href='/'" class="back">뒤로가기</button>
 		</div>		
 	</form>
-		<button type="button" onclick="location.href='/'" class="back">뒤로가기</button>
-	
 	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
