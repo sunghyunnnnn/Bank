@@ -6,17 +6,20 @@
 </head>
 <body>
 	<h1>적금 상품 페이지</h1>
-		<span th:text=" '상품 이름: ' + ${savings.deposit_name} "></span>
+	
+	<form action="joinComplete" method="post" id="ck">
+		<br>
+		<label for="savings_name"> 상품이름 : </label>
+		<input type="text" th:field="${savings.deposit_name}"  name="deposit_name">
 		<br>
 		<span th:text=" '금리: ' + ${savings.rate} "></span>
 		<br>
 		<span th:text=" '가입기간: ' + ${savings.create_date} + '년' " ></span>
-	<form action="joinComplete" method="post">
 	<input type="hidden" name="product_num" th:value="${savings.product_num}">
 	
 	<span>계좌 선택 >> </span>
-		<select name="account_num" id="account_num" >
-			<option value="" selected disabled>계좌 선택</option>
+		<select th:name="account_num" id="account_num" required>
+			<option value="" selected th:name="account_num" disabled>계좌 선택</option>
 			<option th:each="account : ${account}"
 					th:value="${account}"
 					th:utext="${account}"></option>
@@ -24,11 +27,36 @@
 		<br>
 		<span class="totalMoney"></span>
 		<br>	
-		가입 금액: <input name="total" type="text" id="savings_money" th:placeholder="'가입 최소금액은 '+${savings.min_money}+'원'"> <br>
-		<input type="submit" value="가입하기" onclick="return func()">
+		가입 금액: <input name="total" type="text" id="savings_money" th:placeholder="'가입 최소금액은 '+${savings.min_money}+'원'" required> <br>
+		<br>	
+		<span>
+			<label for="account_num">계좌번호</label>
+		</span>
+		<span>
+			<input type="text" name="proAccount_num" id="account" readonly>
+		</span>
+		<br>	
+		<span>
+			<label for="account_pw">계좌 비밀번호</label>
+		</span>
+		<span>
+			<input type="password" name="account_pw" id="account_pw" required>
+		</span>
+		<br>
+		<button type="submit" class="depositBtn">가입하기</button>
 	</form>
 	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script th:inline="javascript">
+		let fix = 9;
+		
+		let accountnum = '';
+		for(let i = 0; i < 8; i++){
+			accountnum += Math.floor(Math.random()*10);
+		}
+		const account = `${fix}${accountnum}`;
+		document.getElementById('account').value = account;
 	
 		const select_account = document.querySelector("#account_num");
 		
@@ -39,12 +67,11 @@
 		const accountPW = [[${accountPW}]];
 		
 	
-		let accountnum = '';
 		let ck = false;
 		let totalMoney;
 		let pwCk;
 		
-		const func=() => {
+		function moneyCk() {
 			ck = false;
 			let money;
 			let account_pw = Number(prompt("계좌 비밀번호 입력"));
@@ -75,6 +102,43 @@
 		}
 		
 		select_account.addEventListener('change', funcChange);
+		
+		$(document).ready(function() {
+			$('#savings_money').on('keyup', () => {
+				let value = $('#savings_money').val().replace(/,/g, '');
+				if (!isNaN(value) && value.trim() !== "") {
+	                value = parseInt(value, 10).toLocaleString('ko-KR');
+	            }
+	            $('#savings_money').val(value);
+	        });
+		});
+		
+		const productCK = $('#ck');
+		productCK.validate({
+			rules: {
+				account_pw: {
+					required: true,
+					rangelength: [6,6]
+				}
+			},
+			messages: {
+				account_pw: {
+					required: '비밀번호를 입력해 주세요.',
+					rangelength: '비밀번호는 6자리 입니다.'
+				}
+			},
+			success: function(input, element) {
+				var id = element.id + '-error';
+				console.log('input: ', input, 'element: ',element, 'id: ', id, 'element.id',element.id)
+				$('#' + id).remove();
+			},
+            submitHandler: function(form) {
+                if (moneyCk()) {
+                    form.submit();
+                }
+            }
+		});
+		
 	</script>
 </body>
 </html>

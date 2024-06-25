@@ -110,7 +110,7 @@ public class AccountController {
 		System.out.println(account_num);
 		String remit_account = request.getParameter("remit_account"); //송금 받는 계좌 = 입금 계좌
 		String remit_text = request.getParameter("remit_text"); //계좌 소유주 or 송금 내역 = 입금한 사람 이름 or 입금 한 내역
-		int remit_money = Integer.parseInt(request.getParameter("remit_money")); //송금 금액 = 입금 금액
+		int remit_money = Integer.parseInt(request.getParameter("remit_money").replace(",", "")); //송금 금액 = 입금 금액
 		
 		//if(Integer.parseInt(total) > remit_money) {
 			try {

@@ -2,13 +2,16 @@ package com.example.demo.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.beans.PropertyEditorSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +46,16 @@ public class ProductController {
 	@Autowired
 	RemitRepo remitrepo;
 	
+	 @InitBinder
+	    public void initBinder(WebDataBinder binder) {
+	        binder.registerCustomEditor(Integer.class, "total", new PropertyEditorSupport() {
+	            @Override
+	            public void setAsText(String text) throws IllegalArgumentException {
+	                // 콤마 제거 후 정수로 변환
+	                setValue(Integer.parseInt(text.replace(",", "")));
+	            }
+	        });
+	    }
 	
 	@RequestMapping(value="/depositList")
 	public ModelAndView deposit() {
@@ -62,9 +75,11 @@ public class ProductController {
 		return mav;
 	}
 	@RequestMapping(value="/depositProduct")
-	public ModelAndView depositProduct(HttpServletRequest request) {
+	public ModelAndView depositProduct(HttpServletRequest request, HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("login");
+		
 		String product_num = request.getParameter("product_num");
-		String id = request.getParameter("id");
+		String id = vo.getId();
 		List<Map<String, Integer>> accountList = accountRepo.selectAccount2(id);
 		List<Integer> accountPW = accountRepo.selectAccountPW(id);
 		
@@ -87,19 +102,31 @@ public class ProductController {
 		return mav;
 	}
 	@RequestMapping(value="depositController")
-	public ModelAndView depositController(HttpServletRequest request, AccountVO acvo) {
+	public ModelAndView depositController(HttpServletRequest request, ProductManagerVO pmvo) {
 		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("login");
 		
-		try {			
-			accountRepo.updateAccount(acvo.getProduct_num(), acvo.getTotal(), acvo.getAccount_num());
-		} catch (Exception e) {
-			// TODO: handle exception
+		String proAccount_num = request.getParameter("proAccount_num");
+		String id = vo.getId();
+		String  product_num = pmvo.getProduct_num();
+		int account_pw = Integer.parseInt(request.getParameter("account_pw"));
+		int total = Integer.parseInt(request.getParameter("total").replace(",", ""));
+		
+		String account_num = request.getParameter("account_num");
+		String deposit_name = request.getParameter("deposit_name");
+		System.out.println(">>>>>>>>>>>>>>>" + account_num);
+		System.out.println(">>>>>>>>>>>>>>>" + deposit_name);
+		
+		try {
+			accountRepo.insertAccount(proAccount_num, id, product_num, account_pw, total);
+		}catch (Exception e) {
 		}
-		try {			
-			remitrepo.insertRemit(acvo.getAccount_num(), "----", "----", acvo.getTotal());
+		try {
+			remitrepo.insertRemit(proAccount_num, account_num, deposit_name, total);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
+
 		mav.setViewName("index");
 		return mav;
 	
@@ -140,21 +167,28 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="joinComplete")
-	public String join(HttpServletRequest request, HttpSession session, AccountVO acvo) {
+	public String join(HttpServletRequest request, HttpSession session, ProductManagerVO pmvo) {
 		
-		MemberVO getid = (MemberVO) session.getAttribute("login");
-
-		String id = getid.getId();
+		MemberVO vo = (MemberVO) session.getAttribute("login");
+		
+		String proAccount_num = request.getParameter("proAccount_num");
+		String id = vo.getId();
+		String  product_num = pmvo.getProduct_num();
+		System.out.println(product_num);
+		int account_pw = Integer.parseInt(request.getParameter("account_pw"));
+		int total = Integer.parseInt(request.getParameter("total").replace(",", ""));
+		
+		String account_num = request.getParameter("account_num");
+		String deposit_name = request.getParameter("deposit_name");
+		System.out.println(">>>>>>>>>>>>>>>" + account_num);
+		System.out.println(">>>>>>>>>>>>>>>" + deposit_name);
 		
 		try {			
-			accountRepo.updateAccount(acvo.getProduct_num(), acvo.getTotal(), acvo.getAccount_num());
-		} catch (Exception e) {
-			// TODO: handle exception
+			accountRepo.insertAccount(proAccount_num, id, product_num, account_pw, total);		} catch (Exception e) {
 		}
 		try {			
-			remitrepo.insertRemit(acvo.getAccount_num(), "----", "----", acvo.getTotal());
+			remitrepo.insertRemit(proAccount_num, account_num, deposit_name, total);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		return "redirect:/savings?id="+id;
 	}

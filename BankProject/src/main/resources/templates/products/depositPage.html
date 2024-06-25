@@ -6,29 +6,57 @@
 </head>
 <body>
 	<h1>예금상품 페이지~!~!~</h1>
-	<span>가입대상 : 개인</span>
-	<br>
-	<span th:text = "'상품 이름 : ' + ${deposit.deposit_name}"></span>
-	<br>
-	<span th:text = "'금리 : ' + ${deposit.rate}"></span>
-	<br>
-	<span th:text = "'가입기간 : '+ ${deposit.create_date} + '년'"></span>
-	<br>
-	<form action="depositController" method="post">
+
+	<form action="depositController" method="post" id="ck">
+		<br>
+		<label for="deposit_name"> 상품이름 : </label>
+			<input type="text" th:field="${deposit.deposit_name}" name="deposit_name">
+		<br>
+		<span th:text = "'금리 : ' + ${deposit.rate}"></span>
+		<br>
+		<span th:text = "'가입기간 : '+ ${deposit.create_date} + '년'"></span>
+		<br>
 		<input name="product_num" th:value="${deposit.product_num}" type="hidden">
 		<input type="hidden" name="id" th:value="${session.login.id}">
 		<span>계좌선택 >>> </span>
-		<select id="account_select" th:name="account_num">
+		<select id="account_select" th:name="account_num" required>
 			<option value="none" selected disabled> === 선택 === </option>
-			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}"></option>
+			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}" th:name="account_num"></option>
 		</select>
 		<br>
 		<span class="total"></span>
 		<br>
-		가입금액<input type="text" name = "total" class="myMoney" th:placeholder="'최소 가입금액 '+${deposit.min_money}+'원'" >
-		<button type="submit" onclick="return moneyCk()" class="depositBtn">가입하기</button>
+		가입금액: <input type="text" id="total" name="total" class="myMoney" th:placeholder="'최소 가입금액 '+${deposit.min_money}+'원'" required >
+		<br>
+		<span>
+			<label for="account_num">계좌번호</label>
+		</span>
+		<span>
+			<input type="text" name="proAccount_num" id="account" readonly>
+		</span>
+		<br>	
+		<span>
+			<label for="account_pw">계좌 비밀번호</label>
+		</span>
+		<span>
+			<input type="password" name="account_pw" id="account_pw" required>
+		</span>
+		<br>	
+		<button type="submit" class="depositBtn">가입하기</button>
 	</form>
+	
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 	<script th:inline="javascript">
+		let fix = 8;
+		
+		let accountnum = '';
+		for(let i = 0; i < 8; i++){
+			accountnum += Math.floor(Math.random()*10);
+		}
+		const account = `${fix}${accountnum}`;
+		document.getElementById('account').value = account;
+	
 		const accountTotal = [[${accountTotal}]];
 		const accountPW = [[${accountPW}]];
 		const depositBtn = document.querySelector(".depositBtn");
@@ -67,6 +95,44 @@
 		}
 		
 		account_select.addEventListener('change', funcChange);
+		
+		$(document).ready(function() {
+			$('#total').on('keyup', () => {
+				let value = $('#total').val().replace(/,/g, '');
+				if (!isNaN(value) && value.trim() !== "") {
+	                value = parseInt(value, 10).toLocaleString('ko-KR');
+	            }
+	            $('#total').val(value);
+	        });
+		});
+		
+		const productCK = $('#ck');
+			productCK.validate({
+				rules: {
+					account_pw: {
+						required: true,
+						rangelength: [6,6]
+					}
+				},
+				messages: {
+					account_pw: {
+						required: '비밀번호를 입력해 주세요.',
+						rangelength: '비밀번호는 6자리 입니다.'
+					}
+				},
+				success: function(input, element) {
+					var id = element.id + '-error';
+					console.log('input: ', input, 'element: ',element, 'id: ', id, 'element.id',element.id)
+					$('#' + id).remove();
+				},
+	            submitHandler: function(form) {
+	                if (moneyCk()) {
+	                    form.submit();
+	                }
+	            }
+			});
+		
+
 	</script>
 </body>
 </html>
