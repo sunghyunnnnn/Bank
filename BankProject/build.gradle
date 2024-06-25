@@ -43,6 +43,7 @@ dependencies {
    implementation 'org.springframework.security:spring-security-crypto:6.0.3'
    implementation 'org.springframework.boot:spring-boot-starter-validation'
    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+   implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 }
 
 tasks.named('test') {
