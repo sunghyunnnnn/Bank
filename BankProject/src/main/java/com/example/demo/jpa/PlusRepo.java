@@ -20,5 +20,9 @@ public interface PlusRepo extends JpaRepository<PlusVO, Integer>{
 
 	@Query(value = "insert into plus (num, account_num, plus_text, exchange_money) values(plus_seq.nextval, :account_num, :plus_text, :exchange_money)", nativeQuery = true)
 	public void insertRemitPlus(@Param("account_num") String account_num, @Param("plus_text") String plus_text, @Param("exchange_money") int exchange_money);
+	
+	@Query(value="insert into plus values(plus_seq.nextval, '+', :account_num, :deposit_name, :exchange_money, sysdate)", nativeQuery = true)
+	public int insertProduct(@Param("account_num") String account_numt,
+							@Param("deposit_name") String deposit_name, @Param("exchange_money") int exchange_money);
 
 }

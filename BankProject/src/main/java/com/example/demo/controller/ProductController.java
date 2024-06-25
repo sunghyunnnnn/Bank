@@ -109,6 +109,7 @@ public class ProductController {
 		MemberVO vo = (MemberVO) session.getAttribute("login");
 		System.out.println("여기까지 왔나?????????????????????");
 		String proAccount_num = request.getParameter("proAccount_num");
+		
 		String id = vo.getId();
 		String  product_num = pmvo.getProduct_num();
 		int account_pw = Integer.parseInt(request.getParameter("account_pw"));
@@ -124,7 +125,15 @@ public class ProductController {
 		}catch (Exception e) {
 		}
 		try {
-			remitrepo.insertRemit(proAccount_num, account_num, deposit_name, total);
+			plusrepo.insertProduct(proAccount_num, deposit_name, total);
+		} catch (Exception e) {
+		}
+		try {
+			remitrepo.insertRemit(account_num, account_num, deposit_name, total);
+		} catch (Exception e) {
+		}
+		try {
+			accountRepo.updateAccountMoney2(account_num, total);
 		} catch (Exception e) {
 		}
 

@@ -47,6 +47,9 @@ public interface AccountRepo extends JpaRepository<AccountVO, String>{
 	@Query(value = "update account set total = total + :addMoney, product_money = 0 where account_num = :account_num", nativeQuery = true)
 	public void updateAccountMoney(@Param(value = "account_num")String account_num, @Param(value= "addMoney")int addMoney);
 	
+	@Query(value = "update account set total = total - :subMoney where account_num = :account_num", nativeQuery = true)
+	public void updateAccountMoney2(@Param(value = "account_num")String account_num, @Param(value= "subMoney")int subMoney);
+	
 	@Query(value="select account_pw from account where account_num = :account_num", nativeQuery = true)
 	public int selectAccountPWByAccountNum(@Param(value="account_num") String account_num);
 

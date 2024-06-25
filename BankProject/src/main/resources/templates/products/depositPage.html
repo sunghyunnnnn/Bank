@@ -99,8 +99,9 @@
       function moneyCk(){
          mCk = false;
          let account_pw = Number(prompt('계좌 비밀번호 입력'));
-         
-         if(Number(myMoney.value) > Number(totalMoney)){
+      
+         let newMoney = myMoney.value.replace(/,/g, '');
+         if(Number(newMoney) > Number(totalMoney)){
             alert('금액 초과!!!');
             return mCk;
          }
@@ -109,6 +110,7 @@
             return mCk;
          }
          else{
+        	 alert('여기로 들어옴')
             mCk = true;
             return mCk;
          }
@@ -118,6 +120,7 @@
       const funcChange = () =>{
          let selectIndex = account_select.selectedIndex;
          totalMoney = accountTotal[selectIndex - 1];
+         console.log(totalMoney);
          pwCk = accountPW[selectIndex - 1];
          total.innerText = `총 잔액 : ${accountTotal[selectIndex - 1]}원`;
       }

@@ -7,11 +7,6 @@
 <link rel="stylesheet" href="style/admin/admin.css">
 </head>
 <body>
-<!-- 
-	
-  
-
- -->
 <th:block th:replace="~{layouts/header :: headerFragment}"></th:block>
    <h1 style="margin-bottom: 15px;">저억~~금 페이지~!~!~</h1>
 	
@@ -66,9 +61,9 @@
    </form>
    </form>
    <th:block th:replace="~{layouts/footer :: footerFragment}"></th:block>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
    <script th:inline="javascript">
       let fix = 9;
       
@@ -79,50 +74,50 @@
       const account = `${fix}${accountnum}`;
       document.getElementById('account').value = account;
    
-      const select_account = document.querySelector("#account_num");
-      
-      const savings_money=document.querySelector("#savings_money");
-      const totalText = document.querySelector(".totalMoney");
-      const account2 = [[${account}]]
-      const total = [[${total}]]
+      const accountTotal = [[${total}]];
       const accountPW = [[${accountPW}]];
-      
-   
-      let ck = false;
-      let totalMoney;
+      const depositBtn = document.querySelector(".depositBtn");
+      const account_select = document.querySelector("#account_select");
+   	  
       let pwCk;
+      let myMoney = document.querySelector(".myMoney");
+      let total = document.querySelector(".total");
+      let totalMoney;
+      let mCk = false;
       
-      function moneyCk() {
-         ck = false;
-         let money;
-         let account_pw = Number(prompt("계좌 비밀번호 입력"));
+      function moneyCk(){
+    	  
+         mCk = false;
+         let account_pw = Number(prompt('계좌 비밀번호 입력'));
+         let newMoney = myMoney.value.replace(/,/g, '');
          
-         for(let i=0; i<account2.length; i++) {
-            console.log(account_num.value)
-            if(account2[i]===account_num.value) {
-               money = total[i]
-            }
-         }if(Number(돈) > Number(totalMoney)) {
-            alert("잔액이 부족합니다. 다른 계좌를 선택하세요")
-         }else if(pwCk != account_pw){
-            alert("계좌 비밀번호가 다릅니다.")
+         if(Number(newMoney) > Number(totalMoney)){
+            alert('금액 초과!!!');
+            return mCk;
          }
-         else {
-            alert("가입되었습니다!")
-            ck = true;
+         else if(pwCk != account_pw){
+        	alert(`${pwCk} : ${account_pw}`);
+            alert('비밀번호가 다릅니다.');
+            return mCk;
          }
-         return ck
+         else{
+            mCk = true;
+            return mCk;
+         }
+         
       }
       
       const funcChange = () =>{
-         let selectIndex = select_account.selectedIndex;
-         totalMoney = total[selectIndex - 1];
+    	 
+         let selectIndex = account_select.selectedIndex;
+         totalMoney = accountTotal[selectIndex - 1];
          pwCk = accountPW[selectIndex - 1];
+         total.innerText = `총 잔액 : ${accountTotal[selectIndex - 1]}원`;
          
-         totalText.innerText = `총 잔액 : ${total[selectIndex - 1]}원`;
+    	  
       }
       
-      select_account.addEventListener('change', funcChange);
+      
       
       $(document).ready(function() {
          $('#savings_money').on('keyup', () => {
@@ -136,31 +131,33 @@
       });
       
       const productCK = $('#ck');
-      productCK.validate({
-         rules: {
-            account_pw: {
-               required: true,
-               rangelength: [6,6]
-            }
-         },
-         messages: {
-            account_pw: {
-               required: '비밀번호를 입력해 주세요.',
-               rangelength: '비밀번호는 6자리 입니다.'
-            }
-         },
-         success: function(input, element) {
-            var id = element.id + '-error';
-            console.log('input: ', input, 'element: ',element, 'id: ', id, 'element.id',element.id)
-            $('#' + id).remove();
-         },
-            submitHandler: function(form) {
-                if (moneyCk()) {
-                    form.submit();
-                }
-            }
-      });
-      
+         productCK.validate({
+            rules: {
+               account_pw: {
+                  required: true,
+                  rangelength: [6,6]
+               }
+            },
+            messages: {
+               account_pw: {
+                  required: '비밀번호를 입력해 주세요.',
+                  rangelength: '비밀번호는 6자리 입니다.'
+               }
+            },
+            success: function(input, element) {
+               var id = element.id + '-error';
+               console.log('input: ', input, 'element: ',element, 'id: ', id, 'element.id',element.id)
+               $('#' + id).remove();
+            },
+               submitHandler: function(form) {
+                   if (moneyCk()) {
+                       form.submit();
+                   }
+               }
+         });
+         
+         account_select.addEventListener('change', funcChange);
+
    </script>
 </body>
 </html>
