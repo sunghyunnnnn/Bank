@@ -28,7 +28,7 @@
 	font-weight: bold;
 }
 .product__common:not(.product__title){
-	border-bottom: 1px solid #DDDFE1;
+	
 	width: 300px;
 	height: 60px;
 	line-height: 60px;

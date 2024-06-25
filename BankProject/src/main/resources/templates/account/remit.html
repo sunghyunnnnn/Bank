@@ -129,6 +129,15 @@
 			
 		}
 		
+		$(document).ready(function() {
+			$('#remit_money').on('keyup', () => {
+				let value = $('#remit_money').val().replace(/,/g, '');
+				if (!isNaN(value) && value.trim() !== "") {
+	                value = parseInt(value, 10).toLocaleString('ko-KR');
+	            }
+	            $('#remit_money').val(value);
+	        });
+		});
 
 	</script>
 	<!-- 나중에 해야할 것 계좌 + 계좌 별명-->

@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="style/register/makeAccount.css">
 </head>
 <body>
-<th:block th:replace="layouts/header :: headerFragment"></th:block>
+<th:block th:replace="~{layouts/header :: headerFragment}"></th:block>
 	<h1 class="title">조회</h1>
 		<div class="select__total">
 		<select id="account_select">
@@ -24,6 +24,10 @@
 		
 	<script th:inline="javascript">
 		//var userVal = document.getElementById("mySelect1").selectedIndex;
+		
+		function formatNumber(number) {
+        	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+   			 }
 		
 		const accountTotal = [[${accountTotal}]];
 		
@@ -50,7 +54,7 @@
 			let newtdTag;
 			let newtrTag;
 			let selectIndex = account_select.selectedIndex;
-			total.innerText = `총 잔액 : ${accountTotal[selectIndex - 1]}원`;
+			total.innerText = `총 잔액 : ${formatNumber(accountTotal[selectIndex - 1])}원`;
 			if(document.querySelectorAll("tr").length !== 0){
 
 				accountList_table.replaceChildren();
@@ -90,7 +94,7 @@
 					let day = totalSorted[i].exchage_date;
 					newTdTagMoney = document.createElement('td');
 					newTdTagDate = document.createElement('td');
-					newTdTagMoney.innerText = totalSorted[i].exchange_money;
+					newTdTagMoney.innerText = formatNumber(totalSorted[i].exchange_money);
 					newTdTagDate.innerText = day.substr(0, 11);
 					newtrTag.appendChild(newtdTag);
 					newtrTag.appendChild(newTdTagMoney);
