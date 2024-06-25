@@ -202,6 +202,7 @@ public class ProductController {
 		}
 		return "redirect:/savings?id="+id;
 	}
+	
 	@RequestMapping(value="Termination")
 	public ModelAndView Termination(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -210,7 +211,10 @@ public class ProductController {
 		
 		MemberVO member = (MemberVO)session.getAttribute("login");
 		ProductManagerVO product = pr.showProduct(product_num);
+		System.out.println(product);
 		AccountVO account = accountRepo.getById(account_num);
+		System.out.println(account);
+		
 		mav.addObject("account", account);
 		mav.addObject("member", member);
 		mav.addObject("product", product);

@@ -7,21 +7,25 @@
 <body>
 	<h1 th:text="${member.name} + '님의 상품정보!!!'"></h1>
 	<hr>
-	<span th:text="'상품 : ' + ${product.deposit_name}"></span>
+	<span th:text="'상품이름 : ' + ${product.deposit_name}"></span>
 	<br>
-	<span th:text="'금액 : ' + ${account.product_money} + '원'"></span>
+	<span th:text="'금액 : ' + ${account.total} + '원'"></span>
 	<br>
 	<span th:text = "'이율 : ' + ${product.rate} + '%'"></span>
 	<br>
 	<button onclick="termination()">해지하기</button>
 	<script th:inline="javascript">
 	
-		const product_money = Number([[${account.product_money}]]);
+	
+		const product_money = Number([[${account.total}]]);
 		const rate = Number([[${product.rate}]]);
 		const account_num = [[${account.account_num}]];
 		
 		const product_rate = rate * 0.01;
 		const addMoney = product_money + (product_money * product_rate);
+		console.log(product_rate)
+		console.log(product_money)
+		console.log(addMoney)		
 		
 		function termination(){
 			let ck = confirm(`지금 해지 시 ${addMoney}원이 지급됩니다.`);
