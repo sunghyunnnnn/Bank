@@ -23,10 +23,10 @@
 		</div>
 		<div class="product__date product__common">
 			<span>최소금액 : </span>
-			<span th:text="${list.min_money} + '원'" ></span>
+			<span th:text="${#numbers.formatInteger(list.min_money, 3, 'COMMA')} + '원'" ></span>
 		</div>
 		<div class="product_rate product__common">
-			<span>금리 : </span>
+			<span>이율 : </span>
 			<span th:text="${list.rate} + '%'"></span>
 		</div>	
 	</div>

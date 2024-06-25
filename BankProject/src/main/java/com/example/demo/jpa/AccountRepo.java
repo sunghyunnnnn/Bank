@@ -49,4 +49,7 @@ public interface AccountRepo extends JpaRepository<AccountVO, String>{
 	
 	@Query(value="select account_pw from account where account_num = :account_num", nativeQuery = true)
 	public int selectAccountPWByAccountNum(@Param(value="account_num") String account_num);
+
+	@Query(value="select count(*) from account where id = :id", nativeQuery = true)
+	public String delete_ck(@Param(value="id") String id);
 }

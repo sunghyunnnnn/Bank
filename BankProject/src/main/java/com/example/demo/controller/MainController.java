@@ -9,10 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.jpa.AccountRepo;
@@ -211,4 +208,48 @@ public class MainController {
 		}
 		return response;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete_ck")
+	public String delelte_ck(HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("login");
+		String id = vo.getId();
+		System.out.println(id);
+		String i = accountRepo.delete_ck(id);
+		
+		if(i.equals("0")) {
+			return "0";
+		}else {
+			return i;
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/pw_ck")
+	public String pw_ck(@RequestBody MemberVO vo, HttpSession session, HttpServletRequest request) {
+		MemberVO membervo = (MemberVO) session.getAttribute("login");
+		System.out.println(vo);
+		String id = membervo.getId();
+		System.out.println(id);
+		String pw = vo.getPw() ;
+		System.out.println(pw);
+		String i = memberRepo.pw_ck(id, pw);
+		 System.out.println("=============>"+i);
+		 session = request.getSession(false);
+		 
+			 if(i.equals("1")) {
+				 try {
+					 if(session != null) {
+						 session.invalidate();
+						 memberRepo.delete_member(id, pw);
+				 		}
+				 	}	catch (Exception e) {
+				 }
+				 return "1";
+			 }else {
+				 return pw;
+			}
+		
+	}
+	
 }

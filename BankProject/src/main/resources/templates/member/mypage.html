@@ -35,8 +35,18 @@
 	</div>
 	<div class="account_info">
 	</div>
+	<form action="delete_ck">
+			<button type="submit" id="deleteMember">회원탈퇴</button>
+	</form>
 	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script th:inline="javascript">
+
+	
+	function formatNumber(number) {
+	    	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				 }
+	
 		const tableList = document.querySelector("#tableList");
 		const account_info = document.querySelector(".account_info");
 		const accountList_table = document.querySelector(".accountList_table");
@@ -89,7 +99,7 @@
 			newTdTagDate = document.createElement('td');
 			
 			newtdTag.innerText = item.account_num;
-			newTdTagMoney.innerText = `${item.total}원`;
+			newTdTagMoney.innerText = `${formatNumber(item.total)}원`;
 			newTdTagDate.innerText = formatDate(item.reg_date);
 			
 			let num;
@@ -120,6 +130,48 @@
 			accountList_table.appendChild(newtrTag);
 			
 		}
+		
+		$('#deleteMember').click(function(event) {
+			event.preventDefault();
+			fetch('/delete_ck', {
+				method: 'post'
+			}).then(response => response.json())
+			.then(data => {
+				if(data === 0) {
+					let pw = prompt('회원 탈퇴를 진행하시려면 비밀번호를 입력하세요.');
+					if (pw !== null) {
+						fetch('/pw_ck', {
+							method: 'post'
+							, headers: {
+		                        'Content-Type': 'application/json'
+		                    }
+						,body:  JSON.stringify({ pw: pw })
+						})
+						.then(response => response.json())
+						.then(data => { 
+								if(data === 1) {
+									alert('탈퇴 되었습니다.')
+									window.location.href='/'
+							}else {
+								alert('비밀번호가 틀렸습니다.')
+									console.log(data, typeof data);
+							}
+						}).catch(error => {
+							console.log('error: ', error)
+						})
+					}else { 
+						alert('취소 되었습니다.')
+					}
+				}else {
+					alert('계좌를 모두 해지하세요.')
+				}
+			})
+			.catch(error => {
+				console.log('error : ', error);
+			})
+		})
+		
+			
 		
 		
 		

@@ -67,6 +67,7 @@
    </form>
    <th:block th:replace="~{layouts/footer :: footerFragment}"></th:block>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
    <script th:inline="javascript">
       let fix = 9;
@@ -131,6 +132,7 @@
                }
                $('#savings_money').val(value);
            });
+         $('#account').inputmask('9-9999-9999', { placeholder: "#" });
       });
       
       const productCK = $('#ck');

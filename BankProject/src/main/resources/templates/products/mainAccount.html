@@ -22,7 +22,7 @@
 		</div>
 		<div class="product__date product__common">
 			<span>최소금액 : </span>
-			<span th:text="${list.min_money} + '원'" ></span>
+			<span th:text="${#numbers.formatInteger(list.min_money, 3, 'COMMA')} + '원'" ></span>
 		</div>
 		<div class="product_rate product__common">
 			<span>비율 : </span>
@@ -32,6 +32,9 @@
 <button type="button" class="submit" onclick="location.href='/'" style="margin-bottom: 20px;">뒤로가기</button>
 <th:block th:replace="layouts/footer :: footerFragment"></th:block>
 	<script th:inline="javascript">
+	function formatNumber(number) {
+    	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			 }
 
 	</script>
 </body>

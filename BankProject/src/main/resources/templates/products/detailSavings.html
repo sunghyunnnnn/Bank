@@ -48,7 +48,7 @@
 			상품명 <input th:value= " ${savings.deposit_name}" readonly></input> <br>
 			이율 <input th:value=" ${savings.rate} " readonly></input><br>
 			가입 기간 <input th:value=" ${savings.create_date} " readonly></input> <br>
-			최소 가입 금액 <input th:value="${savings.min_money}+'원'" readonly></input> <br>
+			최소 가입 금액 <input th:value="${#numbers.formatInteger(savings.min_money, 3, 'COMMA')}+'원'" readonly></input> <br>
 			<button type="submit" class="submit" id="submit" style="margin-bottom: 30px;">가입하기</button>
 		</form>
 	</div>
