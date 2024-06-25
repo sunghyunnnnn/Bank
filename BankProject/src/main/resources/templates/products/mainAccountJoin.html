@@ -15,7 +15,7 @@
 				<label for="account_num">계좌번호</label>
 		</span>
 		<span>
-				<input type="text" name="account_num" id="account" readonly>
+				<input type="text" name="account_num" id="account" >
 		</span>
 		
 		<br>
@@ -45,6 +45,7 @@
 	
 	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script th:inline="javascript">
 		let fix = 4;
@@ -92,18 +93,22 @@
 				
 				let param = new URLSearchParams({
 					account : account
-				}); 
+				});
 				console.log(account);
 				
 				fetch('/account_CK', {
 					method: 'post'
+					,headers: {
+				            'Content-Type': 'application/x-www-form-urlencoded'
+				        }
 					,body: param
 				}).then(response => response.json())
 				.then(data => {
-				if(data === 1) {
-					alert('이미 존재하는 상품입니다.');
-				}else {
-					alert('사용가능합니다.') //완성본은 이거 삭제하면 됨.
+					//console.log(data.status, typeof data.status) 확인코드
+					if(data.status === 1) {
+						alert('이미 존재하는 상품입니다.');
+					}else {
+						//alert('사용가능합니다.') //완성본은 이거 삭제하면 됨.
 				}
 			})
 			.catch(error => {
@@ -119,6 +124,7 @@
 	            }
 	            $('#total').val(value);
 	        });
+			$('#account').inputmask('9-9999-9999', { placeholder: "#" });
 		});
 
 

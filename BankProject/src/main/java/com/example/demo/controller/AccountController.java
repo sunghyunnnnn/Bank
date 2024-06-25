@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -187,15 +188,17 @@ public class AccountController {
 	
 	@ResponseBody
 	@PostMapping("/account_CK") 
-	public Map<String, String> account_ck(@RequestParam(value="account") String account, HttpServletRequest request) {
+	public JSONObject account_ck(@RequestParam(value="account") String account, HttpServletRequest request) {
 		
-		Map<String,String> response = new HashMap<>();
+		JSONObject response = new JSONObject();		
 		String i = accountrepo.selectAccountRemit(account);
+		//System.out.println("==================>"+account);
+		//System.out.println("==================>" + i);
 		
 		if(i.equals("1")) {
-			response.put("status","1");
+			response.put("status", 1);
 		}else {
-			response.put("status","0");
+			response.put("status",0);
 		}
 		return response;
 	}
