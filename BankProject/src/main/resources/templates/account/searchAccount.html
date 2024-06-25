@@ -29,7 +29,7 @@
 		function formatNumber(number) {
         	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
    			 }
-		
+	
 		const accountTotal = [[${accountTotal}]];
 		
 		const plusList = [[${plusList}]];
@@ -37,12 +37,13 @@
 		console.log(plusList, remitList)
 		
 		let totalList = plusList.concat(remitList);
+		let tempTotal = 0;
 		console.log('정렬전 >>> ',totalList);
 		let totalSorted = totalList.sort((b, a) => {
 			return new Date(a.exchage_date) - new Date(b.exchage_date)
 		});
 		
-		console.log(totalSorted);
+		console.log('>>>>',totalSorted);
 		
 		
 		const account_select = document.querySelector("#account_select");
@@ -55,7 +56,14 @@
 			let newtdTag;
 			let newtrTag;
 			let selectIndex = account_select.selectedIndex;
+			
 			total.innerText = `총 잔액 : ${formatNumber(accountTotal[selectIndex - 1])}원`;
+			
+			tempTotal = formatNumber(accountTotal[selectIndex - 1]);
+			let tempTotal2 = tempTotal.replace(/,/g,""); 
+			let newTempTotal =parseInt(tempTotal2);
+			
+			console.log('>>>', newTempTotal);
 			if(document.querySelectorAll("tr").length !== 0){
 
 				accountList_table.replaceChildren();
@@ -65,19 +73,41 @@
 			
 			let newThTag1 = document.createElement('th');
 			let newThTag2 = document.createElement('th');
-			
 			let newThTag3 = document.createElement('th');
+			let newThTag4 = document.createElement('th');
 			
 			newThTag1.innerText = '입금 / 출금';
 			newThTag2.innerText = '거래금액';
 			newThTag3.innerText = '거래일자';
+			newThTag4.innerText = '거래 후 금액';
 			
 			newTrTag1.appendChild(newThTag1);
 			newTrTag1.appendChild(newThTag2);
+			newTrTag1.appendChild(newThTag4);
 			newTrTag1.appendChild(newThTag3);
 			
 			accountList_table.appendChild(newTrTag1);
 			
+			let afterMoney = 0;
+			console.log('afterMoney : ', afterMoney);
+			
+			let moneyList = [];
+			let temp = 0;
+			for(let i = totalList.length - 1; i >= 0; i--){
+				if(totalList[i].account_num === account_select.value){
+					if(totalList[i].exchange_sign === '+'){
+						
+						temp += parseInt(totalList[i].exchange_money);
+					}else{
+						temp -= parseInt(totalList[i].exchange_money);
+					}
+					moneyList.push(temp);
+				}
+			}
+			console.log("이거맞냐 >>>", moneyList);
+			let reverseList = moneyList.reverse();
+			console.log('리버스 댐 >>? ', reverseList);
+			let cnt = 0;
 			for(let i = 0; i < totalSorted.length; i++){
 				if(totalSorted[i].account_num === account_select.value){
 					
@@ -86,22 +116,33 @@
 					if(totalSorted[i].exchange_sign === '+'){
 						newtdTag = document.createElement('td');
 						newtdTag.innerText = '입금';
+						afterMoney = reverseList[cnt];							
 					}
 					else{
 						newtdTag = document.createElement('td');
 						newtdTag.innerText = '출금';
+						afterMoney = reverseList[cnt];
 					}
 					
 					let day = totalSorted[i].exchage_date;
+					
 					newTdTagMoney = document.createElement('td');
 					newTdTagDate = document.createElement('td');
+					newTdTagAfterMoney = document.createElement('td');
+					
+					 
+					newTdTagAfterMoney.innerText = formatNumber(afterMoney);
 					newTdTagMoney.innerText = formatNumber(totalSorted[i].exchange_money);
 					newTdTagDate.innerText = day.substr(0, 11);
+					
 					newtrTag.appendChild(newtdTag);
 					newtrTag.appendChild(newTdTagMoney);
+					newtrTag.appendChild(newTdTagAfterMoney);
 					newtrTag.appendChild(newTdTagDate);	
+					
 					accountList_table.appendChild(newtrTag);
 					
+				cnt++;
 				}
 			}
 		}

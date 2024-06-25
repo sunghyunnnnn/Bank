@@ -132,8 +132,8 @@ form div {
   outline: none;
 }
 .btn-10 {
-  background: rgb(22,9,240);
-background: linear-gradient(0deg, rgba(22,9,240,1) 0%, rgba(49,110,244,1) 100%);
+  background: #1E90FF;
+
   color: #fff;
   border: none;
   transition: all 0.3s ease;
@@ -159,8 +159,8 @@ background: linear-gradient(0deg, rgba(2,126,251,1) 0%,  rgba(0,3,255,1)100%);
   transform: scale(1);
 }
 .btn-1 {
-   background: rgb(0,3,255);
-background: linear-gradient(0deg, rgba(2,126,251,1) 0%,  rgba(0,3,255,1)100%);
+   background: #1E90FF;
+
   -webkit-transform: scale(1);
   transform: scale(1);
   border: none;

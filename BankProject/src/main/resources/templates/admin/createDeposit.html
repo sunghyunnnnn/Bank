@@ -3,43 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="style/register/makeAccount.css">
+<link rel="stylesheet" href="style/admin/admin.css">
 </head>
 <body>
-<div></div>
-<div>
- 	<form action="createProductComplete" method="post" id="productCK">
- 		<div>
- 		<label for="product_num">상품 번호 </label>
+<th:block th:replace="layouts/headerManager :: headerManagerFragment"></th:block>
+<form action="createProductComplete" method="post" id="productCK" class="product__form">
+ 	<div class="input-container">
+ 		<label for="product_num" class="product__form__common__name">상품 번호 </label>
+ 		<br>
  		 <input type="text" name="product_num" id="product_num" value="#2" required>
- 		 <button type="button"  id="numCK">상품 번호 확인</button>
+ 		 <button type="button"  id="numCK" class="submit numCkBtn">상품 번호 확인</button>
+ 		</div>
+
+		<div class="input-container">
+	 		<label for="deposit_name" class="product__form__common__name">상품 이름 </label>
+	 		<br>
+	 		 <input type="text" name="deposit_name" id="deposit_name" class="common__input" required>
  		</div>
  		
- 		<div>
- 		<label for="deposit_name">상품 이름 </label>
- 		 <input type="text" name="deposit_name" id="deposit_name"  required>
+ 		<div class="input-container">
+ 		<label for="create_date" class="product__form__common__name">기간</label>
+ 		 <br>
+ 		 <input type="number" name="create_date" class="common__input" id="create_date" required>
  		</div>
  		
- 		<div>
- 		<label for="create_date">기간 </label>
- 		 <input type="number" name="create_date" id="create_date" required>
+ 		<div class="input-container">
+ 		<label for="min_money" class="product__form__common__name">가입 최소 금액</label>
+ 		<br>
+ 		 <input type="number" name="min_money" class="common__input" id="min_money" required>
  		</div>
  		
- 		<div>
- 		<label for="min_money">가입 최소 금액</label>
- 		 <input type="number" name="min_money" id="min_money" required>
+ 		<div class="input-container">
+ 		<label for="rate" class="product__form__common__name">이율</label>
+ 		<br>
+ 		 <input type="text" name="rate" id="rate" class="common__input" required>
  		</div>
- 		
- 		<div>
- 		<label for="rate">이율</label>
- 		 <input type="text" name="rate" id="rate" required>
+ 
+ 		<div class="input-container">
+ 			<button type="submit" class="submit">등록</button>
  		</div>
- 		
- 		<div>
- 			<input type="submit" value="등록">
- 		</div>
-	</form>
-</div>	
-	
+
+	</form>	
+	<th:block th:replace="layouts/footer :: footerFragment"></th:block>
 	<script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script th:inline="javascript">
