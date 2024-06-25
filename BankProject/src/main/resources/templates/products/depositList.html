@@ -3,25 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="style/register/makeAccount.css">
+<link rel="stylesheet" href="style/admin/admin.css">
 </head>
 <body>
-<h1>여기는 예금페이지~!~!</h1>
-<div th:each="list : ${depositVO}">
-	<hr>
-	<a th:href="@{depositProduct(product_num=${list.product_num},id=${session.login.id})}">
-		<span th:text="'상품명: ' +${list.deposit_name}"></span>
-	</a>
-	<br>
-	<span th:text="'상품기간: ' +${list.create_date}"></span>
-	<br>
-	<span th:text="'최소금액: ' +${list.min_money}"></span>
-	<br>
-	<span th:text="'금리: ' +${list.rate}"></span>
-	<br>
-	<hr>
-</div>
-<button type="button" onclick="location.href='/'">뒤로가기</button>
-
+<th:block th:replace="~{layouts/header :: headerFragment}"></th:block>
+<h1 style="margin-bottom: 20px;">yee ~~금</h1>
+<div th:each="list : ${depositVO}" class="product__items" >
+		<div class="product__name product__common">
+			<span>상품 이름 : </span>
+			<a th:href="@{/depositProduct(product_num=${list.product_num},id=${session.login.id})}"
+				th:text="${list.deposit_name}">
+			</a>
+		</div>
+		<div class="product__date product__common">
+			<span>기간 : </span>
+			<span th:text="${list.create_date} + '년'" ></span>
+		</div>
+		<div class="product__date product__common">
+			<span>최소금액 : </span>
+			<span th:text="${list.min_money} + '원'" ></span>
+		</div>
+		<div class="product_rate product__common">
+			<span>비율 : </span>
+			<span th:text="${list.rate} + '%'"></span>
+		</div>	
+	</div>
+<button type="button" class="submit" onclick="location.href='/'" style="margin-bottom: 20px;">뒤로가기</button>
+<th:block th:replace="~{layouts/footer :: footerFragment}"></th:block>
 
 </body>
 </html>

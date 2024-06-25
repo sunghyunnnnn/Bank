@@ -3,23 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="style/register/makeAccount.css">
+<link rel="stylesheet" href="style/admin/admin.css">
 </head>
+
 <body>
-	<h1>여기는 적금페이지~!~!~</h1>
-	<div th:each="list:${list}">
-		<div>
-				적금<br>
+<th:block th:replace="~{layouts/header :: headerFragment}"></th:block>
+	<h1>여기는 적금</h1>
+	<div th:each="list:${list}" class="product__items">
+		<div class="product__name product__common">
+			<span>상품 이름 : </span>
 			<a th:href="@{/detailProduct(product_num=${list.product_num})}"
-				th:text=${list.deposit_name}>
+				th:text="${list.deposit_name}">
 			</a>
-		</div> <br>
-		<span>
-			<span th:text="'기간: ' + ${list.create_date} + '년 / '" ></span>
-			<span th:text="'이율: ' + ${list.rate}"></span>
-		</span>		
-	<hr>
+		</div>
+		<div class="product__date product__common">
+			<span>기간 : </span>
+			<span th:text="${list.create_date} + '년'" ></span>
+		</div>
+		<div class="product__date product__common">
+			<span>최소금액 : </span>
+			<span th:text="${list.min_money} + '원'" ></span>
+		</div>
+		<div class="product_rate product__common">
+			<span>비율 : </span>
+			<span th:text="${list.rate} + '%'"></span>
+		</div>	
 	</div>
-	<button type="button" onclick="location.href='/'">뒤로가기</button>
+	<button type="button" class="submit" onclick="location.href='/'" style="margin-bottom: 20px;">뒤로가기</button>
+	<th:block th:replace="~{layouts/footer :: footerFragment}"></th:block>
 	<script type="text/javascript">
 
 	</script>

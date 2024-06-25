@@ -62,6 +62,7 @@ public class AccountController {
 		List<String> accountAll = new ArrayList<>();
 		List<String> account = new ArrayList<>();
 		List<String> total = new ArrayList<>();
+		List<Integer> accountPW = accountrepo.selectAccountPW(id);
 		
 		List<Map<String, Integer>> selectNumTotal = remitrepo.selectNumTotal(id);
 		
@@ -78,6 +79,7 @@ public class AccountController {
 		System.out.println(accountAll);
 		mav.addObject("account", account);
 		mav.addObject("total", total);
+		mav.addObject("accountPW", accountPW);
 		mav.addObject("accountnum", accountnum);
 		mav.addObject("accountAll", accountAll);
 		mav.setViewName("account/remit");
@@ -110,7 +112,9 @@ public class AccountController {
 		System.out.println(account_num);
 		String remit_account = request.getParameter("remit_account"); //송금 받는 계좌 = 입금 계좌
 		String remit_text = request.getParameter("remit_text"); //계좌 소유주 or 송금 내역 = 입금한 사람 이름 or 입금 한 내역
-		int remit_money = Integer.parseInt(request.getParameter("remit_money")); //송금 금액 = 입금 금액
+		String rm = request.getParameter("remit_money");
+		String newStr = rm.replaceAll(",", "");
+		int remit_money = Integer.parseInt(newStr); //송금 금액 = 입금 금액
 		
 		//if(Integer.parseInt(total) > remit_money) {
 			try {

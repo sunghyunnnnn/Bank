@@ -81,7 +81,7 @@ form div {
 #total-unit {
     position: absolute;
     right: 8px;
-    top: 45%;
+    top: 40%;
     transform: translateY(-50%);
 }
     
@@ -125,11 +125,7 @@ input-container
 	display: flex;
 	justify-content: center;
 }
-.totalMoney{
-	display:inline-block;
-	margin-top: 25px;
-	font-size: 25px;
-}
+
 table {
   border-collapse: collapse;
   width: 75%;

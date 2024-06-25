@@ -13,7 +13,7 @@
 	</form>
 	
 	<div th:each="list:${list}" class="product__items">
-		
+		<hr>
 		<div class="product__name product__common">
 			<span>상품 이름 : </span>
 			<a th:href="@{/detailMain(product_num=${list.product_num})}"
@@ -28,7 +28,7 @@
 			<span>비율 : </span>
 			<span th:text="${list.rate} + '%'"></span>
 		</div>		
-		<hr>
+		
 	</div>
 	
 	<th:block th:replace="layouts/footer :: footerFragment"></th:block>

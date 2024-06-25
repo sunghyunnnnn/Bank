@@ -39,6 +39,10 @@
 	width: 96px;
 	height: 38px;
 }
+.product__items .product__common:nth-last-child(1){
+	border-bottom: 3px solid black;
+	margin-bottom: 20px;
+} 
 .numCkBtn{
 	position: relative;
 	left: 120%;
