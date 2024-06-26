@@ -103,18 +103,15 @@ public class ProductController {
 	}
 	@RequestMapping(value="depositController")
 	public ModelAndView depositController(HttpServletRequest request, ProductManagerVO pmvo) {
-		System.out.println("여기는 왔나???????????");
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("login");
-		System.out.println("여기까지 왔나?????????????????????");
-		String proAccount_num = request.getParameter("proAccount_num");
+		String proAccount_num = request.getParameter("proAccount_num").replace("-", "");
 		
 		String id = vo.getId();
-		String  product_num = pmvo.getProduct_num();
+		String  product_num = pmvo.getProduct_num().replace("-", "");
 		int account_pw = Integer.parseInt(request.getParameter("account_pw"));
 		int total = Integer.parseInt(request.getParameter("total").replace(",", ""));
-		System.out.println("그러면 여기까지????");
 		String account_num = request.getParameter("account_num");
 		String deposit_name = request.getParameter("deposit_name");
 		System.out.println(">>>>>>>>>>>>>>>" + account_num);
@@ -181,9 +178,9 @@ public class ProductController {
 		
 		MemberVO vo = (MemberVO) session.getAttribute("login");
 		
-		String proAccount_num = request.getParameter("proAccount_num");
+		String proAccount_num = request.getParameter("proAccount_num").replace("-", "");
 		String id = vo.getId();
-		String  product_num = pmvo.getProduct_num();
+		String  product_num = pmvo.getProduct_num().replace("-", "");
 		System.out.println(product_num);
 		int account_pw = Integer.parseInt(request.getParameter("account_pw"));
 		int total = Integer.parseInt(request.getParameter("total").replace(",", ""));
@@ -280,7 +277,7 @@ public class ProductController {
 		
 	@PostMapping("accountComplete")
 	public ModelAndView accountComplete(HttpServletRequest request, HttpSession session) {
-		String account_num = request.getParameter("account_num");
+		String account_num = request.getParameter("account_num").replace("-", "");
 		String id = request.getParameter("id");
 		String product_num = (String) session.getAttribute("num");
 		System.out.println(session.getId());
