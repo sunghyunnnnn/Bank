@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -120,9 +121,27 @@ public class ManagerController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/productNum_CK")
-	public int productNumCK(@RequestParam("product_num") String product_num) {
+	public JSONObject productNumCK(@RequestParam("product_num") String product_num) {
+		JSONObject json = new JSONObject();
 		int i = pr.productNum_CK(product_num);
-		return i;
+		System.out.println(i);
+		json.put("data", i);
+		
+	    String num = "";
+	    if (product_num.startsWith("#1")) {
+	        num = pr.main_ck();
+	        System.out.println(num);
+	    } else if (product_num.startsWith("#2")) {
+	        num = pr.deposit_ck();
+	        System.out.println(num);
+	    } else if (product_num.startsWith("#3")) {
+	        num = pr.savings_ck();
+	        System.out.println(num);
+	    }
+		json.put("num", num);
+		System.out.println(num);
+		
+		return json;
 	}
 	
 	/*@RequestMapping(value="createComplete")

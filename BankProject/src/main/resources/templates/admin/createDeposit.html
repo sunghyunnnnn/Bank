@@ -83,10 +83,10 @@
 		}).then(response => response.json())
 		.then(data => {
 			console.log(data);
-			if(data === 1) {
-			alert('이미 존재하는 상품입니다.');
-			}else {
+			if(data.data.toString() === '0') {
 				alert('사용가능합니다.')
+			}else {
+				alert('이미 존재하는 상품입니다. 마지막번호: ' + data.num.toString());
 			}
 		})
 		.catch(error => {

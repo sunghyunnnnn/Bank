@@ -28,4 +28,16 @@ public interface ProductRepo extends JpaRepository<ProductManagerVO, String>{
 	
 	@Query(value="select count(*) from account where id = :id and account_num like '4%'", nativeQuery = true)
 	public int account_ckeck(@Param("id")String id);
+	
+	@Query(value="SELECT product_num FROM product_manager WHERE PRODUCT_NUM LIKE '#1%' ORDER BY TO_NUMBER(REGEXP_SUBSTR(PRODUCT_NUM, '\\d+$')) DESC "
+			+ "FETCH FIRST 1 ROW ONLY", nativeQuery = true)
+	public String main_ck();
+	
+	@Query(value="SELECT product_num FROM product_manager WHERE PRODUCT_NUM LIKE '#2%' ORDER BY TO_NUMBER(REGEXP_SUBSTR(PRODUCT_NUM, '\\d+$')) DESC "
+			+ "FETCH FIRST 1 ROW ONLY", nativeQuery = true)
+	public String deposit_ck();
+	
+	@Query(value="SELECT product_num FROM product_manager WHERE PRODUCT_NUM LIKE '#3%' ORDER BY TO_NUMBER(REGEXP_SUBSTR(PRODUCT_NUM, '\\d+$')) DESC "
+			+ "FETCH FIRST 1 ROW ONLY", nativeQuery = true)
+	public String savings_ck();
 }

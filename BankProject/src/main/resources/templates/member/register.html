@@ -27,7 +27,7 @@
 			<input type="text" name="name" placeholder="이름 입력" required="required">
 			
 			<br>
-			<input type="text" name="rrn" placeholder="주민번호 입력" required="required">
+			<input type="text" name="rrn" id="rrn" placeholder="주민번호 입력" required="required">
 			<br>
 			<input type="text" oninput="oninputPhone(this)" name="phone_num" placeholder="핸드폰번호 입력" required="required">
 			<br>
@@ -182,17 +182,17 @@
 			let id = $('#registerid').val();
 			console.log(id);
 			
+			
 			let param = new URLSearchParams({
 				id : id
 			});
-			
-			
+						
 			fetch('/id_ck', {
 				method: 'POST'
 				,body: param
 			}).then(response => response.json())
 			.then(data => {
-				if(data === 1) {
+				if(data.status === "1") {
 					alert('존재하는 아이디 입니다.')
 				}else {
 					idDuplication = false;
@@ -215,13 +215,26 @@
 			
 		}
 		
+		document.getElementById('rrn').addEventListener('input', function(event) {
+		    let value = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자는 모두 제거
+		    let formattedValue = '';
+
+		    if (value.length > 6) {
+		        formattedValue = value.slice(0, 6) + '-' + value.slice(6, 13);
+		    } else {
+		        formattedValue = value;
+		    }
+
+		    event.target.value = formattedValue;
+		});
 		
 		function oninputPhone(target) {
 		    target.value = target.value
 		        .replace(/[^0-9]/g, '')
 		        .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
 		}
-	
+
+		
 		registerid.addEventListener("change", funcIdCk);
 		registerPwCk.addEventListener("change", funcPwCk);
 		register__select.addEventListener('change', funcRegisterCk);
