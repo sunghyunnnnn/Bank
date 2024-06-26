@@ -8,7 +8,7 @@
 </head>
 <body>
 <th:block th:replace="~{layouts/header :: headerFragment}"></th:block>
-   <h1 style="margin-bottom: 15px;">yee~~금 페이지~!~!~</h1>
+   <h1 style="margin-bottom: 15px;">예금</h1>
 	
    <form action="depositController" method="post" id="ck">
 	   <input name="product_num" th:value="${deposit.product_num}" type="hidden">
@@ -110,7 +110,7 @@
             return mCk;
          }
          else{
-        	 alert('여기로 들어옴')
+        	
             mCk = true;
             return mCk;
          }

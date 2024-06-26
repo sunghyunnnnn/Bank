@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <title>입출금 통장</title>
 <link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 </head>
 <body>
 <th:block th:replace="~{layouts/header :: headerFragment}"></th:block>
-	<h1 style="margin-bottom: 20px;">입출금 통장</h1>
+	<h1 style="margin-bottom: 20px; margin-left: 45%;">입출금 통장</h1>
 	
     <table class="table">
         <thead class="table-dark">
@@ -31,7 +31,8 @@
             </tr>
         </tbody>
     </table>
-<button type="button" class="submit" onclick="location.href='/'" style="margin-bottom: 20px;">뒤로가기</button>
+   
+<button type="button" class="btn btn-primary" onclick="location.href='/'" style="margin-bottom: 20px; margin-left: 45%">뒤로가기</button>
 
 <th:block th:replace="layouts/footer :: footerFragment"></th:block>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
