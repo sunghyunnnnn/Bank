@@ -109,10 +109,10 @@ public class ProductController {
 		String proAccount_num = request.getParameter("proAccount_num").replace("-", "");
 		
 		String id = vo.getId();
-		String  product_num = pmvo.getProduct_num().replace("-", "");
+		String  product_num = pmvo.getProduct_num();
 		int account_pw = Integer.parseInt(request.getParameter("account_pw"));
 		int total = Integer.parseInt(request.getParameter("total").replace(",", ""));
-		String account_num = request.getParameter("account_num");
+		String account_num = request.getParameter("account_num").replace("-", "");
 		String deposit_name = request.getParameter("deposit_name");
 		System.out.println(">>>>>>>>>>>>>>>" + account_num);
 		System.out.println(">>>>>>>>>>>>>>>" + deposit_name);
@@ -180,12 +180,12 @@ public class ProductController {
 		
 		String proAccount_num = request.getParameter("proAccount_num").replace("-", "");
 		String id = vo.getId();
-		String  product_num = pmvo.getProduct_num().replace("-", "");
+		String  product_num = pmvo.getProduct_num();
 		System.out.println(product_num);
 		int account_pw = Integer.parseInt(request.getParameter("account_pw"));
 		int total = Integer.parseInt(request.getParameter("total").replace(",", ""));
 		
-		String account_num = request.getParameter("account_num");
+		String account_num = request.getParameter("account_num").replace("-", "");
 		String deposit_name = request.getParameter("deposit_name");
 		System.out.println(">>>>>>>>>>>>>>>" + account_num);
 		System.out.println(">>>>>>>>>>>>>>>" + deposit_name);

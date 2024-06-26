@@ -37,7 +37,7 @@
 	     </div>
 	     <div class="product__date product__common" style="width: 380px; border-bottom: 1px solid #DDDFE1;">
 	      <span>가입금액 : </span>
-	      <input type="text" id="total" name="total" class="myMoney" th:placeholder="'최소 가입금액 '+${deposit.min_money}+'원'" required style="outline: none">
+	      <input type="text" id="total" name="total" class="myMoney" th:placeholder="'최소 가입금액 '+${#numbers.formatInteger(deposit.min_money, 3, 'COMMA')}+'원'" required style="outline: none">
 	       </div>
 	       <div class="product__date product__common" style="width: 380px; border-bottom: 1px solid #DDDFE1;">
 	      <span>
@@ -84,7 +84,11 @@
       let total = document.querySelector(".total");
       let totalMoney;
       let mCk = false;
-      
+	
+      function formatAccountNumber(account) {
+          return account.replace(/^(\d)(\d{4})(\d{4})$/, '$1-$2-$3');
+      }
+		  
       $(document).ready(function() {
           $('#total').on('keyup', () => {
              let value = $('#total').val().replace(/,/g, '');
@@ -94,7 +98,16 @@
                 $('#total').val(value);
             });
           $('#account').inputmask('9-9999-9999', { placeholder: "#" });
-       });
+          
+	      $('#account_select option').each(function() {
+		      	console.log($('#account_select'))
+		          const account = $(this).text();
+		      	console.log(account)
+		          const formattedAccount = formatAccountNumber(account);
+		          $(this).text(formattedAccount);
+		      });
+		  });
+
       
       function moneyCk(){
          mCk = false;
@@ -117,12 +130,15 @@
          
       }
       
+      const formatNumber = (number) => {
+  	   	 return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  		};
       const funcChange = () =>{
          let selectIndex = account_select.selectedIndex;
          totalMoney = accountTotal[selectIndex - 1];
          console.log(totalMoney);
          pwCk = accountPW[selectIndex - 1];
-         total.innerText = `총 잔액 : ${accountTotal[selectIndex - 1]}원`;
+         total.innerText = `총 잔액 : ${formatNumber(accountTotal[selectIndex - 1])}원`;
       }
       
       account_select.addEventListener('change', funcChange);

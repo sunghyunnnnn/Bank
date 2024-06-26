@@ -11,7 +11,7 @@
 		<div class="select__total">
 		<select id="account_select">
 			<option value="none" disabled selected> === 선택 === </option>
-			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}"></option>
+			<option class="account_option" th:each="list : ${accountNum}" th:text="${list}" id="account"></option>
 		</select>
 		<br>
 		<span class="totalMoney"></span>
@@ -22,13 +22,10 @@
 		</div>
 
 		<th:block th:replace="~{layouts/footer :: footerFragment}"></th:block>
-		
+	
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script th:inline="javascript">
-		//var userVal = document.getElementById("mySelect1").selectedIndex;
-		
-		function formatNumber(number) {
-        	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-   			 }
+		//var userVal = document.getElementById("mySelect1").selectedIndex;		
 	
 		const accountTotal = [[${accountTotal}]];
 		
@@ -147,6 +144,26 @@
 			}
 		}
 		account_select.addEventListener("change", funcSelectOption);
+		
+			function formatNumber(number) {
+		        	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		   			 }
+			/* 하이픈
+	        function formatAccountNumber(account) {
+	            return account.replace(/^(\d)(\d{4})(\d{4})$/, '$1-$2-$3');
+	        }
+		
+        $(document).ready(function() {
+            // Apply formatting to each account option
+            $('#account_select option').each(function() {
+            	console.log($('#account_select'))
+                const account = $(this).text();
+            	console.log(account)
+                const formattedAccount = formatAccountNumber(account);
+                $(this).text(formattedAccount);
+            });
+        });*/
+		
 	</script>
 </body>
 </html>
