@@ -108,10 +108,10 @@ public class AccountController {
 	@RequestMapping(value="remitComplete") //송금, 입금 모두 다 있음.
 	public ModelAndView remitComplete(HttpServletRequest request, RemitVO remitvo, HttpServletResponse response, PlusVO plusvo) throws IOException {
 		
-		String account_num = request.getParameter("account_num");
+		String account_num = request.getParameter("account_num").replace("-", "");
 		String total = accountrepo.selectTotal(account_num);
 		System.out.println(account_num);
-		String remit_account = request.getParameter("remit_account"); //송금 받는 계좌 = 입금 계좌
+		String remit_account = request.getParameter("remit_account").replace("-", "");; //송금 받는 계좌 = 입금 계좌
 		String remit_text = request.getParameter("remit_text"); //계좌 소유주 or 송금 내역 = 입금한 사람 이름 or 입금 한 내역
 
 		String rm = request.getParameter("remit_money");

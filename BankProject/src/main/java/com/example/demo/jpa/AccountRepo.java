@@ -55,4 +55,5 @@ public interface AccountRepo extends JpaRepository<AccountVO, String>{
 
 	@Query(value="select count(*) from account where id = :id", nativeQuery = true)
 	public String delete_ck(@Param(value="id") String id);
+	
 }
